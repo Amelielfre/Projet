@@ -30,8 +30,8 @@ class ModificationProfilController extends AbstractController
         if ($formModifProfil->isSubmitted() && $formModifProfil->isValid()) {
             $em->persist($user);
             $em->flush();
-            return $this->render('modification_profil/profil.html.twig', [
-                'user' => $user
+            return $this->redirectToRoute('app_profil_afficher', [
+                'id' => $user->getId()
             ]);
         }
 
