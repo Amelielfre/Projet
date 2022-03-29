@@ -5,19 +5,22 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ModificationProfilType;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/profil", name="app_profil_")
+ */
 class ModificationProfilController extends AbstractController
 {
     /**
-     * @Route("/modification/profil", name="app_modification_profil")
+     * @Route("/modifier", name="modifier")
      */
     public function modifProfil(Request $request): Response
     {
-
 
 
         // CREATION FORMULAIRE
@@ -27,7 +30,6 @@ class ModificationProfilController extends AbstractController
         $formModifProfil->handleRequest($request);
 
 
-
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
             'user' => $user,
@@ -35,16 +37,14 @@ class ModificationProfilController extends AbstractController
     }
 
     /**
-     * @Route("/modification/profil", name="app_modification_profil")
+     * @Route("/{id}", name="afficher")
      */
-    public function afficherProfil(Request $request): Response
+    public function afficherProfil($id, UserRepository $userRepo): Response
     {
-
-
-
+        $user = $userRepo->find($id);
 
         return $this->render('modification_profil/profil.html.twig', [
-
+            'user' => $user
         ]);
     }
 }
