@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     *
+     * @Assert\NotBlank
      */
     private $email;
 
@@ -39,25 +39,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=6,
+     *     minMessage="Votre mot de passe doit etre de 6 caractères au mimnimum"
      *
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=50)
-     *
+     * @Assert\NotBlank
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
-     *
+     * @Assert\NotBlank
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=100)
-     *
+     * @Assert\NotBlank
      */
     private $pseudo;
 
@@ -68,14 +73,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     *
+     * @Assert\NotBlank
      */
     private $actif;
 
     /**
      * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     *
+     * @Assert\NotBlank
      */
     private $site;
 
@@ -164,23 +169,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConfirmPassword(): string
-    {
-        return $this->confirm_password;
-    }
-
-    /**
-     * @param mixed $confirm_password
-     */
-    public function setConfirmPassword($confirm_password): self
-    {
-        $this->confirm_password = $confirm_password;
-
-        return $this;
-    }
 
     /**
      * Returning a salt is only needed, if you are not using a modern
