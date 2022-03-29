@@ -42,7 +42,9 @@
 
     <div class="group2 mb-3">
         {{ form_row(registrationForm.confirm_password, {'label':'Confirmer Password :','attr':{'placeholder': 'Saisissez à nouveau votre password'} }) }}
-
+        {% if error %}
+            {{ error }}
+        {% endif %}
     </div>
 
     <div class="group2 mb-3">

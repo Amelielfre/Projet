@@ -22,17 +22,59 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('telephone', TextType::class)
-            ->add('site',EntityType::class,['class'=>Site::class,'choice_label'=>'nom'])
-
-            ->add('password', PasswordType::class)
-            ->add('confirm_password', PasswordType::class)
-
-
+            ->add('pseudo', TextType::class, [
+                'label' => 'Pseudo :'
+                , 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Un pseudo doit etre rempli',
+                    ])
+                ]
+            ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom :'
+                , 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Un nom doit etre rempli',
+                    ])
+                ]
+            ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prenom :'
+                , 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Un prenom doit etre rempli',
+                    ])
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email :'
+                , 'constraints' => [
+                    new NotBlank([
+                        'message' => 'le mail doit etre valide',
+                    ])
+                ]
+            ])
+            ->add('telephone', TextType::class, [
+                'label' => 'Telephone : '
+            ])
+            ->add('site', EntityType::class, ['class' => Site::class, 'choice_label' => 'nom'])
+            ->add('password', PasswordType::class, [
+                'label' => 'Password :'
+                , 'constraints' => [
+                    new NotBlank([
+                        'message' => 'le password doit etre valide',
+                    ])
+                ]
+            ])
+            ->add('confirm_password', PasswordType::class, [
+                'label' => 'Confirmez Password :',
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'le password doit etre le meme',
+                    ])
+                ]
+            ])
             ->add('enregistrer', SubmitType::class);
     }
 

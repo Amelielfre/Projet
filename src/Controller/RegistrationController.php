@@ -18,37 +18,45 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(SiteRepository $siteRepo,Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(SiteRepository $siteRepo, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        $error = null;
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        //Récupération des mot de passe
+        $password = $form->get("password")->getData();
+        $confirmPassword = $form->get("confirm_password")->getData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-           $user->setActif(true);
-/*
+            $user->setActif(true);
+            //Check des mots de passe
+            if ($password == $confirmPassword) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
 
-            $site = $siteRepo->findOneBy(array(''));
-            $user->setSite($site);
-*/
+                $entityManager->persist($user);
+                $entityManager->flush();
+               return $this->redirectToRoute("app_login");
+            } else {
+                $error = "les mots de passe sont pas bon michel !!!!!!";
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(), "error" => $error,
+                ]);
 
-            $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
+            }
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $form->createView(), "error" => $error,
         ]);
     }
 }
