@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ModificationProfilController!{% endblock %}
+
+{% block body %}
+
+    <div class="col-4 offset-4">
+        <h1>Profil</h1>
+
+        {{ form_start(formModifProfil) }}
+
+        <div class="group1 mb-3">
+            {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom}}) }}
+
+        </div>
+
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.nom,{'attr':{'value':user.nom}}) }}
+
+        </div>
+
+
+
+
+
+        {{ form_end(formModifProfil) }}
+    </div>
+
+
+
+
+{% endblock %}
