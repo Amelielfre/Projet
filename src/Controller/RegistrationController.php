@@ -28,7 +28,6 @@ class RegistrationController extends AbstractController
         //Récupération des mot de passe
         $password = $form->get("password")->getData();
         $confirmPassword = $form->get("confirm_password")->getData();
-        dump($user);
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             //Check des mots de passe
