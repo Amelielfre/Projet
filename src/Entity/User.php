@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank
+     *
      */
     private $email;
 
@@ -39,37 +39,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *     min=6,
-     *     minMessage="Votre mot de passe doit etre de 6 caractères au mimnimum"
      *
-     * )
      */
     private $password;
 
     /**
-     * @var string
-     * @Assert\EqualTo(password)
-     * @Assert\NotBlank
-     */
-    private $confirm_password;
-
-    /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
+     *
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
+     *
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank
+     *
      */
     private $pseudo;
 
@@ -80,14 +68,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotBlank
+     *
      */
     private $actif;
 
     /**
      * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank
+     *
      */
     private $site;
 
