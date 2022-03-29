@@ -15,11 +15,8 @@ class ModificationProfilController extends AbstractController
     /**
      * @Route("/modification/profil", name="app_modification_profil")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, User $user): Response
     {
-
-        // CREATION OBJET
-        $user = new User();
 
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
