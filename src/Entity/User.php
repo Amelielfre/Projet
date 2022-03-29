@@ -49,13 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @var string
-     * @Assert\EqualTo(password)
-     * @Assert\NotBlank
-     */
-    private $confirm_password;
-
-    /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
      */
@@ -176,23 +169,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConfirmPassword(): string
-    {
-        return $this->confirm_password;
-    }
-
-    /**
-     * @param mixed $confirm_password
-     */
-    public function setConfirmPassword($confirm_password): self
-    {
-        $this->confirm_password = $confirm_password;
-
-        return $this;
-    }
 
     /**
      * Returning a salt is only needed, if you are not using a modern
