@@ -3,10 +3,12 @@
 }
 
 img {
+    border: solid black 3px;
     width: 10%;
     height: auto;
 }
 .first h1 {
+    margin-left: 3%;
     margin-top: 2%;
 }
 .first{
