@@ -15,11 +15,10 @@ class ModificationProfilController extends AbstractController
     /**
      * @Route("/modification/profil", name="app_modification_profil")
      */
-    public function index(Request $request): Response
+    public function modifProfil(Request $request): Response
     {
 
-        // CREATION OBJET
-        $user = new User();
+
 
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
@@ -32,6 +31,16 @@ class ModificationProfilController extends AbstractController
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
             'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/modification/profil", name="app_modification_profil")
+     */
+    public function afficherProfil(Request $request): Response
+    {
+        return $this->render('modification_profil/profil.html.twig', [
+
         ]);
     }
 }
