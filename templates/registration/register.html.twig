@@ -5,19 +5,57 @@
 {% block body %}
     <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.site) }}
-        {{ form_row(registrationForm.roles) }}
-        {{ form_row(registrationForm.actif) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+    {{ form_start(registrationForm) }}
+
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.pseudo,{'label':'Pseudo :' ,'attr':{'placeholder': 'Saisissez votre pseudo'}}) }}
+
+    </div>
+
+    <div class="group1 mb-3">
+        {{ form_row(registrationForm.prenom,{'label':'Prenom :' ,'attr':{'placeholder': 'Saisissez votre prenom'}}) }}
+
+    </div>
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.nom,{'label':'Nom :' ,'attr':{'placeholder': 'Saisissez votre nom'}}) }}
+
+    </div>
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.email,{'label':'Email :' ,'attr':{'placeholder': 'Saisissez votre email'}}) }}
+
+    </div>
+
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.telephone,{'label':'Telephone :' ,'attr':{'placeholder': 'Saisissez votre telephone'}}) }}
+
+    </div>
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.password, {'label':'Password :','attr':{'placeholder': 'Saisissez votre password'} }) }}
+
+    </div>
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.confirm_password, {'label':'Confirmer Password :','attr':{'placeholder': 'Saisissez à nouveau votre password'} }) }}
+
+    </div>
+
+    <div class="group2 mb-3">
+        {{ form_row(registrationForm.site, {'label':'Choisir votre campus :' }) }}
+
+    </div>
+
+    <div class="button mb-3 row">
+        {{ form_label(registrationForm.enregistrer) }}
+        {{ form_widget(registrationForm.enregistrer) }}
+    </div>
+
+
     {{ form_end(registrationForm) }}
+
 {% endblock %}
