@@ -39,6 +39,10 @@ class ModificationProfilController extends AbstractController
      */
     public function afficherProfil(Request $request): Response
     {
+
+
+
+
         return $this->render('modification_profil/profil.html.twig', [
 
         ]);
