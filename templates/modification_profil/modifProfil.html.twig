@@ -10,19 +10,29 @@
         {{ form_start(formModifProfil) }}
 
         <div class="group1 mb-3">
-            {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom}}) }}
-
+            {{ form_row(formModifProfil.pseudo,{'attr':{'value':user.pseudo}}) }}
         </div>
-
+        <div class="group1 mb-3">
+            {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom}}) }}
+        </div>
         <div class="group2 mb-3">
             {{ form_row(formModifProfil.nom,{'attr':{'value':user.nom}}) }}
-
         </div>
-
-
-
-
-
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.email,{'attr':{'value':user.email}}) }}
+        </div>
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone}}) }}
+        </div>
+        <div class="button mb-3 row">
+            {{ form_label(formModifProfil.enregistrer) }}
+            {{ form_widget(formModifProfil.enregistrer) }}
+        </div>
+        <div class="cancel">
+            <a href="#">
+                <button class="btn btn-warning">Annuler les modifications</button>
+            </a>
+        </div>
         {{ form_end(formModifProfil) }}
     </div>
 

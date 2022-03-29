@@ -25,24 +25,25 @@ class ModificationProfilType extends AbstractType
             ->add('pseudo', TextType::class, ["label" => "Pseudo :"])
             ->add('telephone', TextType::class, ["label" => "Téléphone:"])
             ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
-            ->add('password', PasswordType::class, [
-
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['value' => "FDP123456"],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Mot de passe :',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre password doit au moins avoir {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ]);;
+//            ->add('password', PasswordType::class, [
+//
+//                // instead of being set onto the object directly,
+//                // this is read and encoded in the controller
+//                'mapped' => false,
+//                'attr' => ['value' => "FDP123456"],
+//                'constraints' => [
+//                    new NotBlank([
+//                        'message' => 'Mot de passe :',
+//                    ]),
+//                    new Length([
+//                        'min' => 6,
+//                        'minMessage' => 'Votre password doit au moins avoir {{ limit }} caractères',
+//                        // max length allowed by Symfony for security reasons
+//                        'max' => 4096,
+//                    ]),
+//                ],
+//            ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

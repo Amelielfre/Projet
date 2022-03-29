@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ModificationProfilType;
 
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,18 +18,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModificationProfilController extends AbstractController
 {
     /**
-     * @Route("/modifier", name="modifier")
+     * @Route("/modifier/{id}", name="modifier")
      */
-    public function modifProfil(Request $request): Response
+    public function modifProfil(Request $request, $id, EntityManagerInterface $em, UserRepository $userRepo): Response
     {
-
-
+        $user = $userRepo->find($id);
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
-
-        // AJOUT DONNEES
         $formModifProfil->handleRequest($request);
 
+        if ($formModifProfil->isSubmitted() && $formModifProfil->isValid()) {
+            $em->persist($user);
+            $em->flush();
+            return $this->render('modification_profil/profil.html.twig', [
+                'user' => $user
+            ]);
+        }
 
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
