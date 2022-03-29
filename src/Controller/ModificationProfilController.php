@@ -18,11 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModificationProfilController extends AbstractController
 {
     /**
-     * @Route("/modifier/{id}", name="modifier")
+     * @Route("/modifier", name="modifier")
      */
-    public function modifProfil(Request $request, $id, EntityManagerInterface $em, UserRepository $userRepo): Response
+    public function modifProfil(Request $request, EntityManagerInterface $em, UserRepository $userRepo): Response
     {
-        $user = $userRepo->find($id);
+        $user = $this->getUser();
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
