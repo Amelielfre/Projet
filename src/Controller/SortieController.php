@@ -21,8 +21,8 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
 
-        //   $sortie->setSiteOrganisateur($this->getUser()->getSite());
-        $sortie->setSiteOrganisateur($this->getUser()->getSite()->getNom());
+//        $sortie->setSiteOrganisateur($this->getUser()->getSite()->getNom());
+
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 

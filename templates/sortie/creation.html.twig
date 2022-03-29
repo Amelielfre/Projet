@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}Création sortie{% endblock %}
 
 {% block body %}
 
-<div class="container">
     {{ form_start(formSortie) }}
     <div>
         {{ form_row(formSortie.nom) }}
@@ -31,26 +30,17 @@
         {{ form_errors(formSortie.description) }}
     </div>
     <div>
-        {{ form_row(formSortie.siteOrganisateur,{'attr':{'value':app.user.site.libelle}}) }}
+        {{ form_row(formSortie.siteOrganisateur) }}
         {{ form_errors(formSortie.siteOrganisateur) }}
     </div>
-    <div>
-        {{ form_row(formSortie.ville) }}
-        {{ form_errors(formSortie.ville) }}
-    </div>
+{#    <div>#}
+{#        {{ form_row(formSortie.ville) }}#}
+{#        {{ form_errors(formSortie.ville) }}#}
+{#    </div>#}
     <div>
         {{ form_row(formSortie.lieu) }}
         {{ form_errors(formSortie.lieu) }}
     </div>
-    <div>
-        {{ form_row(formSortie.rue) }}
-        {{ form_errors(formSortie.rue) }}
-    </div>
-    <div>
-        {{ form_row(formSortie.codePostal) }}
-        {{ form_errors(formSortie.codePostal) }}
-    </div>
     {{ form_end(formSortie) }}
 
-</div>
 {% endblock %}
