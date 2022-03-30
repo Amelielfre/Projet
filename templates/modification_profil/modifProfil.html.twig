@@ -24,6 +24,18 @@
         <div class="group2 mb-3">
             {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone}}) }}
         </div>
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.oldPassword) }}
+        </div>
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.password) }}
+        </div>
+        <div class="group2 mb-3">
+            {{ form_row(formModifProfil.confirm_password) }}
+            {% if error %}
+                {{ error }}
+            {% endif %}
+        </div>
         <div class="button mb-3 row">
             {{ form_label(formModifProfil.enregistrer) }}
             {{ form_widget(formModifProfil.enregistrer) }}

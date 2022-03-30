@@ -19,11 +19,34 @@ class ModificationProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, ["label" => "Mail :",'attr' => ['value' => "FDP123456"]])
-            ->add('nom', TextType::class, ["label" => "Nom :"])
-            ->add('prenom', TextType::class, ["label" => "Prenom :"])
-            ->add('pseudo', TextType::class, ["label" => "Pseudo :"])
+            ->add('email', EmailType::class, ["label" => "Mail :", 'constraints' => [
+                new NotBlank([
+                    'message' => 'le mail doit etre valide',
+                ])
+            ]])
+            ->add('nom', TextType::class, ["label" => "Nom :", 'constraints' => [
+                new NotBlank([
+                    'message' => 'Un nom doit etre rempli',
+                ])
+            ]])
+            ->add('prenom', TextType::class, ["label" => "Prenom :", 'constraints' => [
+                new NotBlank([
+                    'message' => 'Un prenom doit etre rempli',
+                ])
+            ]])
+            ->add('pseudo', TextType::class, ["label" => "Pseudo :", 'constraints' => [
+                new NotBlank([
+                    'message' => 'Un pseudo doit etre rempli',
+                ])
+            ]])
             ->add('telephone', TextType::class, ["label" => "Téléphone:"])
+            ->add('oldPassword', PasswordType::class, ['label' => 'Ancien mot de passe :', 'mapped' => false])
+            ->add('password', PasswordType::class, [
+                'label' => 'Nouveau mot de passe :'])
+            ->add('confirm_password', PasswordType::class, [
+                'label' => 'Confirmez nouveau mot de passe :',
+                'mapped' => false
+            ])
             ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
 //            ->add('password', PasswordType::class, [
 //

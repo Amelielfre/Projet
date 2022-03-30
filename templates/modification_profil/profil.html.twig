@@ -15,7 +15,9 @@
                 <ul>
                     <li>Prénom :</li>
                     <li>Nom :</li>
+                    {% if app.user.id == user.id %}
                     <li>Téléphone :</li>
+                    {% endif %}
                     <li>Email :</li>
                     <li>Ville de rattachement :</li>
                 </ul>
@@ -24,7 +26,9 @@
                 <ul>
                     <li>{{ user.prenom }}</li>
                     <li>{{ user.nom }}</li>
+                    {% if app.user.id == user.id %}
                     <li>{{ user.telephone }}</li>
+                    {% endif %}
                     <li>{{ user.email }}</li>
                     <li>{{ user.site.nom }}</li>
                 </ul>
