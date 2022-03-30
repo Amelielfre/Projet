@@ -1,0 +1,4 @@
+easy_admin:
+  design:
+    menu:
+      - { route: 'app_accueil', label: 'Back to the website', icon: 'home'}
