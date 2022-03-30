@@ -35,7 +35,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
         //vérification du user en session
-        if ($this->getUser()){
+        if ($this->getUser()) {
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
             $sortie->setOrganisateur($user);
@@ -47,7 +47,7 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
-        if($formSortie->isSubmitted() && $formSortie->isValid()){
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $etat = $this->etatRepo->find(1);
             $sortie->setEtat($etat);
 

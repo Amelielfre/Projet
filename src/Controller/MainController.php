@@ -14,9 +14,9 @@ class MainController extends AbstractController
     public function main(): Response
     {
         dump($this->getUser());
-        if ($this->getUser()) {
-            return $this->render('main/accueil.html.twig');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
         }
-        return $this->redirectToRoute('app_login');
+        return $this->render('main/accueil.html.twig');
     }
 }
