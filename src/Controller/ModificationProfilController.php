@@ -24,7 +24,7 @@ class ModificationProfilController extends AbstractController
     public function modifProfil(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = $this->getUser();
-        $error = null;
+        $errors[] = null;
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
@@ -36,40 +36,38 @@ class ModificationProfilController extends AbstractController
 
         if ($formModifProfil->isSubmitted() && $formModifProfil->isValid()) {
             if ($oldPassword != null && $password != null && $confirmPassword != null) {
-                $oldPasswordHasher = null;
-                $oldPasswordHasher->hashPassword($oldPassword);
-                if ($user->getPassword() == $oldPasswordHasher && $password == $confirmPassword) {
-                    $user->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $password
-                        )
-                    );
+                // vérification de l'ancien mdp avec celui hashé en bdd + vérification du nouveau mdp confirmé
+                if (password_verify($oldPassword, $user->getPassword()) && $password == $confirmPassword) {
+                    if ($oldPassword != $password) {
+                        $user->setPassword(
+                            $userPasswordHasher->hashPassword($user, $password)
+                        );
+                        $em->persist($user);
+                        $em->flush();
+                        return $this->redirectToRoute('app_profil_afficher', [
+                            'id' => $user->getId()
+                        ]);
+                    } else {
+                        $errors[] = "Votre mot de passe doit être différent de l'ancien";
+                    }
                 } else {
-                    $error = "les mots de passe sont pas bon michel !!!!!!";
-                    return $this->render('modification_profil/modifProfil.html.twig', [
-                        'formModifProfil' => $formModifProfil->createView(), "error" => $error,
-                    ]);
+                    $errors[] = "les mots de passe sont pas bon michel !!!!!!";
                 }
             } else if ($oldPassword == null && $password == null && $confirmPassword == null) {
-
-            } else {
-                $error = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
-                return $this->render('modification_profil/modifProfil.html.twig', [
-                    'formModifProfil' => $formModifProfil->createView(), "error" => $error,
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('app_profil_afficher', [
+                    'id' => $user->getId()
                 ]);
+            } else {
+                $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
             }
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('app_profil_afficher', [
-                'id' => $user->getId()
-            ]);
-        }
 
+        }
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
             'user' => $user,
-            'error' => $error
+            'errors' => $errors
         ]);
     }
 

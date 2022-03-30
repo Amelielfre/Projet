@@ -25,15 +25,17 @@
             {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone}}) }}
         </div>
         <div class="group2 mb-3">
-            {{ form_row(formModifProfil.oldPassword) }}
+            {{ form_row(formModifProfil.oldPassword,) }}
         </div>
         <div class="group2 mb-3">
-            {{ form_row(formModifProfil.password) }}
+            {{ form_row(formModifProfil.password,) }}
         </div>
         <div class="group2 mb-3">
             {{ form_row(formModifProfil.confirm_password) }}
-            {% if error %}
-                {{ error }}
+            {% if errors %}
+                {% for error in errors %}
+                    {{ error }}
+                {% endfor %}
             {% endif %}
         </div>
         <div class="button mb-3 row">
@@ -41,7 +43,8 @@
             {{ form_widget(formModifProfil.enregistrer) }}
         </div>
         <div class="cancel">
-            <a href="#" class="btn btn-warning">Annuler les modifications</a>
+            <a href="{{ path('app_profil_afficher',{'id':user.id}) }}" class="btn btn-warning">Annuler les
+                modifications</a>
         </div>
         {{ form_end(formModifProfil) }}
     </div>

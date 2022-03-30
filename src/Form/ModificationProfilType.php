@@ -40,12 +40,19 @@ class ModificationProfilType extends AbstractType
                 ])
             ]])
             ->add('telephone', TextType::class, ["label" => "Téléphone:"])
-            ->add('oldPassword', PasswordType::class, ['label' => 'Ancien mot de passe :', 'mapped' => false])
+            ->add('oldPassword', PasswordType::class, [
+                'label' => 'Ancien mot de passe :',
+                'mapped' => false,
+                'required' => false])
             ->add('password', PasswordType::class, [
-                'label' => 'Nouveau mot de passe :'])
+                'label' => 'Nouveau mot de passe :',
+                'mapped' => false,
+                'required' => false
+            ])
             ->add('confirm_password', PasswordType::class, [
                 'label' => 'Confirmez nouveau mot de passe :',
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
             ])
             ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
 //            ->add('password', PasswordType::class, [
