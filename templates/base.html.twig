@@ -21,53 +21,63 @@
 <div class="container">
     <header>
         {% if app.user %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('app_accueil') }}"><img src="{{ asset('/img/logo.jpg') }}"
-                                                                          alt="Symfony"/></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Villes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Sites</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_register') }}">Créer participant</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('admin') }}">Espace Admin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil
-                                ({{ app.user.pseudo }})
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+        <div class="navbar" style="background-color: #dcba8a;" >
+            <nav class="navbar-expand-lg navbar-light">
+
+                <a class="navbar-brand logo" href="{{ path('app_accueil') }}">
+                    <img src="{{ asset('/img/logo.png') }}" alt="Symfony"/>
+                    SORTIR.com
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="libelle collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Villes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Sites</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_register') }}">Créer participant</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('admin') }}">Espace Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
+                                    profil
+                                    ({{ app.user.pseudo }})
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+                            </li>
+
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
+                                    profil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
         {% endif %}
     </header>
     {% block body %}

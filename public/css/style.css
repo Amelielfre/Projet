@@ -1,13 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Palette+Mosaic&display=swap');
+
 *{
 
 }
 
-img {
-    border: solid black 3px;
-    width: 10%;
+body{
+    background-color: floralwhite;
+}
+
+.navbar{
+    display: block;
+    justify-content: space-around;
+
+}
+
+.navbar-brand{
+    font-family: 'Anton', sans-serif;
+
+
+}
+
+@media (max-width: 1000px) {
+    .libelle{
+        padding-left: 43%;
+        margin-bottom: 3%;
+        font-family: 'Anton', sans-serif;
+        margin-top: -70px;
+    }
+}
+@media (min-width: 1000px){
+    .libelle{
+        padding-left: 25%;
+        margin-bottom: 3%;
+        font-family: 'Anton', sans-serif;
+        margin-top: -70px;
+    }
+}
+
+
+.logo {
+    display: inline-block;
+}
+
+.logo img {
+
+    width: 15%;
     height: auto;
 }
-.first h1 {
+
+h1 {
     margin-left: 3%;
     margin-top: 2%;
 }
