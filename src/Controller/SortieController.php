@@ -59,4 +59,14 @@ class SortieController extends AbstractController
         dump($sortie);
         return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView()]);
     }
+
+    /**
+     * @Route("/confirmation", name="confirmation")
+     */
+    public function confirmation(Request $request, EntityManagerInterface $em): Response
+    {
+
+
+        return $this->render('sortie/confirmation.html.twig');
+    }
 }
