@@ -22,11 +22,11 @@ class DashboardController extends AbstractDashboardController
 
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
-//        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirect($routeBuilder->setController(UserCrudController::class)->generateUrl());
-//        } else {
-//            return $this->redirectToRoute("app_sortie_creation");
-//        }
+        } else {
+            return $this->redirectToRoute("app_sortie_creation");
+        }
     }
 
     public function configureDashboard(): Dashboard

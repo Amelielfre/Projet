@@ -34,19 +34,14 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
+        //vérification du user en session
         if ($this->getUser()){
-
-            //on récupère le pseudo de l'utilisateur connecté
-//            $user->setPseudo($this->getUser()->getPseudo());
-            $user = (object) $this->userRepo->findBy(["pseudo" => $this->getUser()->getPseudo()]);
-//            dump($this->getUser()->getId());
-//            $idUser = $this->getUser()->getId();
-//
-//            $user = new User();
-//            $user->setId($idUser);
-
+            //on récupère l'utilisateur connecté
+            $user = $this->getUser();
             $sortie->setOrganisateur($user);
             $sortie->setSiteOrganisateur($this->getUser()->getSite());
+        } else {
+            return $this->redirectToRoute('app_login');
         }
 
         $formSortie = $this->createForm(SortieType::class, $sortie);
@@ -54,11 +49,8 @@ class SortieController extends AbstractController
 
         if($formSortie->isSubmitted() && $formSortie->isValid()){
             $etat = $this->etatRepo->find(1);
-
-            dump($etat);
             $sortie->setEtat($etat);
 
-            dump($sortie);
             $em->persist($sortie);
             $em->flush();
             return $this->redirectToRoute('app_sortie_creation');
