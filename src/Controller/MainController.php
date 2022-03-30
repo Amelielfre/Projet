@@ -11,7 +11,7 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil", name="app_accueil")
      */
-    public function accueil(): Response
+    public function main(): Response
     {
         dump($this->getUser());
         if ($this->getUser()) {
