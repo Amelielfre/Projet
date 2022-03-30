@@ -21,8 +21,10 @@ class Sortie
     private $id;
 
     /**
+     *
      * @ORM\Column(type="string", length=50)
      */
+    #[Assert\NotBlank]
     private $nom;
 
     /**
