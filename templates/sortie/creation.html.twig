@@ -33,14 +33,14 @@
         {{ form_row(formSortie.siteOrganisateur) }}
         {{ form_errors(formSortie.siteOrganisateur) }}
     </div>
-{#    <div>#}
-{#        {{ form_row(formSortie.ville) }}#}
-{#        {{ form_errors(formSortie.ville) }}#}
-{#    </div>#}
     <div>
-        {{ form_row(formSortie.lieu) }}
-        {{ form_errors(formSortie.lieu) }}
+        {{ form_row(formSortie.ville) }}
+        {{ form_errors(formSortie.ville) }}
     </div>
+{#    <div>#}
+{#        {{ form_row(formSortie.lieu) }}#}
+{#        {{ form_errors(formSortie.lieu) }}#}
+{#    </div>#}
     {{ form_end(formSortie) }}
 
 {% endblock %}

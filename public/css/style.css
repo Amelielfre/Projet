@@ -15,3 +15,7 @@ img {
     margin-top:5% ;
     display: flex;
 }
+
+#map {
+    height: 180px;
+}
