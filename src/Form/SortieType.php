@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 
 class SortieType extends AbstractType
 {
@@ -26,6 +27,9 @@ class SortieType extends AbstractType
             ->add('nom', TextType::class,
                 [
                     "label" => "Nom de la sortie",
+                    "attr" => [
+                    "placeholder" => "Apéro en terasse...",
+                    ],
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
@@ -38,22 +42,25 @@ class SortieType extends AbstractType
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
-                        ])
+                        ]),
                     ]
                 ])
             ->add('duree', IntegerType::class,
                 [
-                    "required"=>false,
+                    "required" => false,
+                    "attr" => [
+                        "placeholder" => "en min",
+                    ],
                     "label" => "Durée",
                 ])
             ->add('dateFinInscription', DateType::class,
                 [
                     "label" => "Date de fin d'inscription", "widget" => "single_text",
-                    "constraints" => [
+                    'constraints' => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
-                        ])
-                    ]
+                        ]),
+                    ],
                 ])
             ->add('nbInscriptionsMax', IntegerType::class,
                 [
@@ -61,26 +68,32 @@ class SortieType extends AbstractType
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
+                        ]),
+                        new Positive([
+                            'message' => "Le nombre de participant doit être supérieur à 0"
                         ])
                     ]
                 ])
             ->add('description', TextType::class,
                 [
-                    "required"=>false,
+                    "required" => false,
+                    "attr" => [
+                        "placeholder" => "Sortie 100% fun",
+                    ],
                     "label" => "Description",
                 ])
             ->add('siteOrganisateur', EntityType::class,
                 [
-                    "class"=>Site::class,
-                    "disabled"=>true,
+                    "class" => Site::class,
+                    "disabled" => true,
                     "label" => "Site Organisateur"
                 ])
             ->add('ville', EntityType::class,
                 [
-                    "class"=>Ville::class,
-                    'choice_label'=>'nom' ,
+                    "class" => Ville::class,
+                    'choice_label' => 'nom',
                     "label" => "Ville",
-                    "mapped"=>false,
+                    "mapped" => false,
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
@@ -89,18 +102,16 @@ class SortieType extends AbstractType
                 ])
             ->add('lieu', EntityType::class,
                 [
-                    "class"=>Lieu::class,
-                    'choice_label'=>'nom' ,
+                    "class" => Lieu::class,
+                    'choice_label' => 'nom',
                     "label" => "Lieu",
-                    "mapped"=>false,
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
                         ])
                     ]
                 ])
-            ->add('ajout', SubmitType::class,['label' => 'Confirmer'])
-        ;
+            ->add('ajout', SubmitType::class, ['label' => 'Confirmer']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -6,42 +6,50 @@
 
     {{ form_start(formSortie) }}
     <div>
-        {{ form_row(formSortie.nom) }}
+        {{ form_label(formSortie.nom) }}
+        {{ form_widget(formSortie.nom) }}
         {{ form_errors(formSortie.nom) }}
     </div>
     <div>
-        {{ form_row(formSortie.dateDebut) }}
+        {{ form_label(formSortie.dateDebut) }}
+        {{ form_widget(formSortie.dateDebut) }}
         {{ form_errors(formSortie.dateDebut) }}
     </div>
     <div>
-        {{ form_row(formSortie.dateFinInscription) }}
+        {{ form_label(formSortie.dateFinInscription) }}
+        {{ form_widget(formSortie.dateFinInscription) }}
         {{ form_errors(formSortie.dateFinInscription) }}
     </div>
     <div>
-        {{ form_row(formSortie.duree) }}
+        {{ form_label(formSortie.duree) }}
+        {{ form_widget(formSortie.duree) }}
         {{ form_errors(formSortie.duree) }}
     </div>
     <div>
-        {{ form_row(formSortie.nbInscriptionsMax) }}
+        {{ form_label(formSortie.nbInscriptionsMax) }}
+        {{ form_widget(formSortie.nbInscriptionsMax) }}
         {{ form_errors(formSortie.nbInscriptionsMax) }}
     </div>
     <div>
-        {{ form_row(formSortie.description) }}
+        {{ form_label(formSortie.description) }}
+        {{ form_widget(formSortie.description) }}
         {{ form_errors(formSortie.description) }}
     </div>
     <div>
-        {{ form_row(formSortie.siteOrganisateur) }}
+        {{ form_label(formSortie.siteOrganisateur) }}
+        {{ form_widget(formSortie.siteOrganisateur) }}
         {{ form_errors(formSortie.siteOrganisateur) }}
     </div>
     <div>
-        {{ form_row(formSortie.ville) }}
+        {{ form_label(formSortie.ville) }}
+        {{ form_widget(formSortie.ville) }}
         {{ form_errors(formSortie.ville) }}
     </div>
     <div>
-        {{ form_row(formSortie.lieu) }}
+        {{ form_label(formSortie.lieu) }}
+        {{ form_widget(formSortie.lieu) }}
         {{ form_errors(formSortie.lieu) }}
     </div>
-
     {{ form_end(formSortie) }}
 
 {% endblock %}

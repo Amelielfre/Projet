@@ -24,10 +24,10 @@ class Sortie
      *
      * @ORM\Column(type="string", length=50)
      */
-    #[Assert\NotBlank]
     private $nom;
 
     /**
+     * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateDebut;
@@ -38,6 +38,10 @@ class Sortie
     private $duree;
 
     /**
+     * @Assert\GreaterThan("today")
+     * @Assert\Expression(
+     *          "this.getDateDebut() > this.getDateFinInscription()",
+     *          message="La date de fin d'inscription doit être antérieure à la date début")
      * @ORM\Column(type="datetime")
      */
     private $dateFinInscription;
