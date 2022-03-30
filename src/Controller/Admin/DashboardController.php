@@ -25,7 +25,7 @@ class DashboardController extends AbstractDashboardController
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirect($routeBuilder->setController(UserCrudController::class)->generateUrl());
         } else {
-            return $this->redirectToRoute("app_sortie_creation");
+            return $this->redirectToRoute("app_accueil");
         }
     }
 

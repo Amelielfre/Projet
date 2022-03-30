@@ -35,7 +35,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
         //vérification du user en session
-        if ($this->getUser()) {
+        if ($this->getUser()){
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
             $sortie->setOrganisateur($user);
@@ -47,27 +47,16 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+        if($formSortie->isSubmitted() && $formSortie->isValid()){
             $etat = $this->etatRepo->find(1);
             $sortie->setEtat($etat);
 
-            return $this->render('sortie/lieu.html.twig',["sortie" => $sortie]);
+            $em->persist($sortie);
+            $em->flush();
+            return $this->redirectToRoute('app_sortie_creation');
         }
-//            $em->persist($sortie);
-//            $em->flush();
 
+        dump($sortie);
         return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView()]);
-    }
-
-
-    /**
-     * @Route("/creation/lieu", name="creation_lieu")
-     */
-    public function  choixLieu (Request $request, EntityManagerInterface $em): Response
-    {
-
-
-
-        return $this->render('sortie/lieu.html.twig');
     }
 }

@@ -87,6 +87,18 @@ class SortieType extends AbstractType
                         ])
                     ]
                 ])
+            ->add('lieu', EntityType::class,
+                [
+                    "class"=>Lieu::class,
+                    'choice_label'=>'nom' ,
+                    "label" => "Lieu",
+                    "mapped"=>false,
+                    "constraints" => [
+                        new NotBlank([
+                            'message' => "Veuillez remplir ce champs",
+                        ])
+                    ]
+                ])
             ->add('ajout', SubmitType::class,['label' => 'Confirmer'])
         ;
     }

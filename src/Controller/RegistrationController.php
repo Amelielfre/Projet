@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Admin\UserCrudController;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\SiteRepository;
@@ -20,41 +21,46 @@ class RegistrationController extends AbstractController
      */
     public function register(SiteRepository $siteRepo, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $error = null;
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
 
-        //Récupération des mot de passe
-        $password = $form->get("password")->getData();
-        $confirmPassword = $form->get("confirm_password")->getData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            //Check des mots de passe
-            if ($password == $confirmPassword) {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('password')->getData()
-                    )
-                );
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $error = null;
+            $user = new User();
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-               return $this->redirectToRoute("app_login");
-            } else {
-                $error = "les mots de passe sont pas bon michel !!!!!!";
-                return $this->render('registration/register.html.twig', [
-                    'registrationForm' => $form->createView(), "error" => $error,
-                ]);
+            //Récupération des mot de passe
+            $password = $form->get("password")->getData();
+            $confirmPassword = $form->get("confirm_password")->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                //Check des mots de passe
+                if ($password == $confirmPassword) {
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                    );
+
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    return $this->redirectToRoute("app_login");
+                } else {
+                    $error = "les mots de passe sont pas bon michel !!!!!!";
+                    return $this->render('registration/register.html.twig', [
+                        'registrationForm' => $form->createView(), "error" => $error,
+                    ]);
+
+                }
+                // do anything else you need here, like send an email
 
             }
-            // do anything else you need here, like send an email
 
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(), "error" => $error,
+            ]);
+        } else {
+            return $this->redirectToRoute("app_accueil");
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(), "error" => $error,
-        ]);
     }
 }
