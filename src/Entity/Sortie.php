@@ -21,10 +21,8 @@ class Sortie
     private $id;
 
     /**
-     *
      * @ORM\Column(type="string", length=50)
      */
-    #[Assert\NotBlank]
     private $nom;
 
     /**
@@ -54,13 +52,13 @@ class Sortie
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=user::class, inversedBy="sortiesInscrits")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesInscrits")
      */
     private $inscrit;
 

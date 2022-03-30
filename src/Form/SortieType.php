@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
-use http\Client\Curl\User;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -43,11 +43,6 @@ class SortieType extends AbstractType
             ->add('duree', IntegerType::class,
                 [
                     "label" => "Durée",
-                    "constraints" => [
-                        new NotBlank([
-                            'message' => "Veuillez remplir ce champs",
-                        ])
-                    ]
                 ])
             ->add('dateFinInscription', DateType::class,
                 [
@@ -70,11 +65,6 @@ class SortieType extends AbstractType
             ->add('description', TextType::class,
                 [
                     "label" => "Description",
-                    "constraints" => [
-                        new NotBlank([
-                            'message' => "Veuillez remplir ce champs",
-                        ])
-                    ]
                 ])
             ->add('siteOrganisateur', EntityType::class,
                 [
