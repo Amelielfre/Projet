@@ -30,33 +30,33 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    {% if app.user.roles == "ROLE_USER" %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_sortie_creation') }}">Créer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Villes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Sites</a>
-                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Villes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Sites</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_register', {id:app.user.id}) }}">Créer participant</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Espace Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil
+                                ({{ app.user.pseudo }})
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </li>
+                    {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin') }}">Espace Admin</a>
+                        <a class="nav-link" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil
-                            ({{ app.user.pseudo }})
-                        </a>
+                        <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
