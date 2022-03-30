@@ -3,7 +3,63 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-<h1>Accueil</h1>
-</div>
+    <div class="filtres">
+
+        <div class="col-3 offset-1">
+            <h1>Accueil</h1>
+
+            {{ form_start(formFiltres) }}
+
+            <div class="champs">
+                {{ form_label(formFiltres.dateDebut) }}
+                {{ form_widget(formFiltres.dateDebut) }}
+            </div>
+            <div class="champs">
+                {{ form_label(formFiltres.dateFin) }}
+                {{ form_widget(formFiltres.dateFin) }}
+            </div>
+            <div class="champs">
+                {{ form_label(formFiltres.rechercher) }}
+                {{ form_widget(formFiltres.rechercher) }}
+            </div>
+
+            {{ form_end(formFiltres) }}
+        </div>
+    </div>
+    <div class="affichage">
+        <table>
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Cloture des inscriptions</th>
+                <th>inscrits/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if sorties != null %}
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
+                        <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>oui ?</td>
+                        <td>
+                            <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                        </td>
+                        <td>
+                            <a href="#">Afficher</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

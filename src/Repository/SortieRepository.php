@@ -45,9 +45,21 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findByDates(\DateTime $dateDebut, \DateTime $dateFin) {
+        $qb = $this->createQueryBuilder('s');
+        $qb ->andWhere('s.dateDebut >= :dateDebut')
+            ->andWhere('s.dateDebut <= :dateFin')
+            ->setMaxResults(20);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+//     /**
+//      * @return Sortie[] Returns an array of Sortie objects
+//      */
     /*
     public function findByExampleField($value)
     {
