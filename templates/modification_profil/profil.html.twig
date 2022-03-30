@@ -36,9 +36,7 @@
             <button class="btn btn-secondary">Retour</button>
         </a>
         {% if app.user.id == user.id %}
-            <a href="{{ path('app_profil_modifier') }}">
-                <button type="submit" class="btn btn-secondary">Modifier mon profil</button>
-            </a>
+            <a href="{{ path('app_profil_modifier') }}" class="btn btn-secondary">Modifier mon profil</a>
         {% endif %}
     </div>
 
