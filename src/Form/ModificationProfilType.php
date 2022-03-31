@@ -39,7 +39,9 @@ class ModificationProfilType extends AbstractType
                     'message' => 'Un pseudo doit etre rempli',
                 ])
             ]])
-            ->add('telephone', TextType::class, ["label" => "Téléphone:"])
+            ->add('telephone', TextType::class, [
+                "label" => "Téléphone:",
+                'required' => false])
             ->add('oldPassword', PasswordType::class, [
                 'label' => 'Ancien mot de passe :',
                 'mapped' => false,

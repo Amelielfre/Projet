@@ -60,7 +60,9 @@ class RegistrationFormType extends AbstractType
                 'required' => false
             ])
             ->add('actif', CheckboxType::class, ['required'=>true,])
-            ->add('site', EntityType::class, ['class' => Site::class, 'choice_label' => 'nom'])
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'choice_label' => 'nom'])
             ->add('password', PasswordType::class, [
                 'label' => 'Password :'
                 , 'constraints' => [

@@ -24,6 +24,10 @@
             {{ form_start(formFiltres) }}
 
             <div class="champs">
+                {{ form_label(formFiltres.site) }}
+                {{ form_widget(formFiltres.site) }}
+            </div>
+            <div class="champs">
                 {{ form_label(formFiltres.dateDebut) }}
                 {{ form_widget(formFiltres.dateDebut) }}
             </div>

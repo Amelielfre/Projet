@@ -50,12 +50,24 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findByDates($dateDebutRech, $dateFinRech) {
+    public function findByFiltres($site, $dateDebutRech = null, $dateFinRech = null)
+    {
         $qb = $this->createQueryBuilder('s');
-        $qb ->andWhere('s.dateDebut >= :dateDebutRech')
-            ->setParameter('dateDebutRech', $dateDebutRech)
-            ->andWhere('s.dateDebut <= :dateFinRech')
-            ->setParameter('dateFinRech', $dateFinRech);
+
+        // ajout du site à la requete SQL
+        $qb->join("s.organisateur", "o")
+            ->andWhere('o.site = :site')
+            ->setParameter('site', $site->getId());
+
+        // ajout de la date à la requete SQL si necessaire
+        if ($dateDebutRech != null && $dateFinRech != null) {
+            $qb->andWhere('s.dateDebut >= :dateDebutRech')
+                ->setParameter('dateDebutRech', $dateDebutRech)
+                ->andWhere('s.dateDebut <= :dateFinRech')
+                ->setParameter('dateFinRech', $dateFinRech);
+        }
+
+        // execution de la requete et envoie du resultat
         return $qb->getQuery()->getResult();
     }
 
