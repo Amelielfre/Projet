@@ -4,18 +4,19 @@
 
 {% block body %}
     <div class="first row">
-        <div class="left col-2 offset-8">
-            <ul>
-                <li>Date du jour :</li>
-                <li>Participant :</li>
-            </ul>
+        <div class="col-3 offset-9">
+            <table>
+                <tr>
+                    <th>Date du jour :</th>
+                    <th>{{ "now" | date("d/m/Y") }}</th>
+                </tr>
+                <tr>
+                    <th>Participant :</th>
+                    <th>{{ app.user.pseudo }}</th>
+                </tr>
+            </table>
         </div>
-        <div class="right col-2">
-            <ul>
-                <li>{{ "now" | date("d/m/Y") }}</li>
-                <li>{{ app.user.pseudo }}</li>
-            </ul>
-        </div>
+
     </div>
     <h4>Filtrer les sorties</h4>
     {{ form_start(formFiltres) }}
@@ -59,9 +60,8 @@
             </div>
         </div>
         <div class="right col-2 offset-1">
-            <div class="champs">
-                {{ form_label(formFiltres.rechercher) }}
-                {{ form_widget(formFiltres.rechercher) }}
+            <div class="bouton">
+                <button class="btn btn-primary btn-lg" type="submit">Rechercher</button>
             </div>
         </div>
 

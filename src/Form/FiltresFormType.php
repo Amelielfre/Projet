@@ -50,8 +50,9 @@ class FiltresFormType extends AbstractType
                 'label' => "Sorties passées",
                 'required' => false
             ])
-            ->add('rechercher', SubmitType::class, [
-                'label' => "Rechercher"]);
+//            ->add('rechercher', SubmitType::class, [
+//                'label' => "Rechercher"])
+        ;
     }
 
 }
