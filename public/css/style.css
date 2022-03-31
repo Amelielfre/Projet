@@ -61,3 +61,35 @@ h1 {
     height: 500px;
     width: 1000px;
 }
+
+
+/**** PROFIL.html ****/
+
+.profil{
+    border-radius: 50px;
+    background: #4d3489;
+    box-shadow: inset 20px 20px 60px #412c74,
+    inset -20px -20px 60px #593c9e;
+
+}
+
+.corps{
+    display: flex;
+    justify-content: center;
+
+}
+
+.element{
+
+    display: flex;
+    border: solid 3px black;
+
+}
+.element ul{
+    list-style-type: none;
+}
+.pseudo{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}

@@ -5,30 +5,30 @@
 {% block body %}
 
     <div class="profil">
-        <div class="titre row">
-            <div class="col-2 offset-3">
-                <h3>{{ user.pseudo }}</h3>
-            </div>
+
+        <div class="pseudo">
+            <h3>{{ user.pseudo }}</h3>
         </div>
-        <div class="corps row">
-            <div class="left col-2 offset-2">
+
+        <div class="corps">
+            <div class="element mt-4">
                 <ul>
                     <li>Prénom :</li>
                     <li>Nom :</li>
 
                     {% if app.user.id == user.id %}
-                    <li>Téléphone :</li>
+                        <li>Téléphone :</li>
                     {% endif %}
                     <li>Email :</li>
                     <li>Ville de rattachement :</li>
                 </ul>
-            </div>
-            <div class="right col-4">
+
+
                 <ul>
                     <li>{{ user.prenom }}</li>
                     <li>{{ user.nom }}</li>
                     {% if app.user.id == user.id %}
-                    <li>{{ user.telephone }}</li>
+                        <li>{{ user.telephone }}</li>
                     {% endif %}
                     <li>{{ user.email }}</li>
                     <li>{{ user.site.nom }}</li>
