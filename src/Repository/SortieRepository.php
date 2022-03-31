@@ -50,7 +50,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findByFiltres($site, $dateDebutRech = null, $dateFinRech = null)
+    public function findByFiltres($site, $motCles = null, $dateDebutRech = null, $dateFinRech = null)
     {
         $qb = $this->createQueryBuilder('s');
 
@@ -59,7 +59,13 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('o.site = :site')
             ->setParameter('site', $site->getId());
 
-        // ajout de la date à la requete SQL si necessaire
+        // ajout des mot cles a la requete si necessaire
+        if ($motCles != null) {
+            $qb->andWhere($qb->expr()->like('s.nom',
+                $qb->expr()->literal("%" . $motCles . "%")));
+        }
+
+        // ajout de la date a la requete SQL si necessaire
         if ($dateDebutRech != null && $dateFinRech != null) {
             $qb->andWhere('s.dateDebut >= :dateDebutRech')
                 ->setParameter('dateDebutRech', $dateDebutRech)
