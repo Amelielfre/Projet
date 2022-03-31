@@ -11,6 +11,8 @@ use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +37,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
         //vérification du user en session
-        if ($this->getUser()){
+        if ($this->getUser()) {
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
             $sortie->setOrganisateur($user);
@@ -47,16 +49,19 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
-        if($formSortie->isSubmitted() && $formSortie->isValid()){
-            $etat = $this->etatRepo->find(1);
-            $sortie->setEtat($etat);
-
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            if ($request->request->get("save")) {
+                $etat = $this->etatRepo->find(1);
+                $sortie->setEtat($etat);
+            } else {
+                $etat = $this->etatRepo->find(2);
+                $sortie->setEtat($etat);
+            }
             $em->persist($sortie);
             $em->flush();
-            return $this->redirectToRoute('app_sortie_creation');
+            return $this->redirectToRoute('app_sortie_confirmation', ["sortie" => $sortie]);
         }
 
-        dump($sortie);
         return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView()]);
     }
 

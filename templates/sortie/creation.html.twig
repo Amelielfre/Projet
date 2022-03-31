@@ -50,6 +50,11 @@
         {{ form_widget(formSortie.lieu) }}
         {{ form_errors(formSortie.lieu) }}
     </div>
+    <button name="save" type="submit" value="save">Enregistrer</button>
+    <button type="submit" value="publish">Publier</button>
+    <button type="reset" value="annuler">Annuler</button>
+
+
     {{ form_end(formSortie) }}
 
 {% endblock %}

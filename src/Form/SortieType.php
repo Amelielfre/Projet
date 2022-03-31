@@ -9,9 +9,11 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +30,7 @@ class SortieType extends AbstractType
                 [
                     "label" => "Nom de la sortie",
                     "attr" => [
-                    "placeholder" => "Apéro en terasse...",
+                        "placeholder" => "Apéro en terasse...",
                     ],
                     "constraints" => [
                         new NotBlank([
@@ -110,8 +112,8 @@ class SortieType extends AbstractType
                             'message' => "Veuillez remplir ce champs",
                         ])
                     ]
-                ])
-            ->add('ajout', SubmitType::class, ['label' => 'Confirmer']);
+                ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
