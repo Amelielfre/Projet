@@ -91,4 +91,19 @@ h1 {
     justify-content: center;
     margin-top: 3%;
 }
+
+.button-group-custom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-custom-x{
+    background-color: #0d6efd !important;
+    border: none;
+    width: 300px;
+    color: white;
+    margin: 20px 10px;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
 /*************************************/

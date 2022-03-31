@@ -56,7 +56,7 @@ class ModificationProfilType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
+//            ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
 //            ->add('password', PasswordType::class, [
 //
 //                // instead of being set onto the object directly,
