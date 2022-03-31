@@ -1,12 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Palette+Mosaic&display=swap');
 
-* {
-
-}
+/************ALL PAGES******************/
 
 body {
-    background-color: floralwhite;
+    background-color: #fbfaff;
+    color: black;
 }
+
+h1 {
+    margin-left: 3%;
+    margin-top: 2%;
+}
+/*************************************/
+/***************NAVBAR******************/
 
 .navbar-brand {
     font-family: 'Anton', sans-serif;
@@ -22,10 +28,7 @@ body {
 .burger{
     align-items: end;
 }
-h1 {
-    margin-left: 3%;
-    margin-top: 2%;
-}
+
 
 .first {
     margin-top: 5%;
@@ -40,19 +43,17 @@ h1 {
 
 /**** PROFIL.html ****/
 
-
-.profil {
-    border-radius: 50px;
-    background: #4d3489;
-    box-shadow: inset 20px 20px 60px #412c74,
-    inset -20px -20px 60px #593c9e;
-
+.titreProfil {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
 }
 
 .corps {
+
     display: flex;
     justify-content: center;
-
+    margin-top: 3%;
 }
 
 .element {
@@ -60,14 +61,34 @@ h1 {
     display: flex;
     border: solid 3px black;
 
+    border-radius: 68px;
+    background: #fbfaff;
+    box-shadow: 41px 41px 82px #646466,
+    -41px -41px 82px #ffffff;
 }
 
 .element ul {
     list-style-type: none;
+    padding-top: 10%;
+    margin-bottom: 10%;
+}
+
+.droite {
+    padding-right: 20%;
+}
+
+.gauche {
+
+}
+
+.element li {
+
+    margin-top: 30%;
 }
 
 .pseudo {
     display: flex;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 3%;
 }
+/*************************************/

@@ -7,13 +7,17 @@
 
     <div class="profil">
 
+        <div class="titreProfil">
+        <h1>Profil de :</h1>
+        </div>
+
         <div class="pseudo">
-            <h3>{{ user.pseudo }}</h3>
+            <h2>{{ user.pseudo }}</h2>
         </div>
 
         <div class="corps">
             <div class="element mt-4">
-                <ul>
+                <ul class="gauche">
                     <li>Prénom :</li>
                     <li>Nom :</li>
 
@@ -25,7 +29,7 @@
                 </ul>
 
 
-                <ul>
+                <ul class="droite">
                     <li>{{ user.prenom }}</li>
                     <li>{{ user.nom }}</li>
                     {% if app.user.id == user.id %}
