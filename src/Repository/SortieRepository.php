@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,13 +50,13 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findByDates(\DateTime $dateDebut, \DateTime $dateFin) {
+    public function findByDates($dateDebutRech, $dateFinRech) {
         $qb = $this->createQueryBuilder('s');
-        $qb ->andWhere('s.dateDebut >= :dateDebut')
-            ->andWhere('s.dateDebut <= :dateFin')
-            ->setMaxResults(20);
-        $query = $qb->getQuery();
-        return $query->getResult();
+        $qb ->andWhere('s.dateDebut >= :dateDebutRech')
+            ->setParameter('dateDebutRech', $dateDebutRech)
+            ->andWhere('s.dateDebut <= :dateFinRech')
+            ->setParameter('dateFinRech', $dateFinRech);
+        return $qb->getQuery()->getResult();
     }
 
 //     /**

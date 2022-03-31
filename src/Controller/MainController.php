@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\FiltresFormType;
-use App\Form\ModificationProfilType;
 use App\Repository\SortieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +30,10 @@ class MainController extends AbstractController
         if ($formFiltres->isSubmitted() && $formFiltres->isValid()) {
             $dateDebut = $formFiltres->get("dateDebut")->getData();
             $dateFin = $formFiltres->get("dateFin")->getData();
+            dump($dateDebut);
+            dump($dateFin);
             $sorties = $repoSortie->findByDates($dateDebut, $dateFin);
+            dump($sorties);
             return $this->render('main/accueil.html.twig', [
                 'formFiltres' => $formFiltres->createView(),
                 'sorties' => $sorties
@@ -39,7 +41,7 @@ class MainController extends AbstractController
         }
         return $this->render('main/accueil.html.twig', [
             'formFiltres' => $formFiltres->createView(),
-            'sorties' => $repoSortie->findAll()
+            'sorties' => $repoSortie->findAll() //TODO à revoir après
         ]);
     }
 }

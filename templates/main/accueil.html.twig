@@ -3,10 +3,23 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+    <div class="first row">
+        <div class="left col-2 offset-8">
+            <ul>
+                <li>Date du jour :</li>
+                <li>Participant :</li>
+            </ul>
+        </div>
+        <div class="right col-2">
+            <ul>
+                <li>{{ "now" | date("d/m/Y") }}</li>
+                <li>{{ app.user.pseudo }}</li>
+            </ul>
+        </div>
+    </div>
     <div class="filtres">
-
+        <h4>Filtrer les sorties</h4>
         <div class="col-3 offset-1">
-            <h1>Accueil</h1>
 
             {{ form_start(formFiltres) }}
 
