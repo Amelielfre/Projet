@@ -28,15 +28,15 @@ class MainController extends AbstractController
 
         //traitement du formulaire
         if ($formFiltres->isSubmitted() && $formFiltres->isValid()) {
+            // recuperation des champs de filtres
             $site = $formFiltres->get("site")->getData();
-            dump($site);
+            $motCles = $formFiltres->get("motCles")->getData();
             $dateDebut = $formFiltres->get("dateDebut")->getData();
-            dump($dateDebut);
             $dateFin = $formFiltres->get("dateFin")->getData();
-            dump($dateFin);
-            $sorties = $repoSortie->findByFiltres($site, $dateDebut, $dateFin);
+
+            //execution de la requete
+            $sorties = $repoSortie->findByFiltres($site, $motCles, $dateDebut, $dateFin);
         }
-        dump($sorties);
         if ($sorties == null) {
             $sorties = $repoSortie->findAll();
         }

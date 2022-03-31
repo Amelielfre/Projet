@@ -19,13 +19,17 @@
     </div>
     <div class="filtres">
         <h4>Filtrer les sorties</h4>
-        <div class="col-3 offset-1">
+        <div class="col-6 offset-1">
 
             {{ form_start(formFiltres) }}
 
             <div class="champs">
                 {{ form_label(formFiltres.site) }}
                 {{ form_widget(formFiltres.site) }}
+            </div>
+            <div class="champs">
+                {{ form_label(formFiltres.motCles) }}
+                {{ form_widget(formFiltres.motCles) }}
             </div>
             <div class="champs">
                 {{ form_label(formFiltres.dateDebut) }}
@@ -71,7 +75,7 @@
                             <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
                         <td>
-                            <a href="#">Afficher</a>
+                            <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
                             <a href="#">Modifier</a>
                             <a href="#">Publier</a>
                             <a href="#">Annuler</a>
