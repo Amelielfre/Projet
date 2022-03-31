@@ -5,49 +5,83 @@
 {% block body %}
 
 
-    <div class="profil">
 
-        <div class="titreProfil">
-        <h1>Profil de :</h1>
+    <head>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                max-width: 300px;
+                margin: auto;
+                text-align: center;
+                font-family: arial;
+            }
+
+            .title {
+                color: grey;
+                font-size: 18px;
+            }
+
+            button {
+                border: none;
+                outline: 0;
+                display: inline-block;
+                padding: 8px;
+                color: white;
+                background-color: #000;
+                text-align: center;
+                cursor: pointer;
+                width: 100%;
+                font-size: 18px;
+            }
+
+            a {
+                text-decoration: none;
+                font-size: 22px;
+                color: black;
+            }
+
+            button:hover, a:hover {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+    <body>
+
+    <h1 style="text-align:center">Profil de :</h1>
+
+    <div class="card">
+        <img src="/img/profil.png" style="width:100%">
+        <h1>{{ user.pseudo }}</h1>
+        <p class="title">Prénom : {{ user.prenom }}</p>
+        <p class="title">Nom : {{ user.nom }}</p>
+        {% if app.user.id == user.id %}
+            <p class="title">Téléphone : {{ user.telephone }}</p>
+        {% endif %}
+        <p class="title">Email : {{ user.email }}</p>
+        <p>{{ user.site.nom }}</p>
+
+        <div style="margin: 24px 0;">
+
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
         </div>
-
-        <div class="pseudo">
-            <h2>{{ user.pseudo }}</h2>
-        </div>
-
-        <div class="corps">
-            <div class="element mt-4">
-                <ul class="gauche">
-                    <li>Prénom :</li>
-                    <li>Nom :</li>
-
-                    {% if app.user.id == user.id %}
-                        <li>Téléphone :</li>
-                    {% endif %}
-                    <li>Email :</li>
-                    <li>Ville de rattachement :</li>
-                </ul>
-
-
-                <ul class="droite">
-                    <li>{{ user.prenom }}</li>
-                    <li>{{ user.nom }}</li>
-                    {% if app.user.id == user.id %}
-                        <li>{{ user.telephone }}</li>
-                    {% endif %}
-                    <li>{{ user.email }}</li>
-                    <li>{{ user.site.nom }}</li>
-                </ul>
-            </div>
-        </div>
+        {% if app.user.id == user.id %}
+            <p>
+                <button href="{{ path('app_profil_modifier') }}">Modifier Profil</button>
+            </p>
+        {% endif %}
     </div>
+
+    </body>
+
+
     <div class="boutton">
         <a href="{{ path('app_accueil') }}">
             <button class="btn btn-secondary">Retour</button>
         </a>
-        {% if app.user.id == user.id %}
-            <a href="{{ path('app_profil_modifier') }}" class="btn btn-secondary">Modifier mon profil</a>
-        {% endif %}
     </div>
 
 {% endblock %}
