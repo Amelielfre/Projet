@@ -1,59 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Palette+Mosaic&display=swap');
 
-*{
+* {
 
 }
 
-body{
+body {
     background-color: floralwhite;
 }
 
-.navbar{
-    display: block;
-    justify-content: space-around;
-
-}
-
-.navbar-brand{
+.navbar-brand {
     font-family: 'Anton', sans-serif;
-
-
 }
 
-@media (max-width: 1000px) {
-    .libelle{
-        padding-left: 43%;
-        margin-bottom: 3%;
-        font-family: 'Anton', sans-serif;
-        margin-top: -70px;
-    }
+.all-logo{
+    width: auto;
 }
-@media (min-width: 1000px){
-    .libelle{
-        padding-left: 25%;
-        margin-bottom: 3%;
-        font-family: 'Anton', sans-serif;
-        margin-top: -70px;
-    }
-}
-
-
-.logo {
-    display: inline-block;
-}
-
-.logo img {
-
+#logo {
     width: 15%;
-    height: auto;
+    height: 15%;
 }
-
+.burger{
+    align-items: end;
+}
 h1 {
     margin-left: 3%;
     margin-top: 2%;
 }
-.first{
-    margin-top:5% ;
+
+.first {
+    margin-top: 5%;
     display: flex;
 }
 
@@ -66,7 +41,7 @@ h1 {
 /**** PROFIL.html ****/
 
 
-.profil{
+.profil {
     border-radius: 50px;
     background: #4d3489;
     box-shadow: inset 20px 20px 60px #412c74,
@@ -74,22 +49,24 @@ h1 {
 
 }
 
-.corps{
+.corps {
     display: flex;
     justify-content: center;
 
 }
 
-.element{
+.element {
 
     display: flex;
     border: solid 3px black;
 
 }
-.element ul{
+
+.element ul {
     list-style-type: none;
 }
-.pseudo{
+
+.pseudo {
     display: flex;
     justify-content: center;
     margin-top: 10%;
