@@ -25,6 +25,7 @@ class ModificationProfilController extends AbstractController
     {
         $user = $this->getUser();
         $errors[] = null;
+
         // CREATION FORMULAIRE
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
@@ -36,6 +37,7 @@ class ModificationProfilController extends AbstractController
 
         if ($formModifProfil->isSubmitted() && $formModifProfil->isValid()) {
             if ($oldPassword != null && $password != null && $confirmPassword != null) {
+
                 // vérification de l'ancien mdp avec celui hashé en bdd + vérification du nouveau mdp confirmé
                 if (password_verify($oldPassword, $user->getPassword()) && $password == $confirmPassword) {
                     if ($oldPassword != $password) {
