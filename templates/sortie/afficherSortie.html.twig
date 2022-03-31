@@ -6,7 +6,7 @@
     <h1>Afficher une sortie</h1>
 
     <br>
-    <form action="{{ url('app_inscription_sortie') }}" method="post">
+
         <table class="table">
             <thead>
 
@@ -47,17 +47,41 @@
                 <td>{{ sortie.lieu.rue }}</td>
                 <td>{{ sortie.lieu.ville.codePostal }}</td>
 
-
-                <td>
-
-                </td>
             </tr>
 
             </tbody>
         </table>
-    </form>
 
-    <button href="{{ path('app_inscription_sortie', {'id':sortie.id}) }}">
+    <table class="table">
+        <thead>
+
+        <tr>
+
+            <th scope="col">Pseudo :</th>
+            <th scope="col">Nom : :</th>
+
+
+        </tr>
+
+        </thead>
+        <tbody>
+
+
+        <tr>
+            {% for user in users %}
+
+                <td>{{ user.pseudo }}</td>
+                <td>{{ user.nom }}  {{ user.prenom }}</td>
+
+            {% endfor %}
+
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <button type="submit" href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">
         INSCRIPTION
     </button>
 
