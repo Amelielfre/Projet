@@ -7,8 +7,10 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -23,11 +25,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
 
-    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo, UserRepository $userRepo)
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
     {
         $this->sortieRepo = $sortieRepo;
         $this->etatRepo = $etatRepo;
         $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
     }
 
     /**
@@ -59,19 +64,16 @@ class SortieController extends AbstractController
             }
             $em->persist($sortie);
             $em->flush();
-            return $this->redirectToRoute('app_sortie_confirmation', ["sortie" => $sortie]);
+
+            return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
-        return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView()]);
+        $listeVille = $this->villeRepo->findAll();
+        $listeLieu = $this->lieuRepo->findAll();
+
+
+        return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView(),
+            "listeVille" => $listeVille, "listeLieu" => $listeLieu]);
     }
 
-    /**
-     * @Route("/confirmation", name="confirmation")
-     */
-    public function confirmation(Request $request, EntityManagerInterface $em): Response
-    {
-
-
-        return $this->render('sortie/confirmation.html.twig');
-    }
 }

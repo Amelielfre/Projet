@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Site', 'fas fa-list', Site::class);
         yield MenuItem::linkToCrud('Ville', 'fas fa-city', Ville::class);
-        yield MenuItem::linkToCrud('Sortie', 'fas fa-hands', Sortie::class);
+        yield MenuItem::linkToCrud('Sortie', 'fas fa-beer', Sortie::class);
+        yield MenuItem::linkToCrud('Lieu', 'fas fa-map', Lieu::class);
     }
 }

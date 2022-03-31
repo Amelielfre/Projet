@@ -17,6 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
@@ -50,6 +53,11 @@ class SortieType extends AbstractType
             ->add('duree', IntegerType::class,
                 [
                     "required" => false,
+                    'constraints' => [
+                        new Positive([
+                            'message' => "La durée doit être positive",
+                        ]),
+                    ],
                     "attr" => [
                         "placeholder" => "en min",
                     ],
@@ -95,18 +103,8 @@ class SortieType extends AbstractType
                     "class" => Ville::class,
                     'choice_label' => 'nom',
                     "label" => "Ville",
+                    'placeholder' => "Sélectionner une ville",
                     "mapped" => false,
-                    "constraints" => [
-                        new NotBlank([
-                            'message' => "Veuillez remplir ce champs",
-                        ])
-                    ]
-                ])
-            ->add('lieu', EntityType::class,
-                [
-                    "class" => Lieu::class,
-                    'choice_label' => 'nom',
-                    "label" => "Lieu",
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
@@ -114,6 +112,41 @@ class SortieType extends AbstractType
                     ]
                 ]);
 
+        $builder->get('ville')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $this->addLieuField($form->getParent(), $form->getData());
+            }
+        );
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $data = $event->getData();
+                /* @var $lieu \App\Entity\Lieu */
+                $lieu = $data->getLieu();
+                $form = $event->getForm();
+                if ($lieu) {
+                    $ville = $lieu->getVille();
+                    $this->addLieuField($form, $ville);
+                    $form->get('ville')->setData($ville);
+                } else {
+                    $this->addLieuField($form, null);
+                }
+            }
+        );
+
+
+    }
+    private function addLieuField(FormInterface $form, ?Ville $ville){
+        $builder = $form->add('lieu', EntityType::class,[
+            'class' => Lieu::class,
+            'choice_label' => 'nom',
+            'placeholder' => $ville ? 'Selectionnez votre lieu' : 'Selectionnez votre ville',
+            'required' => true,
+            'auto_initialize' => false,
+            'choices' => $ville ? $ville->getLieux() : []
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,15 +1,22 @@
-let ul = document.getElementById("produits");
-pForm.addEventListener('submit', async (e) => { e.preventDefault()
-//Je récupère les valeurs du formulaire
-const data =
-    {
-        name: document.getElementById('add_produit_name').value, description:
-        document.getElementById('add_produit_description').value }
-        const response = await fetch('/produit/add', { method: 'POST', headers:
-            { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-        const produits = JSON.parse(await response.json()); console.log(produits);
-        for(produit of produits){ console.log(produit)
-        let li = document.createElement('li')
-            li.innerHTML= produit.name
-            ul.appendChild(li);
-    } })
+$(document).on('change', '#sortie_ville', function () {
+    chargerListeLieux();
+})
+
+function chargerListeLieux(){
+    $.ajax({
+        method: "POST",
+        url: $('#path_ajax').data("href"),
+        data: {
+            'ville_id' : $('#sortie_ville').val()
+        }
+    }).done(function (response) {
+        $('#sortie_lieu').html('');
+        for(var i = 0 ; i < response.length ; i++) {
+            var lieu = response[i];
+            let option = $('<option value="'+lieu["id"]+'">'+lieu["nom"]+'</option>');
+            $('#sortie_lieu').append(option);
+        }
+    })
+}
+
+

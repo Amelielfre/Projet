@@ -7,54 +7,61 @@
     {{ form_start(formSortie) }}
     <div>
         {{ form_label(formSortie.nom) }}
-        {{ form_widget(formSortie.nom) }}
+        {{ form_widget(formSortie.nom, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.nom) }}
     </div>
     <div>
         {{ form_label(formSortie.dateDebut) }}
-        {{ form_widget(formSortie.dateDebut) }}
+        {{ form_widget(formSortie.dateDebut, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.dateDebut) }}
     </div>
     <div>
         {{ form_label(formSortie.dateFinInscription) }}
-        {{ form_widget(formSortie.dateFinInscription) }}
+        {{ form_widget(formSortie.dateFinInscription, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.dateFinInscription) }}
     </div>
     <div>
         {{ form_label(formSortie.duree) }}
-        {{ form_widget(formSortie.duree) }}
+        {{ form_widget(formSortie.duree, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.duree) }}
     </div>
     <div>
         {{ form_label(formSortie.nbInscriptionsMax) }}
-        {{ form_widget(formSortie.nbInscriptionsMax) }}
+        {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.nbInscriptionsMax) }}
     </div>
     <div>
         {{ form_label(formSortie.description) }}
-        {{ form_widget(formSortie.description) }}
+        {{ form_widget(formSortie.description, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.description) }}
     </div>
     <div>
         {{ form_label(formSortie.siteOrganisateur) }}
-        {{ form_widget(formSortie.siteOrganisateur) }}
+        {{ form_widget(formSortie.siteOrganisateur, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.siteOrganisateur) }}
     </div>
     <div>
         {{ form_label(formSortie.ville) }}
-        {{ form_widget(formSortie.ville) }}
+        {{ form_widget(formSortie.ville, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.ville) }}
     </div>
     <div>
         {{ form_label(formSortie.lieu) }}
-        {{ form_widget(formSortie.lieu) }}
+        {{ form_widget(formSortie.lieu, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.lieu) }}
     </div>
-    <button name="save" type="submit" value="save">Enregistrer</button>
-    <button type="submit" value="publish">Publier</button>
-    <button type="reset" value="annuler">Annuler</button>
-
-
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
+        <button type="submit" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
+        <a href="{{ path('app_accueil') }}" class="btn btn-primary mt-1">Annuler</a>
+    </div>
+    <div id="path_ajax" data-href="{{ path('ajax_lieu_by_ville') }}"></div>
     {{ form_end(formSortie) }}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
+    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 {% endblock %}
+
+{% block js %}
+
+ {% endblock %}
