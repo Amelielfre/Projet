@@ -14,10 +14,12 @@ class FiltresFormType extends \Symfony\Component\Form\AbstractType
         $builder
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Entre : ",
-                'widget' => "single_text"])
+                'widget' => "single_text",
+                'required' => false])
             ->add('dateFin', DateTimeType::class, [
                 'label' => "et : ",
-                'widget' => "single_text"])
+                'widget' => "single_text",
+                'required' => false])
             ->add('rechercher', SubmitType::class, [
                 'label' => "Rechercher"]);
     }

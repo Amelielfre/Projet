@@ -19,8 +19,8 @@ class MainController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-//        $sorties = null;
-//        $sorties = $repoSortie->findAll();
+
+        $sorties = null;
 
         // CREATION FORMULAIRE
         $formFiltres = $this->createForm(FiltresFormType::class);
@@ -30,18 +30,18 @@ class MainController extends AbstractController
         if ($formFiltres->isSubmitted() && $formFiltres->isValid()) {
             $dateDebut = $formFiltres->get("dateDebut")->getData();
             $dateFin = $formFiltres->get("dateFin")->getData();
-            dump($dateDebut);
-            dump($dateFin);
-            $sorties = $repoSortie->findByDates($dateDebut, $dateFin);
-            dump($sorties);
-            return $this->render('main/accueil.html.twig', [
-                'formFiltres' => $formFiltres->createView(),
-                'sorties' => $sorties
-            ]);
+            if ($dateDebut != null && $dateFin != null) {
+                $sorties = $repoSortie->findByDates($dateDebut, $dateFin);
+            }
         }
+
+        if ($sorties == null) {
+            $sorties = $repoSortie->findAll();
+        }
+
         return $this->render('main/accueil.html.twig', [
             'formFiltres' => $formFiltres->createView(),
-            'sorties' => $repoSortie->findAll() //TODO à revoir après
+            'sorties' => $sorties
         ]);
     }
 }

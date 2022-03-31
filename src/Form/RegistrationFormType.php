@@ -56,7 +56,8 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('telephone', TextType::class, [
-                'label' => 'Telephone : '
+                'label' => 'Telephone : ',
+                'required' => false
             ])
             ->add('actif', CheckboxType::class, ['required'=>true,])
             ->add('site', EntityType::class, ['class' => Site::class, 'choice_label' => 'nom'])

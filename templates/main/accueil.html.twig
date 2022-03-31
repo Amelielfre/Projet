@@ -67,7 +67,12 @@
                             <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                            <a href="#">Afficher</a>
+                            <a href="#">Modifier</a>
+                            <a href="#">Publier</a>
+                            <a href="#">Annuler</a>
+                            <a href="#">S'inscrire</a>
+                            <a href="#">Se désister</a>
                         </td>
                     </tr>
                 {% endfor %}
