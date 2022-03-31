@@ -50,7 +50,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findByFiltres($site, $motCles = null, $dateDebutRech = null, $dateFinRech = null)
+    public function findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles = null, $dateDebutRech = null, $dateFinRech = null)
     {
         $qb = $this->createQueryBuilder('s');
 
@@ -58,6 +58,26 @@ class SortieRepository extends ServiceEntityRepository
         $qb->join("s.organisateur", "o")
             ->andWhere('o.site = :site')
             ->setParameter('site', $site->getId());
+
+        //ajout du filtre par sorties organisees si necessaire
+        if ($orga == true) {
+            $qb->andWhere('s.organisateur = :orga')
+                ->setParameter('orga', $user);
+        }
+
+        // ajout du filtre par inscrit/pas inscrit si necessaire
+        if ($inscrit == true) {
+
+        } elseif ($pasInscrit == true) {
+
+        }
+
+        // ajout du filtre par sorties passees si necessaire
+        if ($passees == true) {
+            $qb->join("s.etat", "e")
+                ->andWhere('e.libelle = :etat')
+                ->setParameter('etat', "passée");
+        }
 
         // ajout des mot cles a la requete si necessaire
         if ($motCles != null) {

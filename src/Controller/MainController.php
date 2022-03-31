@@ -33,9 +33,14 @@ class MainController extends AbstractController
             $motCles = $formFiltres->get("motCles")->getData();
             $dateDebut = $formFiltres->get("dateDebut")->getData();
             $dateFin = $formFiltres->get("dateFin")->getData();
+            $orga = $formFiltres->get("orga")->getData();
+            $inscrit = $formFiltres->get("inscrit")->getData();
+            $pasInscrit = $formFiltres->get("pasInscrit")->getData();
+            $passees = $formFiltres->get("passees")->getData();
+            $user = $this->getUser();
 
             //execution de la requete
-            $sorties = $repoSortie->findByFiltres($site, $motCles, $dateDebut, $dateFin);
+            $sorties = $repoSortie->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);
         }
         if ($sorties == null) {
             $sorties = $repoSortie->findAll();
