@@ -16,7 +16,6 @@ class AjaxController extends AbstractController
      */
     public function rechercheLieuByVille(LieuRepository $lieuRepo, Request $request): Response
     {
-
         $lieux = $lieuRepo->findBy(['ville' => $request->query->get('ville_id')]);
         $json_data = array();
         $i = 0;
