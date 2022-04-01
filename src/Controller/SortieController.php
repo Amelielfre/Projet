@@ -68,7 +68,6 @@ class SortieController extends AbstractController
             }
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash('success', 'Votre sortie à bien été créee');
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
@@ -79,7 +78,6 @@ class SortieController extends AbstractController
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
             $em->persist($lieu);
             $em->flush();
-            $this->addFlash('success', 'Votre sortie à bien été créee');
         }
 
         $lieuForm = $this->createForm(LieuType::class);
