@@ -67,22 +67,25 @@
         <tbody>
 
 
-        <tr>
-            {% for user in users %}
 
+            {% for user in users %}
+        <tr>
                 <td>{{ user.pseudo }}</td>
                 <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
-
+        </tr>
             {% endfor %}
 
-        </tr>
+
 
         </tbody>
     </table>
 
 
-    <button type="submit" name="inscription" value="inscription">
+    <button type="submit" class="btn btn-sm btn-primary btn-lieu-custom" id="btn-lieu" name="inscription" value="inscription">
         <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">INSCRIPTION</a>
+    </button>
+    <button type="submit" class="btn btn-sm btn-primary btn-lieu-custom" id="btn-lieu" name="desister" value="desister">
+        <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">DESISTER</a>
     </button>
 
 {% endblock %}

@@ -115,7 +115,7 @@
                             {% set ok = true %}
                             {% for user in sortie.inscrit %}
                                 {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
-                                    <a href="#">Se désister</a>
+                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se désister</a>
                                     {% set ok = false %}
                                 {% endif %}
                             {% endfor %}

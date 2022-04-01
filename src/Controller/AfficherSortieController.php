@@ -23,19 +23,14 @@ class AfficherSortieController extends AbstractController
     {
         //Affichage
         $sortie = $repoSortie->find($id);
-        /*     if ($this->getUser()) {
-                 $user = $this->getUser();
-                 // INSCRIPTION
-                 if ($request->request->get("inscription")) {
-                     $sortie->addInscrit($user);
-                     $this->addFlash('succes', 'Votre inscription a bien été enregistrée !');
-                 }
-             } else {
-                 return $this->redirectToRoute('app_login');
-             }*/
-        $users = $sortie->getInscrit();
+        if ($sortie->getInscrit()){
+            $users = $sortie->getInscrit();
+            return $this->render('sortie/afficherSortie.html.twig', [
+                'users' => $users,
+                'sortie' => $sortie
+            ]);
+        }
         return $this->render('sortie/afficherSortie.html.twig', [
-            'users' => $users,
             'sortie' => $sortie
         ]);
     }
@@ -48,18 +43,44 @@ class AfficherSortieController extends AbstractController
 
         $user = $this->getUser();
         $sortie = $repoSortie->find($id);
-        // $user->addSortiesInscrit($sortie);
-        dump("oli");
+
         // INSCRIPTION
-        //$user->addSortiesInscrit($sortie);
-        dump("olo");
+
         $sortie->addInscrit($user);
-        dump("ola");
-        $this->addFlash('succes', 'Votre inscription a bien été enregistrée !');
+        if ($sortie->getInscrit()){
+            $users = $sortie->getInscrit();
+            return $this->render('sortie/afficherSortie.html.twig', [
+                'users' => $users,
+                'sortie' => $sortie
+            ]);
+        }
         $em->flush();
-        $users = $sortie->getInscrit();
         return $this->render('sortie/afficherSortie.html.twig', [
-            'users' => $users,
+            'sortie' => $sortie
+        ]);
+    }
+
+    /**
+     * @Route("/afficher/sortie/desister/{id}", name="app_afficher_sortie_desister")
+     */
+    public function desister($id, SortieRepository $repoSortie, EntityManagerInterface $em): Response
+    {
+
+        $user = $this->getUser();
+        $sortie = $repoSortie->find($id);
+
+        // DESISTER
+
+        $sortie->removeInscrit($user);
+        if ($sortie->getInscrit()){
+            $users = $sortie->getInscrit();
+            return $this->render('sortie/afficherSortie.html.twig', [
+                'users' => $users,
+                'sortie' => $sortie
+            ]);
+        }
+        $em->flush();
+        return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie
         ]);
     }
