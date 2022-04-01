@@ -16,13 +16,13 @@ class LieuCrudController extends AbstractCrudController
     }
 
 
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            TextField::new('Nom'),
-            TextField::new('Rue'),
-            CollectionField::new('Ville'),
-        ];
-    }
+//    public function configureFields(string $pageName): iterable
+//    {
+//        return [
+//            TextField::new('Nom'),
+//            TextField::new('Rue'),
+//            AssociationField::new('Ville'),
+//        ];
+//    }
 
 }

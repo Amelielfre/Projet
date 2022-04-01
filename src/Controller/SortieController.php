@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
@@ -66,16 +67,17 @@ class SortieController extends AbstractController
             }
             $em->persist($sortie);
             $em->flush();
-
+            $this->addFlash('success', 'Votre sortie à bien été créee');
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
-        $listeVille = $this->villeRepo->findAll();
-        $listeLieu = $this->lieuRepo->findAll();
+        $lieuForm = $this->createForm(LieuType::class);
 
+        return $this->render('sortie/creation.html.twig', [
+            "formSortie" => $formSortie->createView(),
+            "locationForm" => $lieuForm->createView()
+        ]);
 
-        return $this->render('sortie/creation.html.twig', ["formSortie" => $formSortie->createView(),
-            "listeVille" => $listeVille, "listeLieu" => $listeLieu]);
     }
 
 }
