@@ -52,7 +52,17 @@
     <h1 style="text-align:center">Profil de :</h1>
 
     <div class="card">
-        <img src="/img/profil.png" style="width:100%">
+
+        {% if app.user.UrlPhoto%}
+
+            <img src="uploads/{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
+
+        {% else %}
+
+            <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault" width="100%" class="">
+
+        {% endif %}
+
         <h1>{{ user.pseudo }}</h1>
         <p class="title">Prénom : {{ user.prenom }}</p>
         <p class="title">Nom : {{ user.nom }}</p>

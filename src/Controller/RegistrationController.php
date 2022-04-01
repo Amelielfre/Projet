@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
@@ -19,7 +20,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(SiteRepository $siteRepo, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(SiteRepository $siteRepo, Request $request,SluggerInterface $slugger,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
@@ -32,7 +33,7 @@ class RegistrationController extends AbstractController
             $password = $form->get("password")->getData();
             $confirmPassword = $form->get("confirm_password")->getData();
             if ($form->isSubmitted() && $form->isValid()) {
-                // encode the plain password
+
                 //Check des mots de passe
                 if ($password == $confirmPassword) {
                     $user->setPassword(
@@ -41,6 +42,23 @@ class RegistrationController extends AbstractController
                             $form->get('password')->getData()
                         )
                     );
+
+                    $photo = $form->get('photo')->getData();
+
+                    if ($photo) {
+                        $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+                        // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
+                        $safeFilename = $slugger->slug($originalFilename);
+                        $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+                        // Move the file to the directory where brochures are storedtry {
+                        $photo->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                        $user->setUrlPhoto($newFilename);
+                    }
 
                     $entityManager->persist($user);
                     $entityManager->flush();
@@ -52,15 +70,26 @@ class RegistrationController extends AbstractController
                     ]);
 
                 }
-                // do anything else you need here, like send an email
 
             }
 
+
+            dump($this->getUser());
             return $this->render('registration/register.html.twig', [
                 'registrationForm' => $form->createView(), "error" => $error,
             ]);
         } else {
             return $this->redirectToRoute("app_accueil");
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function generateUniqueFileName()
+    {
+        // md5() réduit la similarité des noms de fichiers générés
+        // uniqid(), qui sont basé sur des timestamps
+        return md5(uniqid());
     }
 }
