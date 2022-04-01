@@ -94,6 +94,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sortiesInscrits;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $UrlPhoto;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -323,6 +328,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->sortiesInscrits->removeElement($sortiesInscrit)) {
             $sortiesInscrit->removeInscrit($this);
         }
+
+        return $this;
+    }
+
+    public function getUrlPhoto(): ?string
+    {
+        return $this->UrlPhoto;
+    }
+
+    public function setUrlPhoto(?string $UrlPhoto): self
+    {
+        $this->UrlPhoto = $UrlPhoto;
 
         return $this;
     }

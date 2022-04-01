@@ -70,7 +70,9 @@
         </div>
         {% if app.user.id == user.id %}
             <p>
-                <button href="{{ path('app_profil_modifier') }}">Modifier Profil</button>
+                <a href="{{ path('app_profil_modifier') }}">
+                <button>Modifier Profil</button>
+                </a>
             </p>
         {% endif %}
     </div>
