@@ -86,8 +86,7 @@ class RegistrationFormType extends AbstractType
             ->add('photo',FileType::class,[
                 'mapped'=>false,
                 'required'=>false,
-            ])
-            ->add('enregistrer', SubmitType::class);
+            ]);
 
 
     }

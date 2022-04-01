@@ -3,69 +3,83 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="form-custom">
+    <h1 class="title-form-custom">Créer un participant</h1>
 
     {{ form_start(registrationForm) }}
 
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.pseudo,{'label':'Pseudo :' ,'attr':{'placeholder': 'Saisissez votre pseudo'}}) }}
+        {{ form_row(registrationForm.pseudo,
+            {'label':'Pseudo :' ,'attr':{
+                'placeholder': 'Saisissez votre pseudo',
+                'class': "form-control"
+            }}) }}
 
     </div>
 
     <div class="group1 mb-3">
-        {{ form_row(registrationForm.prenom,{'label':'Prenom :' ,'attr':{'placeholder': 'Saisissez votre prenom'}}) }}
+        {{ form_row(registrationForm.prenom,
+            {'label':'Prenom :' ,'attr':{'placeholder': 'Saisissez votre prenom',
+            'class': "form-control"}}) }}
 
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.nom,{'label':'Nom :' ,'attr':{'placeholder': 'Saisissez votre nom'}}) }}
+        {{ form_row(registrationForm.nom,
+            {'label':'Nom :' ,'attr':{'placeholder': 'Saisissez votre nom',
+            'class': "form-control"}}) }}
 
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.email,{'label':'Email :' ,'attr':{'placeholder': 'Saisissez votre email'}}) }}
+        {{ form_row(registrationForm.email,
+            {'label':'Email :' ,'attr':{'placeholder': 'Saisissez votre email',
+            'class': "form-control"}}) }}
 
     </div>
 
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.telephone,{'label':'Telephone :' ,'attr':{'placeholder': 'Saisissez votre telephone'}}) }}
+        {{ form_row(registrationForm.telephone,
+            {'label':'Telephone :' ,'attr':{'placeholder': 'Saisissez votre telephone',
+            'class': "form-control"}}) }}
 
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.password, {'label':'Password :','attr':{'placeholder': 'Saisissez votre password'} }) }}
+        {{ form_row(registrationForm.password,
+            {'label':'Password :','attr':{'placeholder': 'Saisissez votre password',
+            'class': "form-control"} }) }}
 
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.confirm_password, {'label':'Confirmer Password :','attr':{'placeholder': 'Saisissez à nouveau votre password'} }) }}
+        {{ form_row(registrationForm.confirm_password,
+            {'label':'Confirmer Password :','attr':{'placeholder': 'Saisissez à nouveau votre password',
+            'class': "form-control"} }) }}
         {% if error %}
             {{ error }}
         {% endif %}
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.actif, {'label':'User ?' }) }}
-
+        {{ form_row(registrationForm.actif) }}
     </div>
 
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.site, {'label':'Choisir votre campus :' }) }}
+        {{ form_row(registrationForm.site, {'label':'Choisir votre campus :  ' }) }}
 
     </div>
     <div class="group2 mb-3">
-        {{ form_row(registrationForm.photo, {'label':'Choisir une photo ? ' }) }}
-
+        {{ form_row(registrationForm.photo, {'label':'Choisir une photo ' }) }}
     </div>
 
-    <div class="button mb-3 row">
-        {{ form_label(registrationForm.enregistrer) }}
-        {{ form_widget(registrationForm.enregistrer) }}
-    </div>
+    <button type="submit" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
 
 
     {{ form_end(registrationForm) }}
 
+    </div>
 {% endblock %}
+

@@ -72,7 +72,7 @@ class SortieController extends AbstractController
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
-        $lieu = new Lieu();
+         $lieu = new Lieu();
         $formLieu = $this->createForm(LieuType::class, $lieu);
         $formLieu->handleRequest($request);
 
@@ -82,9 +82,6 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'Votre sortie à bien été créee');
         }
 
-        //sauvegarde en bdd
-        $em->persist($lieu);
-        $em->flush();
         $lieuForm = $this->createForm(LieuType::class);
 
         return $this->render('sortie/creation.html.twig', [
