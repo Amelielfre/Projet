@@ -53,15 +53,15 @@
 
     <div class="card">
 
-        {% if app.user.UrlPhoto%}
+        {#{% if app.user.UrlPhoto%}
 
-            <img src="uploads/{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
+             <img src="uploads/{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
-        {% else %}
+        {% else %}#}
 
             <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault" width="100%" class="">
 
-        {% endif %}
+        {#{% endif %}#}
 
         <h1>{{ user.pseudo }}</h1>
         <p class="title">Prénom : {{ user.prenom }}</p>

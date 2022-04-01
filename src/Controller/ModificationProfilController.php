@@ -26,11 +26,12 @@ class ModificationProfilController extends AbstractController
         $user = $this->getUser();
         $errors[] = null;
 
-        // CREATION FORMULAIRE
+        // CREATION FORMULAIRE*****
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
 
-        // traitement du formulaire
+        // traitement du formulaire ********
+        // Récupère les données remplies dans les champs des formulaires
         $oldPassword = $formModifProfil->get("oldPassword")->getData();
         $password = $formModifProfil->get("password")->getData();
         $confirmPassword = $formModifProfil->get("confirm_password")->getData();
@@ -44,8 +45,11 @@ class ModificationProfilController extends AbstractController
                         $user->setPassword(
                             $userPasswordHasher->hashPassword($user, $password)
                         );
+
+                        // ENVOIE EN BDD
                         $em->persist($user);
                         $em->flush();
+
                         return $this->redirectToRoute('app_profil_afficher', [
                             'id' => $user->getId()
                         ]);
@@ -56,6 +60,8 @@ class ModificationProfilController extends AbstractController
                     $errors[] = "les mots de passe sont pas bon michel !!!!!!";
                 }
             } else if ($oldPassword == null && $password == null && $confirmPassword == null) {
+
+                // ENVOI EN BDD
                 $em->persist($user);
                 $em->flush();
                 return $this->redirectToRoute('app_profil_afficher', [
