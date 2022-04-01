@@ -65,6 +65,7 @@ class Sortie
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesInscrits")
+
      */
     private $inscrit;
 
@@ -191,7 +192,7 @@ class Sortie
     }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection|user[]
      */
     public function getInscrit(): Collection
     {

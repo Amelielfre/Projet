@@ -276,7 +276,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, SortieOrganisateur>
+     * @return Collection|SortieOrganisateur[]
      */
     public function getSortiesOrganisateur(): Collection
     {

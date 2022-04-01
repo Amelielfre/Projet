@@ -40,12 +40,14 @@ class SortieController extends AbstractController
      */
     public function creationSortie(Request $request, EntityManagerInterface $em): Response
     {
+
         $sortie = new Sortie();
         //vérification du user en session
         if ($this->getUser()) {
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
             $sortie->setOrganisateur($user);
+            $sortie->addInscrit($user);
             $sortie->setSiteOrganisateur($this->getUser()->getSite());
         } else {
             return $this->redirectToRoute('app_login');
