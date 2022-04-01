@@ -21,6 +21,7 @@ class MainController extends AbstractController
         }
 
         $sorties = null;
+        $user = $this->getUser();
 
         // CREATION FORMULAIRE
         $formFiltres = $this->createForm(FiltresFormType::class);
@@ -37,7 +38,6 @@ class MainController extends AbstractController
             $inscrit = $formFiltres->get("inscrit")->getData();
             $pasInscrit = $formFiltres->get("pasInscrit")->getData();
             $passees = $formFiltres->get("passees")->getData();
-            $user = $this->getUser();
 
             //execution de la requete
             $sorties = $repoSortie->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);

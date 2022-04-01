@@ -90,7 +90,13 @@
                         <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
-                        <td>oui ?</td>
+                        <td>
+                            {% for user in sortie.inscrit %}
+                                {% if app.user.id == user.id %}
+                                    X
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td>
                             <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
@@ -106,11 +112,15 @@
                             {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="#">Annuler</a>
                             {% endif %}
-                            {% if app.user.id != sortie.organisateur.id %}
+                            {% set ok = true %}
+                            {% for user in sortie.inscrit %}
+                                {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
+                                    <a href="#">Se désister</a>
+                                    {% set ok = false %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if ok == true and app.user.id != sortie.organisateur.id %}
                                 <a href="#">S'inscrire</a>
-                            {% endif %}
-                            {% if app.user.id != sortie.organisateur.id %}
-                                <a href="#">Se désister</a>
                             {% endif %}
                         </td>
                     </tr>
