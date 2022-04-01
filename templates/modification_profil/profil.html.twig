@@ -13,9 +13,10 @@
             .card {
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
                 max-width: 300px;
+
                 margin: auto;
                 text-align: center;
-                font-family: arial;
+
             }
 
             .title {
@@ -36,7 +37,7 @@
                 font-size: 18px;
             }
 
-            a {
+            .card a {
                 text-decoration: none;
                 font-size: 22px;
                 color: black;
@@ -49,19 +50,25 @@
     </head>
     <body>
 
-    <h1 style="text-align:center; margin-top: 3%">Profil de :</h1>
+
+
+    <div class="boutton mt-5">
+        <a href="{{ path('app_accueil') }}">
+            <button class="btn btn-secondary">Retour</button>
+        </a>
+    </div>
 
     <div class="card">
 
-        {#{% if app.user.UrlPhoto%}
+        {% if app.user.UrlPhoto%}
 
-             <img src="uploads/{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
+             <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
-        {% else %}#}
+        {% else %}
 
             <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault" width="100%" class="">
 
-        {#{% endif %}#}
+        {% endif %}
 
         <h1>{{ user.pseudo }}</h1>
         <p class="title">Prénom : {{ user.prenom }}</p>
@@ -90,10 +97,6 @@
     </body>
 
 
-    <div class="boutton">
-        <a href="{{ path('app_accueil') }}">
-            <button class="btn btn-secondary">Retour</button>
-        </a>
-    </div>
+
 
 {% endblock %}

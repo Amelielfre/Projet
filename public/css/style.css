@@ -50,7 +50,7 @@ div#navbarSupportedContent{
     width: 1000px;
 }
 
-
+/*********************************************/
 /**** PROFIL.html ****/
 
 .titreProfil {
@@ -115,6 +115,14 @@ div#navbarSupportedContent{
     margin: 20px 10px;
     border-radius: 5px;
     padding: 5px 5px;
+}
+
+.boutton{
+    display: block;
+    justify-content: center;
+    width: 15%;
+    height: 15%;
+
 }
 /*************************************/
 /************PROFIL BOOTSTRAP*********************/
