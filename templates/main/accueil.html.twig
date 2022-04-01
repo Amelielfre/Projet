@@ -95,14 +95,15 @@
                             <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
-                            {% if app.user.id == sortie.organisateur.id %}
+                            {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                            {% endif %}
+                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
                                 <a href="#">Modifier</a>
-                            {% endif %}
-                            {% if app.user.id == sortie.organisateur.id %}
                                 <a href="#">Publier</a>
+                                <a href="#">Annuler</a>
                             {% endif %}
-                            {% if app.user.id == sortie.organisateur.id %}
+                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="#">Annuler</a>
                             {% endif %}
                             {% if app.user.id != sortie.organisateur.id %}
