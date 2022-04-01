@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\LieuType;
@@ -71,6 +72,19 @@ class SortieController extends AbstractController
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
+        $lieu = new Lieu();
+        $formLieu = $this->createForm(LieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if ($formLieu->isSubmitted() && $formLieu->isValid()) {
+            $em->persist($lieu);
+            $em->flush();
+            $this->addFlash('success', 'Votre sortie à bien été créee');
+        }
+
+        //sauvegarde en bdd
+        $em->persist($lieu);
+        $em->flush();
         $lieuForm = $this->createForm(LieuType::class);
 
         return $this->render('sortie/creation.html.twig', [

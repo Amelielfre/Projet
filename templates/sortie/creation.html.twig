@@ -67,8 +67,22 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <a href="#" class="closebtn">x</a>
-                    {{ form_start(locationForm, {'attr' : {'id': 'location_form'}}) }}
-                    {{ form_widget(locationForm) }}
+                    {{ form_start(locationForm) }}
+                    <div>
+                        {{ form_label(locationForm.nom) }}
+                        {{ form_widget(locationForm.nom, {'attr': {'class': "form-control"}}) }}
+                        {{ form_errors(locationForm.nom) }}
+                    </div>
+                    <div>
+                        {{ form_label(locationForm.rue) }}
+                        {{ form_widget(locationForm.rue, {'attr': {'class': "form-control"}}) }}
+                        {{ form_errors(locationForm.rue) }}
+                    </div>
+                    <div>
+                        {{ form_label(locationForm.ville) }}
+                        {{ form_widget(locationForm.ville, {'attr': {'class': "form-control"}}) }}
+                        {{ form_errors(locationForm.ville) }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Ajouter le lieu</button>
