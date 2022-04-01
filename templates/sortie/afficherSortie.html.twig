@@ -7,50 +7,50 @@
 
     <br>
 
-        <table class="table">
-            <thead>
+    <table class="table">
+        <thead>
 
-            <tr>
+        <tr>
 
-                <th scope="col">Nom de la sortie :</th>
-                <th scope="col">Date et heure début : :</th>
-                <th scope="col">Date limite inscription :</th>
-                <th scope="col">Nombre de places :</th>
-                <th scope="col">Durée en minutes :</th>
-                <th scope="col">Description :</th>
+            <th scope="col">Nom de la sortie :</th>
+            <th scope="col">Date et heure début : :</th>
+            <th scope="col">Date limite inscription :</th>
+            <th scope="col">Nombre de places :</th>
+            <th scope="col">Durée en minutes :</th>
+            <th scope="col">Description :</th>
 
-                <th scope="col">Campus Organisateur :</th>
-                <th scope="col">Ville :</th>
-                <th scope="col">Lieu :</th>
-                <th scope="col">Rue :</th>
-                <th scope="col">Code Postal :</th>
-
-
-            </tr>
-
-            </thead>
-            <tbody>
+            <th scope="col">Campus Organisateur :</th>
+            <th scope="col">Ville :</th>
+            <th scope="col">Lieu :</th>
+            <th scope="col">Rue :</th>
+            <th scope="col">Code Postal :</th>
 
 
-            <tr>
+        </tr>
 
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
-                <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-                <td>{{ sortie.duree }}</td>
-                <td>{{ sortie.description }}</td>
+        </thead>
+        <tbody>
 
-                <td>{{ sortie.organisateur.site.nom }}</td>
-                <td>{{ sortie.lieu.ville.nom }}</td>
-                <td>{{ sortie.lieu.nom }}</td>
-                <td>{{ sortie.lieu.rue }}</td>
-                <td>{{ sortie.lieu.ville.codePostal }}</td>
 
-            </tr>
+        <tr>
 
-            </tbody>
-        </table>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
+            <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
+            <td>{{ sortie.nbInscriptionsMax }}</td>
+            <td>{{ sortie.duree }}</td>
+            <td>{{ sortie.description }}</td>
+
+            <td>{{ sortie.organisateur.site.nom }}</td>
+            <td>{{ sortie.lieu.ville.nom }}</td>
+            <td>{{ sortie.lieu.nom }}</td>
+            <td>{{ sortie.lieu.rue }}</td>
+            <td>{{ sortie.lieu.ville.codePostal }}</td>
+
+        </tr>
+
+        </tbody>
+    </table>
 
     <table class="table">
         <thead>
@@ -71,7 +71,7 @@
             {% for user in users %}
 
                 <td>{{ user.pseudo }}</td>
-                <td>{{ user.nom }}  {{ user.prenom }}</td>
+                <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
 
             {% endfor %}
 
@@ -81,8 +81,8 @@
     </table>
 
 
-    <button type="submit" href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">
-        INSCRIPTION
+    <button type="submit" name="inscription" value="inscription">
+        <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">INSCRIPTION</a>
     </button>
 
 {% endblock %}

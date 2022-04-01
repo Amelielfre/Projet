@@ -276,7 +276,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|SortieOrganisateur[]
+     * @return Collection<int, SortieOrganisateur>
      */
     public function getSortiesOrganisateur(): Collection
     {
@@ -306,7 +306,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Sortie>
+     * @return Collection|Sortie[]
      */
     public function getSortiesInscrits(): Collection
     {
