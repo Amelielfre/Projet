@@ -67,7 +67,9 @@ class SortieRepository extends ServiceEntityRepository
 
         // ajout du filtre par inscrit/pas inscrit si necessaire
         if ($inscrit == true) {
-
+            $qb->join("s.inscrit", "i")
+                ->andWhere('i.id = :inscrit')
+                ->setParameter('inscrit', $user->getId());
         } elseif ($pasInscrit == true) {
 
         }
