@@ -6,6 +6,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/35b0a46636.js" crossorigin="anonymous"></script>
     {% block stylesheets %}
 
     {% endblock %}
@@ -14,60 +15,70 @@
 </head>
 <body>
 {% if app.user %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('app_accueil') }}">
-                <img src="{{ asset('/img/logo.png') }}" id="logo" alt="Symfony"/>SORTIR.com</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ path('app_sortie_creation') }}">Proposer
-                                une
-                                sortie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
-                                profil</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Espace Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ path('app_register') }}">Créer participant</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ path('admin') }}">Admin</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}" tabindex="-1"
-                               aria-disabled="false">Deconnexion</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ path('app_sortie_creation') }}">Proposer
-                                une
-                                sortie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
-                                profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </li>
-                    {% endif %}
-                </ul>
+    <div class="header-nav">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('app_accueil') }}">
+                    <i class="fa-solid fa-martini-glass-citrus fa-shake"></i>Sortir.com</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link active link-three" aria-current="page"
+                                   href="{{ path('app_sortie_creation') }}">Proposer
+                                    une
+                                    sortie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-three"
+                                   href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
+                                    profil - {{ app.user.pseudo }}</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle link-three" id="navbarDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Espace Admin
+                                </a>
+                                <ul class="dropdown-menu link-three" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{{ path('app_register') }}">Créer participant</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ path('admin') }}">Admin</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-three" href="{{ path('app_logout') }}" tabindex="-1"
+                                   aria-disabled="false">Deconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link active link-three" aria-current="page"
+                                   href="{{ path('app_sortie_creation') }}">Proposer
+                                    une
+                                    sortie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-three"
+                                   href="{{ path('app_profil_afficher', {id:app.user.id}) }}">Mon
+                                    profil - {{ app.user.pseudo }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-three" href="{{ path('app_logout') }}">Se déconnecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom link-three">{{ "now" | date("d/m/Y") }}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 {% endif %}
 <div class="container">
     {% block body %}

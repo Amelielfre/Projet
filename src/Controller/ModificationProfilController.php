@@ -57,7 +57,7 @@ class ModificationProfilController extends AbstractController
                         $errors[] = "Votre mot de passe doit être différent de l'ancien";
                     }
                 } else {
-                    $errors[] = "les mots de passe sont pas bon michel !!!!!!";
+                    $errors[] = "Les mot des de passe ne sont pas identiques";
                 }
             } else if ($oldPassword == null && $password == null && $confirmPassword == null) {
 

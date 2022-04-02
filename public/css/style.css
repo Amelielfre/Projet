@@ -1,10 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Palette+Mosaic&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 /************ALL PAGES******************/
 
 .btn-primary{
     background-color: #657ED4 !important;
     border: 1px solid #657ED4 !important;
+    transition: transform .5s !important;
+}
+.btn-primary:hover{
+    background-color: #597dff !important;
+    border: 1px solid #5f86ff !important;
+    transform: scale(1.05);
+}
+
+*{
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -16,14 +26,25 @@ h1 {
     margin-left: 3%;
     margin-top: 2%;
 }
+
 /*************************************/
 /***************NAVBAR******************/
+
+.header-nav{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+}
+
 .container-fluid{
+    padding-top: 5px;
     justify-content: space-between;
 }
 .navbar-brand {
-    font-family: 'Anton', sans-serif;
     width: 200px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    gap: 5px;
 }
 div#navbarSupportedContent{
     padding-left: 35%;
@@ -49,6 +70,53 @@ div#navbarSupportedContent{
     height: 500px;
     width: 1000px;
 }
+
+.nav-link{
+    border-radius: 30px;
+    color: black;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/*********************************************/
+/************Filtre **************************/
+.filtres{
+    min-height: 5vh;
+    padding: 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+{
+    display: block;
+    width: 150px;
+    float: left;
+}
+
+.form-control-filtre{
+    padding: 5px;
+}
+
+.select-filtre{
+    width: 212px;
+    height: 37px;
+}
+
+.champs-group{
+    display: flex;
+    gap: 20px;
+}
+
+.affichage{
+    padding: 20px 20px;
+}
+
+/********************************************/
+/**************FORMULAIRE******************/
+.form-custom{
+    margin-top: 25px;
+    padding: 20px 20px;
+}
+
 
 /*********************************************/
 /**** PROFIL.html ****/
@@ -87,10 +155,6 @@ div#navbarSupportedContent{
     padding-right: 20%;
 }
 
-.gauche {
-
-}
-
 .element li {
 
     margin-top: 30%;
@@ -106,6 +170,8 @@ div#navbarSupportedContent{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
+    gap: 30px;
 }
 .btn-custom-x{
     background-color: #0d6efd !important;
@@ -171,14 +237,11 @@ div#navbarSupportedContent{
     text-align: justify;
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
     animation-name: slideDownFadeIN;
     animation-duration: 0.5s;
 }
 
 /* Bouton servant à fermer la fenêtre modale */
-
-
 .btn-lieu-custom a {
     text-decoration: none;
     margin-top: 10px;
@@ -192,20 +255,38 @@ div#navbarSupportedContent{
     margin-top: 10px;
     color: white;
 }
-
-/*formulaire de création de sortie*/
-.form-custom{
-    margin-top: 15px;
-}
-.title-form-custom{
-    text-align: center;
-    align-items: center;
-}
-
 .closebtn{
     border: none;
     font-size: 1.2em;
 }
 
 /****************** FIN FENETRE MODAL ********************/
+/*********************************/
+/********* Formulaire de création de sortie *************/
 
+label{
+    margin-top: 15px;
+}
+
+.title-form-custom{
+    text-align: center;
+    align-items: center;
+}
+
+
+/*********************************************************/
+/**************** LOGIN ******************************/
+.form-custom-login{
+    margin-top: 100px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 20px 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/*****************ERREUR FORMULAIRE MODIF PROFIL******************/
+.error-modif-mdp{
+    color: indianred;
+    margin: 10px 10px;
+    font-size: 0.8em;
+}

@@ -3,53 +3,54 @@
 {% block title %}Modification Profil{% endblock %}
 
 {% block body %}
+    <div class="form-custom">
+        <h1 class="title-form-custom">Votre profil ({{ app.user.pseudo }})</h1>
 
-    <h1>Profil</h1>
+        {{ form_start(formModifProfil) }}
 
-    {{ form_start(formModifProfil) }}
-
-    <div>
-        {{ form_row(formModifProfil.pseudo,{'attr':{'value':user.pseudo, 'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom, 'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.nom,{'attr':{'value':user.nom, 'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.email,{'attr':{'value':user.email, 'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone, 'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.oldPassword,{'attr': {'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.password,{'attr': {'class': "form-control"}}) }}
-    </div>
-    <div>
-        {{ form_row(formModifProfil.confirm_password, {'attr': {'class': "form-control"}}) }}
-        {% if errors %}
-            {% for error in errors %}
-                {{ error }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div class="button-group-custom">
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        <div>
+            {{ form_row(formModifProfil.pseudo,{'attr':{'value':user.pseudo, 'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom, 'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.nom,{'attr':{'value':user.nom, 'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.email,{'attr':{'value':user.email, 'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone, 'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.oldPassword,{'attr': {'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.password,{'attr': {'class': "form-control"}}) }}
+        </div>
+        <div>
+            {{ form_row(formModifProfil.confirm_password, {'attr': {'class': "form-control"}}) }}
+            <div class="error-modif-mdp">
+                <strong>
+                    {% if errors is not null %}
+                        {% for error in errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
+        <div class="button-group-custom">
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
             <a href="{{ path('app_profil_afficher',{'id':user.id}) }}">
-        <button type="submit" class="btn btn-primary">
-            Annuler les
-            modifications
-        </button>
+                <button type="submit" class="btn btn-primary">
+                    Annuler les
+                    modifications
+                </button>
             </a>
+        </div>
+        {{ form_end(formModifProfil) }}
     </div>
-    {{ form_end(formModifProfil) }}
-
-
-
-
 
 {% endblock %}

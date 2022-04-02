@@ -51,9 +51,11 @@
         {{ form_label(formSortie.lieu) }}
         {{ form_widget(formSortie.lieu, {'attr': {'class': "form-control"}}) }}
         {{ form_errors(formSortie.lieu) }}
+        <a href="#id01" class="add-lieu-icone">
         <button type="button" class="btn btn-sm btn-primary btn-lieu-custom" id="btn-lieu">
-            <a href="#id01" class="add-lieu-icone">+</a>
+            +
         </button>
+        </a>
     </div>
     <div class="text-center">
         <button type="submit" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>

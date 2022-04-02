@@ -23,7 +23,7 @@ class FiltresFormType extends AbstractType
                 'choice_label' => 'nom'
             ])
             ->add('motCles', TextType::class, [
-                'label' => 'le nom de la sortie contient : ',
+                'label' => 'Mot-clés : ',
                 'required' => false
             ])
             ->add('dateDebut', DateTimeType::class, [

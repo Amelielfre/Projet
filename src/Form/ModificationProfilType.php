@@ -21,7 +21,7 @@ class ModificationProfilType extends AbstractType
         $builder
             ->add('email', EmailType::class, ["label" => "Mail :", 'constraints' => [
                 new NotBlank([
-                    'message' => 'le mail doit etre valide',
+                    'message' => "l'email doit etre valide",
                 ])
             ]])
             ->add('nom', TextType::class, ["label" => "Nom :", 'constraints' => [
