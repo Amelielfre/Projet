@@ -132,10 +132,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Ajouter une ville</h5>
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
+                        {% for label, messages in app.flashes(['success', 'warning']) %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
                         {% endfor %}
                         <a href="#" class="closebtn">
                             <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
@@ -165,10 +167,8 @@
             </div>
         </div>
 
-        <div id="path_ajax_lieu" data-href="{{ path('app_ajouter_lieu') }}"></div>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
-
     </div>
 {% endblock %}
 

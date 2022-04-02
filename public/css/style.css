@@ -45,7 +45,7 @@ h1 {
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    gap: 5px;
+    gap: 1px;
 }
 div#navbarSupportedContent{
     padding-left: 35%;
@@ -86,6 +86,7 @@ div#navbarSupportedContent{
     padding: 20px 20px;
     display: flex;
     flex-wrap: wrap;
+    border: 1px solid black;
 }
 {
     display: block;

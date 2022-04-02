@@ -87,11 +87,19 @@ class SortieController extends AbstractController
         $formLieu = $this->createForm(LieuType::class, $lieu);
         $formLieu->handleRequest($request);
 
+
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
-            $this->addFlash('success', 'Lieu ajouté');
-            $em->persist($lieu);
-            $em->flush();
+            if ($this->lieuRepo->findBy(
+                ['nom' => $lieu->getNom()],
+                ['rue' => $lieu->getRue()])) {
+                $this->addFlash('warning', 'Cette ville existe déjà');
+            } else {
+                $this->addFlash('success', 'Lieu ajouté');
+                $em->persist($lieu);
+                $em->flush();
+            }
         }
+
 
         $lieuForm = $this->createForm(LieuType::class);
 
@@ -101,9 +109,13 @@ class SortieController extends AbstractController
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
-            $this->addFlash('success', 'Ville ajouté');
-            $em->persist($ville);
-            $em->flush();
+            if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
+                $this->addFlash('warning', 'Cette ville existe déjà');
+            } else {
+                $this->addFlash('success', 'Ville ajouté');
+                $em->persist($ville);
+                $em->flush();
+            }
         }
 
 

@@ -22,15 +22,15 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            EmailField::new('email'),
-            TextField::new('nom')->setFormTypeOption('disabled','disabled'),
-            TextField::new('password')->setFormTypeOption('disabled','disabled'),
-            TextField::new('prenom')->setFormTypeOption('disabled','disabled'),
-            TextField::new('pseudo'),
-            TelephoneField::new('telephone')->setFormTypeOption('disabled','disabled'),
-            ArrayField::new('roles'),
-            BooleanField::new('actif'),
-            AssociationField::new('site'),
+            EmailField::new('email', 'Email'),
+            TextField::new('nom', 'Nom')->setFormTypeOption('disabled','disabled'),
+            TextField::new('password', 'Mot de passe')->setFormTypeOption('disabled','disabled'),
+            TextField::new('prenom', 'Prénom')->setFormTypeOption('disabled','disabled'),
+            TextField::new('pseudo', 'Pseudo'),
+            TelephoneField::new('telephone', 'Téléphone')->setFormTypeOption('disabled','disabled'),
+            ArrayField::new('roles', 'Rôles'),
+            BooleanField::new('actif', 'Actif'),
+            AssociationField::new('site', 'Campus'),
         ];
     }
 
