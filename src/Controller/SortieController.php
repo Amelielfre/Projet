@@ -62,26 +62,6 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $formSortie = $this->createForm(SortieType::class, $sortie);
-        $formSortie->handleRequest($request);
-
-        //on vérifie si le formulaire est submit et validé
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
-            if ($request->request->get("save")) {
-                $etat = $this->etatRepo->find(1);
-                $sortie->setEtat($etat);
-            } else {
-                //sinon l'état devient -> "en cours"
-                $etat = $this->etatRepo->find(2);
-                $sortie->setEtat($etat);
-            }
-            //on vient ajouter en BDD
-            $em->persist($sortie);
-            $em->flush();
-            return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
-        }
-
         //Partie formulaire pour ajouter des lieux avec la fenêtre modal
         $lieu = new Lieu();
         $formLieu = $this->createForm(LieuType::class, $lieu);
@@ -89,17 +69,16 @@ class SortieController extends AbstractController
 
 
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
-            if ($this->lieuRepo->findBy(
-                ['nom' => $lieu->getNom()],
-                ['rue' => $lieu->getRue()])) {
-                $this->addFlash('warning', 'Cette ville existe déjà');
+            if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])){
+                $this->addFlash('warning', 'Ce lieu existe déjà');
+            }elseif ($this->lieuRepo->findBy( ['rue' => $lieu->getRue()])){
+                $this->addFlash('warning', 'Ce lieu existe déjà');
             } else {
                 $this->addFlash('success', 'Lieu ajouté');
                 $em->persist($lieu);
                 $em->flush();
             }
         }
-
 
         $lieuForm = $this->createForm(LieuType::class);
 
@@ -118,6 +97,25 @@ class SortieController extends AbstractController
             }
         }
 
+        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formSortie->handleRequest($request);
+
+        //on vérifie si le formulaire complet est submit et validé
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
+            if ($request->request->get("save")) {
+                $etat = $this->etatRepo->find(1);
+                $sortie->setEtat($etat);
+            } else {
+                //sinon l'état devient -> "en cours"
+                $etat = $this->etatRepo->find(2);
+                $sortie->setEtat($etat);
+            }
+            //on vient ajouter en BDD
+            $em->persist($sortie);
+            $em->flush();
+            return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
+        }
 
         return $this->render('sortie/creation.html.twig', [
             "formSortie" => $formSortie->createView(),
