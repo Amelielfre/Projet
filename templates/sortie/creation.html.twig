@@ -3,112 +3,171 @@
 {% block title %}Création sortie{% endblock %}
 
 {% block body %}
-
+    <script src="https://kit.fontawesome.com/35b0a46636.js" crossorigin="anonymous"></script>
     <div class="form-custom">
         <h1 class="title-form-custom">Créer une sortie</h1>
         {{ form_start(formSortie) }}
-    <div>
-        {{ form_label(formSortie.nom) }}
-        {{ form_widget(formSortie.nom, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.nom) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.dateDebut) }}
-        {{ form_widget(formSortie.dateDebut, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.dateDebut) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.dateFinInscription) }}
-        {{ form_widget(formSortie.dateFinInscription, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.dateFinInscription) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.duree) }}
-        {{ form_widget(formSortie.duree, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.duree) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.nbInscriptionsMax) }}
-        {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.nbInscriptionsMax) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.description) }}
-        {{ form_widget(formSortie.description, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.description) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.siteOrganisateur) }}
-        {{ form_widget(formSortie.siteOrganisateur, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.siteOrganisateur) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.ville) }}
-        {{ form_widget(formSortie.ville, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.ville) }}
-    </div>
-    <div>
-        {{ form_label(formSortie.lieu) }}
-        {{ form_widget(formSortie.lieu, {'attr': {'class': "form-control"}}) }}
-        {{ form_errors(formSortie.lieu) }}
-        <a href="#id01" class="add-lieu-icone">
-        <button type="button" class="btn btn-sm btn-primary btn-lieu-custom" id="btn-lieu">
-            +
-        </button>
-        </a>
-    </div>
-    <div class="text-center">
-        <button type="submit" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
-        <button type="submit" value="publish" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
-        <a href="{{ path('app_accueil') }}" value="annuler" class="btn btn-primary mt-1">Annuler</a>
-    </div>
-
-
-    <div id="path_ajax" data-href="{{ path('ajax_lieu_by_ville') }}"></div>
-
-
-    {{ form_end(formSortie) }}
-    <div id="id01" class="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ajouter un lieu</h5>
-                    <a href="#" class="closebtn">
-                    <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <div>
+            {{ form_label(formSortie.nom) }}
+            {{ form_widget(formSortie.nom, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.nom) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.dateDebut) }}
+            {{ form_widget(formSortie.dateDebut, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.dateDebut) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.dateFinInscription) }}
+            {{ form_widget(formSortie.dateFinInscription, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.dateFinInscription) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.duree) }}
+            {{ form_widget(formSortie.duree, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.duree) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.nbInscriptionsMax) }}
+            {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.nbInscriptionsMax) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.description) }}
+            {{ form_widget(formSortie.description, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.description) }}
+        </div>
+        <div>
+            {{ form_label(formSortie.siteOrganisateur) }}
+            {{ form_widget(formSortie.siteOrganisateur, {'attr': {'class': "form-control"}}) }}
+            {{ form_errors(formSortie.siteOrganisateur) }}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_label(formSortie.ville) }}
+                {{ form_widget(formSortie.ville, {'attr': {'class': "form-control"}}) }}
+                {{ form_errors(formSortie.ville) }}
+                <a href="#id02" class="add-lieu-icone">
+                    <button type="button" class="btn-lieu-custom" id="btn-lieu">
+                        +
                     </button>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    {{ form_start(locationForm) }}
-                    <div>
-                        {{ form_label(locationForm.nom) }}
-                        {{ form_widget(locationForm.nom, {'attr': {'class': "form-control nom-lieu"}}) }}
-                        {{ form_errors(locationForm.nom) }}
-                    </div>
-                    <div>
-                        {{ form_label(locationForm.rue) }}
-                        {{ form_widget(locationForm.rue, {'attr': {'class': "form-control"}}) }}
-                        {{ form_errors(locationForm.rue) }}
-                    </div>
-                    <div>
-                        {{ form_label(locationForm.ville) }}
-                        {{ form_widget(locationForm.ville, {'attr': {'class': "form-control"}}) }}
-                        {{ form_errors(locationForm.ville) }}
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Ajouter le lieu</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                </div>
-                {{ form_end(locationForm) }}
+                </a>
+            </div>
+            <div class="col-md-6">
+                {{ form_label(formSortie.lieu) }}
+                {{ form_widget(formSortie.lieu, {'attr': {'class': "form-control"}}) }}
+                {{ form_errors(formSortie.lieu) }}
+                <a href="#id01" class="add-lieu-icone">
+                    <button type="button" class="btn-lieu-custom" id="btn-lieu">
+                        +
+                    </button>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div id="path_ajax_lieu" data-href="{{ path('app_ajouter_lieu') }}"></div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+        <div class="button-group-custom">
+            <button type="submit" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
+            <button type="submit" value="publish" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
+            <a href="{{ path('app_accueil') }}" value="annuler" class="btn btn-primary mt-1">Annuler</a>
+        </div>
+
+
+        <div id="path_ajax" data-href="{{ path('ajax_lieu_by_ville') }}"></div>
+
+
+        {{ form_end(formSortie) }}
+
+
+        {#
+        Fenetre modale d'ajout de lieu
+        #}
+        <div id="id01" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter un lieu</h5>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        <a href="#" class="closebtn">
+                            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(locationForm) }}
+                        <div>
+                            {{ form_label(locationForm.nom) }}
+                            {{ form_widget(locationForm.nom, {'attr': {'class': "form-control nom-lieu"}}) }}
+                            {{ form_errors(locationForm.nom) }}
+                        </div>
+                        <div>
+                            {{ form_label(locationForm.rue) }}
+                            {{ form_widget(locationForm.rue, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(locationForm.rue) }}
+                        </div>
+                        <div>
+                            {{ form_label(locationForm.ville) }}
+                            {{ form_widget(locationForm.ville, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(locationForm.ville) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ajouter le lieu</button>
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                    {{ form_end(locationForm) }}
+                </div>
+            </div>
+        </div>
+
+        {#
+        Fenêtre modal pour ajouter des villes
+        #}
+        <div id="id02" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter une ville</h5>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        <a href="#" class="closebtn">
+                            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(formVille) }}
+                        <div>
+                            {{ form_label(formVille.nom) }}
+                            {{ form_widget(formVille.nom, {'attr': {'class': "form-control nom-lieu"}}) }}
+                            {{ form_errors(formVille.nom) }}
+                        </div>
+                        <div>
+                            {{ form_label(formVille.codePostal) }}
+                            {{ form_widget(formVille.codePostal, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(formVille.codePostal) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ajouter la ville</button>
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                    {{ form_end(formVille) }}
+                </div>
+            </div>
+        </div>
+
+        <div id="path_ajax_lieu" data-href="{{ path('app_ajouter_lieu') }}"></div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 
     </div>
 {% endblock %}

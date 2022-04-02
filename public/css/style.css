@@ -5,12 +5,13 @@
 .btn-primary{
     background-color: #657ED4 !important;
     border: 1px solid #657ED4 !important;
-    transition: transform .5s !important;
+    transition: transform .2s !important;
 }
 .btn-primary:hover{
     background-color: #597dff !important;
     border: 1px solid #5f86ff !important;
     transform: scale(1.05);
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 10px 24px;
 }
 
 *{
@@ -246,17 +247,39 @@ div#navbarSupportedContent{
     text-decoration: none;
     margin-top: 10px;
     color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 .btn-lieu-custom{
     margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #FFFFFF;
+    border: 1px solid #b9cdd9;
+    border-radius: 25px;
+    transition: 0.2s;
 }
+
+.btn-lieu-custom:hover{
+    transform: scale(1.2);
+    background-color: #657ED4 !important;
+    border: gold;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: white;
+}
+
 .btn-lieu-custom a {
     text-decoration: none;
     margin-top: 10px;
     color: white;
 }
+
+
 .closebtn{
     border: none;
+    background-color: #f3f3f3;
     font-size: 1.2em;
 }
 

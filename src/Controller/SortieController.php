@@ -6,8 +6,10 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Entity\Ville;
 use App\Form\LieuType;
 use App\Form\SortieType;
+use App\Form\VilleType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
@@ -28,7 +30,7 @@ class SortieController extends AbstractController
 {
 
     public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
-                                UserRepository $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
     {
         $this->sortieRepo = $sortieRepo;
         $this->etatRepo = $etatRepo;
@@ -49,42 +51,66 @@ class SortieController extends AbstractController
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
             $sortie->setOrganisateur($user);
+
+            //on vient l'ajouter dans la table sortieId_userId en BDD
             $sortie->addInscrit($user);
+
             $sortie->setSiteOrganisateur($this->getUser()->getSite());
         } else {
+            //si l'utilisateur qui n'est pas co
+            // tente d'aller sur la page de création il est redirigé vers le login
             return $this->redirectToRoute('app_login');
         }
 
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
+        //on vérifie si le formulaire est submit et validé
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
             if ($request->request->get("save")) {
                 $etat = $this->etatRepo->find(1);
                 $sortie->setEtat($etat);
             } else {
+                //sinon l'état devient -> "en cours"
                 $etat = $this->etatRepo->find(2);
                 $sortie->setEtat($etat);
             }
+            //on vient ajouter en BDD
             $em->persist($sortie);
             $em->flush();
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
-         $lieu = new Lieu();
+        //Partie formulaire pour ajouter des lieux avec la fenêtre modal
+        $lieu = new Lieu();
         $formLieu = $this->createForm(LieuType::class, $lieu);
         $formLieu->handleRequest($request);
 
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
+            $this->addFlash('success', 'Lieu ajouté');
             $em->persist($lieu);
             $em->flush();
         }
 
         $lieuForm = $this->createForm(LieuType::class);
 
+        //Partie formulaire pour ajouter des villes avec la fenêtre modal
+        $ville = new Ville();
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            $this->addFlash('success', 'Ville ajouté');
+            $em->persist($ville);
+            $em->flush();
+        }
+
+
         return $this->render('sortie/creation.html.twig', [
             "formSortie" => $formSortie->createView(),
-            "locationForm" => $lieuForm->createView()
+            "locationForm" => $lieuForm->createView(),
+            'formVille' => $formVille->createView()
         ]);
 
     }
