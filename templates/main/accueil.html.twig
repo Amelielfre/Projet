@@ -4,15 +4,11 @@
 
 {% block body %}
     <div class="first row">
-        <div class="col-3 offset-9">
+        <div class="col-3 offset-9 mt-4">
             <table>
                 <tr>
                     <th>Date du jour :</th>
                     <th>{{ "now" | date("d/m/Y") }}</th>
-                </tr>
-                <tr>
-                    <th>Participant :</th>
-                    <th>{{ app.user.pseudo }}</th>
                 </tr>
             </table>
         </div>

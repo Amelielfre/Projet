@@ -5,12 +5,13 @@
 .btn-primary{
     background-color: #657ED4 !important;
     border: 1px solid #657ED4 !important;
-    transition: transform .2s !important;
+    transition: transform .3s !important;
 }
 .btn-primary:hover{
-    background-color: #597dff !important;
+    background-color: #FFFFFF !important;
+    color: #657ED4 !important;
     border: 1px solid #5f86ff !important;
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: rgba(149, 157, 165, 0.4) 0px 10px 24px;
 }
 
@@ -19,6 +20,7 @@
 }
 
 body {
+
     background-color: #fbfaff;
     color: black;
 }
@@ -79,6 +81,21 @@ div#navbarSupportedContent{
     text-transform: uppercase;
 }
 
+.nav-link{
+    background-color: #FFFFFF !important;
+    color: #657ED4 !important;
+    border-radius: 5px !important;
+    transition: 0.3s !important;
+    margin: 2px 2px !important;
+}
+
+.nav-link:hover{
+    background-color: rgba(101, 126, 212, 0.22) !important;
+    border-radius: 10px !important;
+    color: #657ED4 !important;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 10px 24px;
+}
+
 /*********************************************/
 /************Filtre **************************/
 .filtres{
@@ -117,6 +134,22 @@ div#navbarSupportedContent{
 .form-custom{
     margin-top: 25px;
     padding: 20px 20px;
+}
+
+.check-group{
+    justify-content: space-around;
+    display: flex;
+    gap: 5px;
+}
+#registration_form_actif{
+    margin-left: 3px;
+}
+
+.input-file-custom input{
+    margin-left: 3px;
+    border: none;
+    background-color: #FFFFFF !important;
+    color: #657ED4 !important;
 }
 
 
@@ -290,6 +323,7 @@ div#navbarSupportedContent{
 
 label{
     margin-top: 15px;
+    margin-bottom: 5px;
 }
 
 .title-form-custom{

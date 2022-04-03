@@ -44,7 +44,6 @@ class SortieController extends AbstractController
      */
     public function creationSortie(Request $request, EntityManagerInterface $em): Response
     {
-
         $sortie = new Sortie();
         //vérification du user en session
         if ($this->getUser()) {
