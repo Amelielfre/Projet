@@ -27,7 +27,6 @@ class AjaxController extends AbstractController
         } else {
             $json_data[$i++] = array('id' => '', 'nom' => 'Pas de lieu correspondant à votre recherche.');
             return new JsonResponse($json_data);
-
         }
     }
 }

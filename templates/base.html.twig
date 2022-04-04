@@ -31,6 +31,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
                                 <a class="nav-link active link-three" aria-current="page"
+                                   onclick="resetValue()"
                                    href="{{ path('app_sortie_creation') }}">Proposer
                                     une
                                     sortie</a>
@@ -58,6 +59,7 @@
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link active link-three" aria-current="page"
+                                   onclick="resetValue()"
                                    href="{{ path('app_sortie_creation') }}">Proposer
                                     une
                                     sortie</a>
@@ -90,5 +92,10 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
 
+<script>
+    function resetValue(){
+        window.localStorage.clear();
+    }
+</script>
 </body>
 </html>

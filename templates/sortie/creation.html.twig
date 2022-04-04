@@ -9,37 +9,37 @@
         {{ form_start(formSortie) }}
         <div>
             {{ form_label(formSortie.nom) }}
-            {{ form_widget(formSortie.nom, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.nom, {'attr': {'id': 'txt_1', 'onkeyup': 'saveValue(this);', 'class': "form-control"}}) }}
             {{ form_errors(formSortie.nom) }}
         </div>
         <div>
             {{ form_label(formSortie.dateDebut) }}
-            {{ form_widget(formSortie.dateDebut, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.dateDebut, {'attr': {'id': 'txt_2','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.dateDebut) }}
         </div>
         <div>
             {{ form_label(formSortie.dateFinInscription) }}
-            {{ form_widget(formSortie.dateFinInscription, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.dateFinInscription, {'attr': {'id': 'txt_3','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.dateFinInscription) }}
         </div>
         <div>
             {{ form_label(formSortie.duree) }}
-            {{ form_widget(formSortie.duree, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.duree, {'attr': {'id': 'txt_4','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.duree) }}
         </div>
         <div>
             {{ form_label(formSortie.nbInscriptionsMax) }}
-            {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'id': 'txt_5','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.nbInscriptionsMax) }}
         </div>
         <div>
             {{ form_label(formSortie.description) }}
-            {{ form_widget(formSortie.description, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.description, {'attr': {'id': 'txt_6','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.description) }}
         </div>
         <div>
             {{ form_label(formSortie.siteOrganisateur) }}
-            {{ form_widget(formSortie.siteOrganisateur, {'attr': {'class': "form-control"}}) }}
+            {{ form_widget(formSortie.siteOrganisateur, {'attr': {'id': 'txt_7','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             {{ form_errors(formSortie.siteOrganisateur) }}
         </div>
         <div class="row">
@@ -66,9 +66,9 @@
         </div>
 
         <div class="button-group-custom">
-            <button type="submit" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
-            <button type="submit" value="publish" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
-            <a href="{{ path('app_accueil') }}" value="annuler" class="btn btn-primary mt-1">Annuler</a>
+            <button type="submit" onclick="resetValue()" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
+            <button type="submit" onclick="resetValue()" value="publish" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
+            <a href="{{ path('app_accueil') }}" onclick="resetValue()" value="annuler" class="btn btn-primary mt-1">Annuler</a>
         </div>
 
 
@@ -170,9 +170,33 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
     </div>
+    <script type="text/javascript">
+        document.getElementById("sortie_nom").value = getSavedValue("sortie_nom");
+        document.getElementById("sortie_dateDebut").value = getSavedValue("sortie_dateDebut");
+        document.getElementById("sortie_dateFinInscription").value = getSavedValue("sortie_dateFinInscription");
+        document.getElementById("sortie_duree").value = getSavedValue("sortie_duree");
+        document.getElementById("sortie_nbInscriptionsMax").value = getSavedValue("sortie_nbInscriptionsMax");
+        document.getElementById("sortie_description").value = getSavedValue("sortie_description");
+
+
+        function saveValue(e){
+            var id = e.id;
+            var val = e.value;
+            localStorage.setItem(id, val);
+        }
+
+        function getSavedValue  (v){
+            if (!localStorage.getItem(v)) {
+                return "";
+            }
+            return localStorage.getItem(v);
+        }
+        function resetValue(){
+            window.localStorage.clear();
+        }
+    </script>
 {% endblock %}
 
 {% block js %}
-
 {% endblock %}
 
