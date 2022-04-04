@@ -36,11 +36,11 @@ class ModificationProfilController extends AbstractController
         $password = $formModifProfil->get("password")->getData();
         $confirmPassword = $formModifProfil->get("confirm_password")->getData();
 
-        if ($formModifProfil->isSubmitted() && $formModifProfil->isValid()) {
-            if ($oldPassword != null && $password != null && $confirmPassword != null) {
+        if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && password_verify($oldPassword, $user->getPassword())) {
+            if ($password != null && $confirmPassword != null) {
 
                 // vérification de l'ancien mdp avec celui hashé en bdd + vérification du nouveau mdp confirmé
-                if (password_verify($oldPassword, $user->getPassword()) && $password == $confirmPassword) {
+                if ($password == $confirmPassword) {
                     if ($oldPassword != $password) {
 
                         $user->setPassword(
@@ -48,32 +48,28 @@ class ModificationProfilController extends AbstractController
 
                         );
 
-                        return $this->redirectToRoute('app_profil_afficher', [
-                            'id' => $user->getId()
-                        ]);
                     } else {
                         $errors[] = "Votre mot de passe doit être différent de l'ancien";
                     }
                 } else {
-                    $errors[] = "Les mot des de passe ne sont pas identiques";
+                    $errors[] = "Les nouveaux mots de passe ne sont pas identiques";
                 }
-            } else if (password_verify($oldPassword, $user->getPassword()) && $password == null && $confirmPassword == null) {
-
-                // ENVOI EN BDD
-                $em->persist($user);
-                $em->flush();
-                return $this->redirectToRoute('app_profil_afficher', [
-                    'id' => $user->getId()
-                ]);
-            } else {
-                $errors[] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
-                $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
             }
 
+            // ENVOI EN BDD
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('app_profil_afficher', [
+                'id' => $user->getId()
+            ]);
 
-
-            dump($user);
+        } else if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && !password_verify($oldPassword, $user->getPassword())) {
+            $errors[] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
+            $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
         }
+
+        dump($user);
+
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
             'user' => $user,

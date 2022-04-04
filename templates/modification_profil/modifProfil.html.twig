@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="form-custom">
-        <h1 class="title-form-custom">Votre profil ({{ app.user.pseudo }})</h1>
+        <h1 class="title-form-custom">Votre profil</h1>
 
         {{ form_start(formModifProfil) }}
 
@@ -51,11 +51,8 @@
         </div>
         <div class="button-group-custom">
             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-            <a href="{{ path('app_profil_afficher',{'id':user.id}) }}">
-                <button type="submit" class="btn btn-primary">
-                    Annuler les
-                    modifications
-                </button>
+            <a class="btn btn-primary" href="{{ path('app_profil_afficher',{id:user.id}) }}">
+                Annuler les modifications
             </a>
         </div>
         {{ form_end(formModifProfil) }}
