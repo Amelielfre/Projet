@@ -5,13 +5,22 @@
 {% block body %}
     <div class="first row">
         <div class="col-3 offset-9 mt-4">
-            <table>
-                <tr>
-                    <th>Date du jour :</th>
-                    <th>{{ "now" | date("d/m/Y") }}</th>
-                    <th>Utilisateur :</th>
-                    <th>{{ "now" | date("d/m/Y") }}</th>
+            <table class="utilisateur">
+                <tr class="utilisateur">
+
+
+
+                    {% if app.user.UrlPhoto %}
+                    <th>{{ app.user.pseudo}}  <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="50%" class=""></th>
+
+                    {% else %}
+                        <th>{{ app.user.pseudo}}   <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault" width="50%" class=""></th>
+
+                    {% endif %}
                 </tr>
+
+
+
             </table>
         </div>
 

@@ -348,3 +348,16 @@ label{
     margin: 10px 10px;
     font-size: 0.8em;
 }
+
+.utilisateur{
+
+    margin-left: 50%;
+}
+
+.utilisateur img{
+
+    border: solid black 1px;
+    border-radius: 50% ;
+    margin-left: 5%;
+
+}
