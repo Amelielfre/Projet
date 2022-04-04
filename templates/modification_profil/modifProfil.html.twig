@@ -25,9 +25,7 @@
         </div>
 
         <div class="input-file-custom">
-            {{ form_label(formModifProfil.photo) }}
-            {{ form_widget(formModifProfil.photo, { 'attr': {'class': 'input-file-custom'} }) }}
-            {{ form_errors(formModifProfil.photo) }}
+            {{ form_row(formModifProfil.photo,{'attr':{'value':user.UrlPhoto, 'class': "input-file-custom"}}) }}
         </div>
 
         <div>
