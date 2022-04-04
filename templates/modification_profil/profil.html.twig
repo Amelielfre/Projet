@@ -19,6 +19,7 @@
 
             }
 
+
             .title {
                 color: grey;
                 font-size: 18px;
@@ -51,18 +52,15 @@
     <body>
 
 
-
     <div class="boutton mt-5">
-        <a href="{{ path('app_accueil') }}">
-            <button class="btn btn-secondary">Retour</button>
-        </a>
+
     </div>
 
     <div class="card">
 
-        {% if app.user.UrlPhoto%}
+        {% if app.user.UrlPhoto %}
 
-             <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
+            <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
         {% else %}
 
@@ -81,17 +79,25 @@
 
         <div style="margin: 24px 0;">
 
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/1200px-Twitter_Bird.svg.png"><i class="fa fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.coursinfo.fr/wp-content/uploads/2016/04/facebook-logo.jpg"><i class="fa fa-facebook"></i></a>
         </div>
         {% if app.user.id == user.id %}
             <p>
                 <a href="{{ path('app_profil_modifier') }}">
-                <button>Modifier Profil</button>
+                    <button>Modifier Profil</button>
                 </a>
+
             </p>
         {% endif %}
+        <p>
+            <a href="{{ path('app_accueil') }}">
+                <button>Retour</button>
+            </a>
+        </p>
+
+
     </div>
 
     </body>
