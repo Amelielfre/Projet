@@ -152,7 +152,15 @@ div#navbarSupportedContent{
     color: #657ED4 !important;
 }
 
+.error-custom{
+    list-style-type: none !important;
+    margin-top: 4px;
+    color: indianred;
+}
 
+.error-custom li {
+    list-style-type: none !important;
+}
 /*********************************************/
 /**** PROFIL.html ****/
 

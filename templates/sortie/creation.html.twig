@@ -10,27 +10,43 @@
         <div>
             {{ form_label(formSortie.nom) }}
             {{ form_widget(formSortie.nom, {'attr': {'id': 'txt_1', 'onkeyup': 'saveValue(this);', 'class': "form-control"}}) }}
-            {{ form_errors(formSortie.nom) }}
+            <div class="error-custom">
+                {{ form_errors(formSortie.nom) }}
+            </div>
         </div>
         <div>
             {{ form_label(formSortie.dateDebut) }}
             {{ form_widget(formSortie.dateDebut, {'attr': {'id': 'txt_2','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
-            {{ form_errors(formSortie.dateDebut) }}
+            <div class="error-custom">
+                {{ form_errors(formSortie.dateDebut) }}
+            </div>
         </div>
         <div>
             {{ form_label(formSortie.dateFinInscription) }}
             {{ form_widget(formSortie.dateFinInscription, {'attr': {'id': 'txt_3','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
-            {{ form_errors(formSortie.dateFinInscription) }}
+            <div class="error-custom">
+                {{ form_errors(formSortie.dateFinInscription) }}
+            </div>
         </div>
         <div>
             {{ form_label(formSortie.duree) }}
             {{ form_widget(formSortie.duree, {'attr': {'id': 'txt_4','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
+            <div class="error-custom">
             {{ form_errors(formSortie.duree) }}
+                {% if error is defined %}
+                    {{ error }}
+                {% endif %}
+            </div>
         </div>
         <div>
             {{ form_label(formSortie.nbInscriptionsMax) }}
             {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'id': 'txt_5','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
+            <div class="error-custom">
             {{ form_errors(formSortie.nbInscriptionsMax) }}
+                {% if error is defined %}
+                    {{ error }}
+                {% endif %}
+            </div>
         </div>
         <div>
             {{ form_label(formSortie.description) }}
@@ -66,8 +82,12 @@
         </div>
 
         <div class="button-group-custom">
-            <button type="submit" onclick="resetValue()" name="save" value="save" class="btn btn-primary mt-1 mr-2">Enregistrer</button>
-            <button type="submit" onclick="resetValue()" value="publish" class="btn btn-primary mt-1 mr-2">Publier la sortie</button>
+            <button type="submit" onclick="resetValue()" name="save" value="save" class="btn btn-primary mt-1 mr-2">
+                Enregistrer
+            </button>
+            <button type="submit" onclick="resetValue()" value="publish" class="btn btn-primary mt-1 mr-2">Publier la
+                sortie
+            </button>
             <a href="{{ path('app_accueil') }}" onclick="resetValue()" value="annuler" class="btn btn-primary mt-1">Annuler</a>
         </div>
 
@@ -86,11 +106,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Ajouter un lieu</h5>
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+                        {% if notif %}
+                            <div class="alert alert-info"> {{ notif }} </div>
+                        {% endif %}
                         <a href="#" class="closebtn">
                             <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
@@ -132,13 +150,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Ajouter une ville</h5>
-                        {% for label, messages in app.flashes(['success', 'warning']) %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ label }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
+                        {% if notif %}
+                            <div class="alert alert-info"> {{ notif }} </div>
+                        {% endif %}
                         <a href="#" class="closebtn">
                             <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
@@ -156,6 +170,11 @@
                             {{ form_label(formVille.codePostal) }}
                             {{ form_widget(formVille.codePostal, {'attr': {'class': "form-control"}}) }}
                             {{ form_errors(formVille.codePostal) }}
+                            <div class="error-custom">
+                                {% if errorCpo is defined %}
+                                    {{ errorCpo }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -179,19 +198,20 @@
         document.getElementById("sortie_description").value = getSavedValue("sortie_description");
 
 
-        function saveValue(e){
+        function saveValue(e) {
             var id = e.id;
             var val = e.value;
             localStorage.setItem(id, val);
         }
 
-        function getSavedValue  (v){
+        function getSavedValue(v) {
             if (!localStorage.getItem(v)) {
                 return "";
             }
             return localStorage.getItem(v);
         }
-        function resetValue(){
+
+        function resetValue() {
             window.localStorage.clear();
         }
     </script>

@@ -46,6 +46,8 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = new Sortie();
+        $notif = "";
+        $error = "";
         //vérification du user en session
         if ($this->getUser()) {
             //on récupère l'utilisateur connecté
@@ -70,11 +72,11 @@ class SortieController extends AbstractController
 
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
             if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])){
-                $this->addFlash('warning', 'Ce lieu existe déjà');
+                $notif = "Ce lieu existe déjà";
             }elseif ($this->lieuRepo->findBy( ['rue' => $lieu->getRue()])){
-                $this->addFlash('warning', 'Ce lieu existe déjà');
+                $notif = "Ce lieu existe déjà";
             } else {
-                $this->addFlash('success', 'Lieu ajouté');
+                $notif = "Lieu ajouté";
                 $em->persist($lieu);
                 $em->flush();
             }
@@ -84,16 +86,21 @@ class SortieController extends AbstractController
 
         //Partie formulaire pour ajouter des villes avec la fenêtre modal
         $ville = new Ville();
+        $errorCpo = "";
         $formVille = $this->createForm(VilleType::class, $ville);
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
-            if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
-                $this->addFlash('warning', 'Cette ville existe déjà');
-            } else {
-                $this->addFlash('success', 'Ville ajouté');
-                $em->persist($ville);
-                $em->flush();
+            if(!is_int($ville->getCodePostal())){
+                $errorCpo = "Code Postal inconnu";
+            }else {
+                if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
+                    $notif = "Cette ville existe déjà";
+                } else {
+                    $notif = "Ville ajoutée";
+                    $em->persist($ville);
+                    $em->flush();
+                }
             }
         }
 
@@ -102,23 +109,32 @@ class SortieController extends AbstractController
 
         //on vérifie si le formulaire complet est submit et validé
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
-            if ($request->request->get("save")) {
-                $etat = $this->etatRepo->find(1);
-                $sortie->setEtat($etat);
+            if($sortie->getDuree()>2880){
+                $error = "La durée est trop longue (max 2880 min = 48h)";
+            } else if (is_int($sortie->getNbInscriptionsMax())){
+                $error = "Le nombre de participant est inconnu";
             } else {
-                //sinon l'état devient -> "Ouvert"
-                $etat = $this->etatRepo->find(2);
-                $sortie->setEtat($etat);
+                //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
+                if ($request->request->get("save")) {
+                    $etat = $this->etatRepo->find(1);
+                    $sortie->setEtat($etat);
+                } else {
+                    //sinon l'état devient -> "Ouvert"
+                    $etat = $this->etatRepo->find(2);
+                    $sortie->setEtat($etat);
+                }
+                //on vient ajouter en BDD
+                $em->persist($sortie);
+                $em->flush();
+                return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
             }
-            //on vient ajouter en BDD
-            $em->persist($sortie);
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 
         return $this->render('sortie/creation.html.twig', [
+            "notif" => $notif,
+            "errorCpo" => $errorCpo,
+            "error" => $error,
             "formSortie" => $formSortie->createView(),
             "locationForm" => $lieuForm->createView(),
             'formVille' => $formVille->createView()
