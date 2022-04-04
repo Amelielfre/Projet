@@ -67,11 +67,11 @@ class SortieRepository extends ServiceEntityRepository
 
         // ajout du filtre par inscrit/pas inscrit si necessaire
         if ($inscrit == true) {
-            $qb->join("s.inscrit", "i")
-                ->andWhere('i.id = :inscrit')
-                ->setParameter('inscrit', $user->getId());
+            $qb->andWhere(':inscrit MEMBER OF s.inscrit')
+                ->setParameter('inscrit', $user);
         } elseif ($pasInscrit == true) {
-
+            $qb->andWhere(':inscrit NOT MEMBER OF s.inscrit')
+                ->setParameter('inscrit', $user);
         }
 
         // ajout du filtre par sorties passees si necessaire
