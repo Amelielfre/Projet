@@ -6,21 +6,38 @@
     <div class="first row">
         <div class="col-3 offset-9 mt-4">
             <table class="utilisateur">
-                <tr class="utilisateur">
-
+                <tr>
 
 
                     {% if app.user.UrlPhoto %}
-                    <th>{{ app.user.pseudo}}  <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="50%" class=""></th>
+
+
+                        <th>
+
+
+                            <div class="photoaccueil">
+                                <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser"
+                                     width="100%" class="">
+                            </div>
+
+                            <h4>{{ app.user.pseudo }}</h4>
+                        </th>
 
                     {% else %}
-                        <th>{{ app.user.pseudo}}   <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault" width="50%" class=""></th>
+
+                        <th>
+                            <div class="photoaccueil">
+                                <img src="{{ asset('img/profil.png') }}" alt="AvatarDefault"
+                                     width="100%" class="">
+                            </div>
+
+                            <h3>{{ app.user.pseudo }}</h3>
+                        </th>
 
                     {% endif %}
+
+
                 </tr>
-
-
-
             </table>
         </div>
 
@@ -122,11 +139,12 @@
                             {% set ok = true %}
                             {% for user in sortie.inscrit %}
                                 {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
-                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se désister</a>
+                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se
+                                        désister</a>
                                     {% set ok = false %}
                                 {% endif %}
                             {% endfor %}
-                           {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
+                            {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
                             {% endif %}
                         </td>

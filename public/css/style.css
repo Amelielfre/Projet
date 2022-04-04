@@ -357,15 +357,20 @@ label{
     font-size: 0.8em;
 }
 
-.utilisateur{
+.photoaccueil{
 
-    margin-left: 50%;
 }
 
-.utilisateur img{
+.utilisateur{
+    margin-left: 55%;
+   text-align: center;
+}
+
+.photoaccueil img{
 
     border: solid black 1px;
-    border-radius: 50% ;
-    margin-left: 5%;
+    border-radius: 100% ;
+    width: 50%;
+    height: auto;
 
 }
