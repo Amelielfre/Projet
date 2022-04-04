@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,10 +43,18 @@ class ModificationProfilType extends AbstractType
             ->add('telephone', TextType::class, [
                 "label" => "Téléphone:",
                 'required' => false])
+
+            ->add('photo',FileType::class,[
+                'mapped'=>false,
+                'required'=>false,
+                'label'=>'Choisir une photo de profil : '
+            ])
+
             ->add('oldPassword', PasswordType::class, [
-                'label' => 'Ancien mot de passe :',
+                'label' => 'Mot de passe actuel  :',
                 'mapped' => false,
-                'required' => false])
+                'required' => true,
+            ])
             ->add('password', PasswordType::class, [
                 'label' => 'Nouveau mot de passe :',
                 'mapped' => false,

@@ -23,6 +23,13 @@
         <div>
             {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone, 'class': "form-control"}}) }}
         </div>
+
+        <div class="input-file-custom">
+            {{ form_label(formModifProfil.photo) }}
+            {{ form_widget(formModifProfil.photo, { 'attr': {'class': 'input-file-custom'} }) }}
+            {{ form_errors(formModifProfil.photo) }}
+        </div>
+
         <div>
             {{ form_row(formModifProfil.oldPassword,{'attr': {'class': "form-control"}}) }}
         </div>
@@ -35,7 +42,8 @@
                 <strong>
                     {% if errors is not null %}
                         {% for error in errors %}
-                            {{ error }}
+
+                            {{ error }}<br>
                         {% endfor %}
                     {% endif %}
                 </strong>
