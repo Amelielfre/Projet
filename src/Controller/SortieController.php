@@ -42,7 +42,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/creation", name="creation")
      */
-    public function creationSortie(Request $request, EntityManagerInterface $em): Response
+    public function creationSortie(Request $request, EntityManagerInterface $em
+    ): Response
     {
         $sortie = new Sortie();
         //vérification du user en session
@@ -106,13 +107,14 @@ class SortieController extends AbstractController
                 $etat = $this->etatRepo->find(1);
                 $sortie->setEtat($etat);
             } else {
-                //sinon l'état devient -> "en cours"
+                //sinon l'état devient -> "Ouvert"
                 $etat = $this->etatRepo->find(2);
                 $sortie->setEtat($etat);
             }
             //on vient ajouter en BDD
             $em->persist($sortie);
             $em->flush();
+
             return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
         }
 

@@ -67,25 +67,71 @@
         <tbody>
 
 
-
-            {% for user in users %}
-        <tr>
+        {% for user in users %}
+            <tr>
                 <td>{{ user.pseudo }}</td>
                 <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
-        </tr>
-            {% endfor %}
-
+            </tr>
+        {% endfor %}
 
 
         </tbody>
     </table>
 
+    <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">
+        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="inscription" value="inscription">
+            INSCRIPTION
+        </button>
+    </a>
+    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">
+        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="desister" value="desister">
+            DESISTER
+        </button>
+    </a>
+    <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">
+        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="publier" value="publier">
+            PUBLIER
+        </button>
+    </a>
+    <a href="#id01">
+        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="#id01" name="annuler" value="annuler">
+            ANNULER
+        </button>
+    </a>
 
-    <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="inscription" value="inscription">
-        <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">INSCRIPTION</a>
-    </button>
-    <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="desister" value="desister">
-        <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">DESISTER</a>
-    </button>
+
+    {#
+    Fenetre modale d'ajout de motif annulation
+    #}
+    <div id="id01" class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Motif d'Annulation</h5>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <a href="#" class="closebtn">
+                        <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                        </button>
+                    </a>
+                </div>
+                <form action="{{ path('app_afficher_sortie_annuler', {'id':sortie.id}) }}" method="post">
+                    <div class="modal-body">
+
+                        <div>
+                            <input type="text" name="motifAnnulation" id="motifAnnulation" value="motifAnnulation">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Confirmer l'annulation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

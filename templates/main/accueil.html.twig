@@ -101,9 +101,9 @@
                                 <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
                             {% endif %}
                             {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
                                 <a href="#">Modifier</a>
-                                <a href="#">Publier</a>
-                                <a href="#">Annuler</a>
+                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">Publier</a>
                             {% endif %}
                             {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="#">Annuler</a>
@@ -115,7 +115,7 @@
                                     {% set ok = false %}
                                 {% endif %}
                             {% endfor %}
-                            {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
+                           {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
                             {% endif %}
                         </td>
