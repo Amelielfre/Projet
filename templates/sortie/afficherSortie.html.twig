@@ -3,135 +3,156 @@
 {% block title %} Sortie{% endblock %}
 
 {% block body %}
-    <h1>Afficher une sortie</h1>
+    <div class="form-custom">
+        <h1>Afficher une sortie</h1>
 
-    <br>
-
-    <table class="table">
-        <thead>
-
-        <tr>
-
-            <th scope="col">Nom de la sortie :</th>
-            <th scope="col">Date et heure début : :</th>
-            <th scope="col">Date limite inscription :</th>
-            <th scope="col">Nombre de places :</th>
-            <th scope="col">Durée en minutes :</th>
-            <th scope="col">Description :</th>
-
-            <th scope="col">Campus Organisateur :</th>
-            <th scope="col">Ville :</th>
-            <th scope="col">Lieu :</th>
-            <th scope="col">Rue :</th>
-            <th scope="col">Code Postal :</th>
-
-
-        </tr>
-
-        </thead>
-        <tbody>
-
-
-        <tr>
-
-            <td>{{ sortie.nom }}</td>
-            <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
-            <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
-            <td>{{ sortie.nbInscriptionsMax }}</td>
-            <td>{{ sortie.duree }}</td>
-            <td>{{ sortie.description }}</td>
-
-            <td>{{ sortie.organisateur.site.nom }}</td>
-            <td>{{ sortie.lieu.ville.nom }}</td>
-            <td>{{ sortie.lieu.nom }}</td>
-            <td>{{ sortie.lieu.rue }}</td>
-            <td>{{ sortie.lieu.ville.codePostal }}</td>
-
-        </tr>
-
-        </tbody>
-    </table>
-
-    <table class="table">
-        <thead>
-
-        <tr>
-
-            <th scope="col">Pseudo :</th>
-            <th scope="col">Nom : :</th>
-
-
-        </tr>
-
-        </thead>
-        <tbody>
-
-
-        {% for user in users %}
-            <tr>
-                <td><a href="{{ path('app_profil_afficher', {'id':user.id}) }}">{{ user.pseudo }}</a></td>
-                <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
-            </tr>
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
         {% endfor %}
 
+        <table class="table">
+            <thead>
 
-        </tbody>
-    </table>
+            <tr>
 
-    <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">
-        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="inscription" value="inscription">
-            INSCRIPTION
-        </button>
-    </a>
-    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">
-        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="desister" value="desister">
-            DESISTER
-        </button>
-    </a>
-    <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">
-        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="publier" value="publier">
-            PUBLIER
-        </button>
-    </a>
-    <a href="#id01">
-        <button type="submit" class="btn btn-sm btn-primary btn-custom" id="#id01" name="annuler" value="annuler">
-            ANNULER
-        </button>
-    </a>
+                <th scope="col">Nom de la sortie :</th>
+                <th scope="col">Date et heure début : :</th>
+                <th scope="col">Date limite inscription :</th>
+                <th scope="col">Nombre de places :</th>
+                <th scope="col">Durée en minutes :</th>
+                <th scope="col">Description :</th>
+
+                <th scope="col">Campus Organisateur :</th>
+                <th scope="col">Ville :</th>
+                <th scope="col">Lieu :</th>
+                <th scope="col">Rue :</th>
+                <th scope="col">Code Postal :</th>
 
 
-    {#
-    Fenetre modale d'ajout de motif annulation
-    #}
-    <div id="id01" class="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Motif d'Annulation</h5>
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success">
-                            {{ message }}
+            </tr>
+
+            </thead>
+            <tbody>
+
+
+            <tr>
+
+                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
+                <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
+                <td>{{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.duree }}</td>
+                <td>{{ sortie.description }}</td>
+
+                <td>{{ sortie.organisateur.site.nom }}</td>
+                <td>{{ sortie.lieu.ville.nom }}</td>
+                <td>{{ sortie.lieu.nom }}</td>
+                <td>{{ sortie.lieu.rue }}</td>
+                <td>{{ sortie.lieu.ville.codePostal }}</td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+
+            <tr>
+
+                <th scope="col">Pseudo :</th>
+                <th scope="col">Nom : :</th>
+
+
+            </tr>
+
+            </thead>
+            <tbody>
+
+
+            {% for user in users %}
+                <tr>
+                    <td><a href="{{ path('app_profil_afficher', {'id':user.id}) }}">{{ user.pseudo }}</a></td>
+                    <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+        {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
+            <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="publier" value="publier">
+                    PUBLIER
+                </button>
+            </a>
+        {% endif %}
+        {% if app.user.id == sortie.organisateur.id and sortie.etat.id < 3 %}
+            <a href="#id01">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="#id01" name="annuler"
+                        value="annuler">
+                    ANNULER
+                </button>
+            </a>
+        {% endif %}
+        {% set ok = true %}
+        {% for user in sortie.inscrit %}
+            {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
+                <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">
+                    <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="desister"
+                            value="desister">
+                        DESISTER
+                    </button>
+                </a>
+                {% set ok = false %}
+            {% endif %}
+        {% endfor %}
+        {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
+            <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="inscription"
+                        value="inscription">
+                    INSCRIPTION
+                </button>
+            </a>
+        {% endif %}
+
+
+
+
+        {#
+        Fenetre modale d'ajout de motif annulation
+        #}
+        <div id="id01" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Motif d'Annulation</h5>
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        <a href="#" class="closebtn">
+                            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                            </button>
+                        </a>
+                    </div>
+                    <form action="{{ path('app_afficher_sortie_annuler', {'id':sortie.id}) }}" method="post">
+                        <div class="modal-body">
+
+                            <div>
+                                <input type="text" name="motifAnnulation" id="motifAnnulation" value="motifAnnulation">
+                            </div>
                         </div>
-                    {% endfor %}
-                    <a href="#" class="closebtn">
-                        <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
-                        </button>
-                    </a>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Confirmer l'annulation</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="{{ path('app_afficher_sortie_annuler', {'id':sortie.id}) }}" method="post">
-                    <div class="modal-body">
-
-                        <div>
-                            <input type="text" name="motifAnnulation" id="motifAnnulation" value="motifAnnulation">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirmer l'annulation</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-
 {% endblock %}
