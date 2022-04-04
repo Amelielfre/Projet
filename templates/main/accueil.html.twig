@@ -115,7 +115,7 @@
                                     {% set ok = false %}
                                 {% endif %}
                             {% endfor %}
-                            {% if ok == true and app.user.id != sortie.organisateur.id %}
+                            {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
                                 <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
                             {% endif %}
                         </td>
