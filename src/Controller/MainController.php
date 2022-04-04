@@ -20,7 +20,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $sorties = null;
+        $sorties = $repoSortie->findAccueil();
         $user = $this->getUser();
 
         // CREATION FORMULAIRE
@@ -41,9 +41,6 @@ class MainController extends AbstractController
 
             //execution de la requete
             $sorties = $repoSortie->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);
-        }
-        if ($sorties == null) {
-            $sorties = $repoSortie->findAll();
         }
 
         return $this->render('main/accueil.html.twig', [

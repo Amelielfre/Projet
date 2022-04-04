@@ -77,8 +77,8 @@ class SortieRepository extends ServiceEntityRepository
         // ajout du filtre par sorties passees si necessaire
         if ($passees == true) {
             $qb->join("s.etat", "e")
-                ->andWhere('e.libelle = :etat')
-                ->setParameter('etat', "passée");
+                ->andWhere('e.id = :etat')
+                ->setParameter('etat', 5);
         }
 
         // ajout des mot cles a la requete si necessaire
@@ -94,6 +94,22 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('s.dateDebut <= :dateFinRech')
                 ->setParameter('dateFinRech', $dateFinRech);
         }
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findAccueil() {
+
+        // creation du query builder
+        $qb = $this->createQueryBuilder('s');
+
+        //recherche des sorties avec etat non passees ou annulees
+        $qb->join('s.etat', 'e')
+            ->where('e.id = 2');
 
         // execution de la requete et envoie du resultat
         return $qb->getQuery()->getResult();
