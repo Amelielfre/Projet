@@ -82,6 +82,11 @@
 
             </tbody>
         </table>
+        <a href="{{ path('app_accueil') }}">
+            <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="retour" value="retour">
+                RETOUR
+            </button>
+        </a>
         {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
             <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">
                 <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="publier" value="publier">

@@ -176,4 +176,16 @@ class AfficherSortieController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/afficher/sortie/modifier/{id}", name="app_afficher_sortie_modifier")
+     */
+    public function modifier($id, EtatRepository $etatRepo, Request $request, SortieRepository $sortieRepo, EntityManagerInterface $em): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
+    }
 }
