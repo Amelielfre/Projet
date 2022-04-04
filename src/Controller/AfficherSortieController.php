@@ -122,9 +122,10 @@ class AfficherSortieController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-
+        $user = $this->getUser();
         $sortie = $sortieRepo->find($id);
         $users = $sortie->getInscrit();
+        $sortie->addInscrit($user);
 
         $etat = $etatRepo->find(2);
         dump($etat);
