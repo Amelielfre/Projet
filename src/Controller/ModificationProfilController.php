@@ -25,7 +25,7 @@ class ModificationProfilController extends AbstractController
     {
         $user = $this->getUser();
         $errors[] = null;
-
+        $user2 = new User();
         // CREATION FORMULAIRE*****
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
@@ -42,13 +42,11 @@ class ModificationProfilController extends AbstractController
                 // vérification de l'ancien mdp avec celui hashé en bdd + vérification du nouveau mdp confirmé
                 if (password_verify($oldPassword, $user->getPassword()) && $password == $confirmPassword) {
                     if ($oldPassword != $password) {
+
                         $user->setPassword(
                             $userPasswordHasher->hashPassword($user, $password)
-                        );
 
-                        // ENVOIE EN BDD
-                        $em->persist($user);
-                        $em->flush();
+                        );
 
                         return $this->redirectToRoute('app_profil_afficher', [
                             'id' => $user->getId()
@@ -59,7 +57,7 @@ class ModificationProfilController extends AbstractController
                 } else {
                     $errors[] = "Les mot des de passe ne sont pas identiques";
                 }
-            } else if ($oldPassword == null && $password == null && $confirmPassword == null) {
+            } else if (password_verify($oldPassword, $user->getPassword()) && $password == null && $confirmPassword == null) {
 
                 // ENVOI EN BDD
                 $em->persist($user);
@@ -68,9 +66,13 @@ class ModificationProfilController extends AbstractController
                     'id' => $user->getId()
                 ]);
             } else {
+                $errors[] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
                 $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
             }
 
+
+
+            dump($user);
         }
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
