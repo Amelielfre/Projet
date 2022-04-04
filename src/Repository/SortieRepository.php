@@ -102,7 +102,8 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function findAccueil() {
+    public function findAccueil()
+    {
 
         // creation du query builder
         $qb = $this->createQueryBuilder('s');
@@ -110,6 +111,23 @@ class SortieRepository extends ServiceEntityRepository
         //recherche des sorties avec etat non passees ou annulees
         $qb->join('s.etat', 'e')
             ->where('e.id = 2');
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findAArchiver($date)
+    {
+
+        //creation du query builder et de la date recherchee
+        $qb = $this->createQueryBuilder('s');
+
+        //recuperation des sorties qui ont plus d'un mois depuis leur déroulement
+        $qb->where('s.dateDebut < :date')
+            ->setParameter('date', $date);
 
         // execution de la requete et envoie du resultat
         return $qb->getQuery()->getResult();
