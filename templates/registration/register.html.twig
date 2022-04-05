@@ -45,8 +45,11 @@
                 {'label':'Email :' ,'attr':{'placeholder': 'Saisissez votre email',
                     'class': "form-control"}}) }}
             <div class="error-custom">
-                {% if form_errors(registrationForm.email) %}
-                    <i class="fa-solid fa-circle-exclamation"></i>{{ form_errors(registrationForm.email) }}
+                {% if error["email"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li> {{ error["email"] }}</li>
+                    </ul>
                 {% endif %}
             </div>
         </div>

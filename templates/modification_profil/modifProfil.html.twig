@@ -9,7 +9,16 @@
         {{ form_start(formModifProfil) }}
 
         <div>
-            {{ form_row(formModifProfil.pseudo,{'attr':{'value':user.pseudo, 'class': "form-control"}}) }}
+            {{ form_label(formModifProfil.pseudo) }}
+            {{ form_widget(formModifProfil.pseudo,{'attr':{'value':user.pseudo, 'class': "form-control"}}) }}
+            <div class="error-custom">
+                {% if errors["pseudo"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li> {{ errors["pseudo"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
         <div>
             {{ form_row(formModifProfil.prenom,{'attr':{'value':user.prenom, 'class': "form-control"}}) }}
@@ -18,7 +27,16 @@
             {{ form_row(formModifProfil.nom,{'attr':{'value':user.nom, 'class': "form-control"}}) }}
         </div>
         <div>
-            {{ form_row(formModifProfil.email,{'attr':{'value':user.email, 'class': "form-control"}}) }}
+            {{ form_label(formModifProfil.email) }}
+            {{ form_widget(formModifProfil.email,{'attr':{'value':user.email, 'class': "form-control"}}) }}
+            <div class="error-custom">
+                {% if errors["email"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li> {{ errors["email"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
         <div>
             {{ form_row(formModifProfil.telephone,{'attr':{'value':user.telephone, 'class': "form-control"}}) }}
@@ -29,22 +47,51 @@
         </div>
 
         <div>
-            {{ form_row(formModifProfil.oldPassword,{'attr': {'class': "form-control"}}) }}
+            {{ form_label(formModifProfil.oldPassword) }}
+            {{ form_widget(formModifProfil.oldPassword,
+                {'label':'Password :','attr':{'placeholder': 'Saisissez votre password',
+                    'class': "form-control"} }) }}
+            <div class="error-custom">
+                {% if errors["mdpVerifModif"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li>{{ errors["mdpVerifModif"] }}</li>
+                    </ul>
+                {% endif %}
+                {% if errors["mdpDiffAncien"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li>{{ errors["mdpDiffAncien"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
         <div>
-            {{ form_row(formModifProfil.password,{'attr': {'class': "form-control"}}) }}
+            {{ form_label(formModifProfil.password) }}
+            {{ form_widget(formModifProfil.password,
+                {'label':'Password :','attr':{'placeholder': 'Saisissez votre password',
+                    'class': "form-control"} }) }}
+            <div class="error-custom">
+                {% if errors["mdpDiff"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li>{{ errors["mdpDiff"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
         <div>
-            {{ form_row(formModifProfil.confirm_password, {'attr': {'class': "form-control"}}) }}
-            <div class="error-modif-mdp">
-                <strong>
-                    {% if errors is not null %}
-                        {% for error in errors %}
-
-                            {{ error }}<br>
-                        {% endfor %}
-                    {% endif %}
-                </strong>
+            {{ form_label(formModifProfil.confirm_password) }}
+            {{ form_widget(formModifProfil.confirm_password,
+                {'label':'Password :','attr':{'placeholder': 'Saisissez votre password',
+                    'class': "form-control"} }) }}
+            <div class="error-custom">
+                {% if errors["mdpVerifModif2"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li>{{ errors["mdpVerifModif2"] }}</li>
+                    </ul>
+                {% endif %}
             </div>
         </div>
         <div class="button-group-custom">

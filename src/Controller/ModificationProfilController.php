@@ -22,16 +22,17 @@ class ModificationProfilController extends AbstractController
     /**
      * @Route("/modifier", name="modifier")
      */
-    public function modifProfil(SluggerInterface $slugger, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function modifProfil(UserRepository $userRepo, SluggerInterface $slugger, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
         $user = $this->getUser();
-        dump($user);
         $errors[] = null;
         $user2 = new User();
+        $oldPseudo = $this->getUser()->getPseudo();
+        $oldEmail = $this->getUser()->getEmail();
         // CREATION FORMULAIRE*****
         $formModifProfil = $this->createForm(ModificationProfilType::class, $user);
         $formModifProfil->handleRequest($request);
@@ -42,12 +43,20 @@ class ModificationProfilController extends AbstractController
         $oldPassword = $formModifProfil->get("oldPassword")->getData();
         $password = $formModifProfil->get("password")->getData();
         $confirmPassword = $formModifProfil->get("confirm_password")->getData();
-
+        if($user->getEmail() != $oldEmail){
+            if($userRepo->findBy(["email"=>$user->getEmail()])){
+                $errors["email"] = "Email déjà existant";
+            }
+        }
         if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && password_verify($oldPassword, $user->getPassword())) {
+            if($user->getPseudo() != $oldPseudo){
+                if($userRepo->findBy(["pseudo"=>$user->getPseudo()])){
+                    $errors["pseudo"] = "Pseudo déjà existant";
+                }
+            }
 
 
             if ($password != null && $confirmPassword != null) {
-
                 // vérification de l'ancien mdp avec celui hashé en bdd + vérification du nouveau mdp confirmé
                 if ($password == $confirmPassword) {
                     if ($oldPassword != $password) {
@@ -56,12 +65,11 @@ class ModificationProfilController extends AbstractController
                             $userPasswordHasher->hashPassword($user, $password)
 
                         );
-
                     } else {
-                        $errors[] = "Votre mot de passe doit être différent de l'ancien";
+                        $errors["mdpDiffAncien"] = "Votre mot de passe doit être différent de l'ancien";
                     }
                 } else {
-                    $errors[] = "Les nouveaux mots de passe ne sont pas identiques";
+                    $errors["mdpDiff"] = "Les nouveaux mots de passe ne sont pas identiques";
                 }
             }
             // MODIFIER LA PHOTO
@@ -81,39 +89,19 @@ class ModificationProfilController extends AbstractController
                 );
                 $user->setUrlPhoto($newFilename);
             }
-            // ENVOI EN BDD
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('app_profil_afficher', [
-                'id' => $user->getId()
-            ]);
+            if(count($errors) < 1){
+                // ENVOI EN BDD
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('app_profil_afficher', [
+                    'id' => $user->getId()
+                ]);
+            }
 
         } else if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && !password_verify($oldPassword, $user->getPassword())) {
-            $errors[] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
-            $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
-            $photo = $formModifProfil->get('photo')->getData();
-
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-
-                // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
-
-                // Move the file to the directory where brochures are storedtry {
-                $photo->move(
-                    $this->getParameter('images_directory'),
-                    $newFilename
-                );
-                $user->setUrlPhoto($newFilename);
-            }
-            $url = $this->getUser()->getUrlPhoto();
-            $user->setUrlPhoto($url);
-
+            $errors["mdpVerifModif"] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
+            $errors["mdpVerifModif2"] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
         }
-
-        dump($user);
-
         return $this->render('modification_profil/modifProfil.html.twig', [
             'formModifProfil' => $formModifProfil->createView(),
             'user' => $user,

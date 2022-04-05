@@ -81,7 +81,6 @@ class SortieController extends AbstractController
                 $em->flush();
             }
         }
-
         $lieuForm = $this->createForm(LieuType::class);
 
         //Partie formulaire pour ajouter des villes avec la fenêtre modal

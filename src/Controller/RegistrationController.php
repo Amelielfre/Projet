@@ -31,9 +31,13 @@ class RegistrationController extends AbstractController
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
 
+            if($userRepo->findBy(["email"=>$user->getEmail()])){
+                    $error["email"] = "Email déjà existant";
+            }
+
             if ($userRepo->findBy(['pseudo' => $user->getPseudo()])) {
                 $error["pseudo"] = "Pseudo déjà existant";
-            } else {
+            }
                 //Récupération des mot de passe
                 $password = $form->get("password")->getData();
                 $confirmPassword = $form->get("confirm_password")->getData();
@@ -64,15 +68,16 @@ class RegistrationController extends AbstractController
                             $user->setUrlPhoto($newFilename);
                         }
 
-
-                        $entityManager->persist($user);
-                        $entityManager->flush();
-                        return $this->redirectToRoute("app_login");
+                        if(count($error) < 1){
+                            $entityManager->persist($user);
+                            $entityManager->flush();
+                            return $this->redirectToRoute("app_login");
+                        }
                     } else {
                         $error["mdp"] = "Les mots de passe sont pas bon michel !!!!!!";
                     }
                 }
-            }
+
             return $this->render('registration/register.html.twig', [
                 'registrationForm' => $form->createView(),
                 "error" => $error,
