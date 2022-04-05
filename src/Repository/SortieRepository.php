@@ -66,15 +66,6 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('orga', $user);
         }
 
-        // ajout du filtre par inscrit/pas inscrit si necessaire
-        if ($inscrit == true) {
-            $qb->andWhere(':inscrit MEMBER OF s.inscrit')
-                ->setParameter('inscrit', $user);
-        } elseif ($pasInscrit == true) {
-            $qb->andWhere(':inscrit NOT MEMBER OF s.inscrit')
-                ->setParameter('inscrit', $user);
-        }
-
         // ajout du filtre par sorties passees si necessaire
         if ($passees == true) {
             $qb->join("s.etat", "e")
@@ -82,6 +73,15 @@ class SortieRepository extends ServiceEntityRepository
         } else {
             $qb->join("s.etat", "e")
                 ->andWhere($qb->expr()->between('e.id', 1, 4));
+        }
+
+        // ajout du filtre par inscrit/pas inscrit si necessaire
+        if ($inscrit == true) {
+            $qb->andWhere(':inscrit MEMBER OF s.inscrit')
+                ->setParameter('inscrit', $user);
+        } elseif ($pasInscrit == true) {
+            $qb->andWhere(':inscrit NOT MEMBER OF s.inscrit')
+                ->setParameter('inscrit', $user);
         }
 
         // ajout des mot cles a la requete si necessaire
