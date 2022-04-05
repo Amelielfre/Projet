@@ -26,6 +26,7 @@ class RegistrationController extends AbstractController
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $error = null;
             $user = new User();
+            $user->setActif(true);
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
 
@@ -33,7 +34,7 @@ class RegistrationController extends AbstractController
             $password = $form->get("password")->getData();
             $confirmPassword = $form->get("confirm_password")->getData();
             if ($form->isSubmitted() && $form->isValid()) {
-
+                dump($user);
                 //Check des mots de passe
                 if ($password == $confirmPassword) {
                     $user->setPassword(
@@ -60,6 +61,7 @@ class RegistrationController extends AbstractController
                         $user->setUrlPhoto($newFilename);
                     }
 
+
                     $entityManager->persist($user);
                     $entityManager->flush();
                     return $this->redirectToRoute("app_login");
@@ -74,7 +76,6 @@ class RegistrationController extends AbstractController
             }
 
 
-            dump($this->getUser());
             return $this->render('registration/register.html.twig', [
                 'registrationForm' => $form->createView(), "error" => $error,
             ]);
