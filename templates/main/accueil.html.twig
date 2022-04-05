@@ -7,14 +7,8 @@
         <div class="col-3 offset-9 mt-4">
             <table class="utilisateur">
                 <tr>
-
-
                     {% if app.user.UrlPhoto %}
-
-
                         <th>
-
-
                             <div class="photoaccueil">
                                 <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser"
                                      width="100%" class="">
@@ -35,52 +29,39 @@
                         </th>
 
                     {% endif %}
-
-
                 </tr>
             </table>
         </div>
-
     </div>
 
     {{ form_start(formFiltres) }}
 
     <div class=" filtres  row mb-5">
-
         <div class="table row col-xl-12  ">
             <h4>Filtrer les sorties</h4>
-
             <div class="champs col-xl-3 ">
                 {{ form_label(formFiltres.site) }}
 
                 {{ form_widget(formFiltres.site) }}
             </div>
-
             <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.motCles) }}
 
                 {{ form_widget(formFiltres.motCles) }}
             </div>
-
             <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.dateDebut) }}
 
                 {{ form_widget(formFiltres.dateDebut) }}
             </div>
-
             <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.dateFin) }}
-
-
                 {{ form_widget(formFiltres.dateFin) }}
             </div>
 
-
         </div>
 
-
         <div class="row">
-
             <div class="col-xl-6">
                 <div class="champs col-xl-9 offset-xl-3">
                     {{ form_widget(formFiltres.orga, {'id': 'orga'}) }}
@@ -108,7 +89,6 @@
             </div>
         </div>
 
-
     </div>
     {{ form_end(formFiltres) }}
     <div class="affichage">
@@ -125,9 +105,7 @@
                 <th scope="col">Actions</th>
             </tr>
             </thead>
-
             <tbody>
-
             {% if sorties != null %}
 
                 {% for sortie in sorties %}
@@ -175,11 +153,12 @@
                         </td>
                     </tr>
                 {% endfor %}
-            {% else %}
-                <h4>Aucune sortie ne correspond à votre recherche !</h4>
             {% endif %}
             </tbody>
         </table>
+        {% if sorties == null %}
+            <h4>Aucune sortie ne correspond à votre recherche !</h4>
+        {% endif %}
     </div>
     <div class="bouton mt-4 col-sm-3 ">
         <a class="btn btn-primary btn-lg" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
