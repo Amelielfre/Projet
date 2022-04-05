@@ -68,19 +68,19 @@
 
         <div class="middle col-xl-4 offset-xl-1  ">
             <div class="champs">
-                {{ form_widget(formFiltres.orga) }}
+                {{ form_widget(formFiltres.orga, {'id': 'orga'}) }}
                 {{ form_label(formFiltres.orga) }}
             </div>
             <div class="champs">
-                {{ form_widget(formFiltres.inscrit) }}
+                {{ form_widget(formFiltres.inscrit, {'id': 'inscrit'}) }}
                 {{ form_label(formFiltres.inscrit) }}
             </div>
             <div class="champs">
-                {{ form_widget(formFiltres.pasInscrit) }}
+                {{ form_widget(formFiltres.pasInscrit, {'id': 'pasInscrit'}) }}
                 {{ form_label(formFiltres.pasInscrit) }}
             </div>
             <div class="champs">
-                {{ form_widget(formFiltres.passees) }}
+                {{ form_widget(formFiltres.passees, {'id': 'passees'}) }}
                 {{ form_label(formFiltres.passees) }}
             </div>
         </div>
@@ -157,4 +157,8 @@
     <div class="bouton mt-4 col-sm-3 ">
         <a class="btn btn-primary btn-lg" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('js/accueilScript.js') }}"></script>
 {% endblock %}
