@@ -113,7 +113,7 @@
                         <td>{{ sortie.nom }}</td>
                         <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
                         <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
-                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.inscrit.count }} / {{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
                         <td>
                             {% for user in sortie.inscrit %}
