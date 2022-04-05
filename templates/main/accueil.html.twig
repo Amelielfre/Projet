@@ -44,7 +44,8 @@
     </div>
 
     {{ form_start(formFiltres) }}
-    <<div class=" filtres  row mb-5">
+
+    <div class=" filtres  row mb-5">
 
         <div class="table row col-xl-12  ">
             <h4>Filtrer les sorties</h4>
@@ -74,36 +75,38 @@
                 {{ form_widget(formFiltres.dateFin) }}
             </div>
 
-        </div>
-
-        <div class="bouton col-xl-5 offset-xl-7 mt-5 mb-2">
-            <button class="btn btn-primary btn-lg" type="submit">Rechercher</button>
-        </div>
-
-        <div class=" col-xl-12 ">
-            <div class="champs col-xl-3">
-                {{ form_widget(formFiltres.orga, {'id': 'orga'}) }}
-                {{ form_label(formFiltres.orga) }}
-            </div>
-            <div class="champs col-xl-3">
-                {{ form_widget(formFiltres.inscrit, {'id': 'inscrit'}) }}
-                {{ form_label(formFiltres.inscrit) }}
-            </div>
-
-            <div class="champs col-xl-4 ">
-                {{ form_widget(formFiltres.pasInscrit, {'id': 'pasInscrit'}) }}
-                {{ form_label(formFiltres.pasInscrit) }}
-            </div>
-            <div class="champs col-xl-2">
-                {{ form_widget(formFiltres.passees, {'id': 'passees'}) }}
-                {{ form_label(formFiltres.passees) }}
-            </div>
-
-
 
         </div>
 
 
+        <div class="row">
+
+            <div class="col-xl-6">
+                <div class="champs col-xl-9 offset-xl-3">
+                    {{ form_widget(formFiltres.orga, {'id': 'orga'}) }}
+                    {{ form_label(formFiltres.orga) }}
+                </div>
+                <div class="champs col-xl-9 offset-xl-3">
+                    {{ form_widget(formFiltres.inscrit, {'id': 'inscrit'}) }}
+                    {{ form_label(formFiltres.inscrit) }}
+                </div>
+
+                <div class="champs col-xl-9 offset-xl-3">
+                    {{ form_widget(formFiltres.pasInscrit, {'id': 'pasInscrit'}) }}
+                    {{ form_label(formFiltres.pasInscrit) }}
+                </div>
+                <div class="champs col-xl-9 offset-xl-3">
+                    {{ form_widget(formFiltres.passees, {'id': 'passees'}) }}
+                    {{ form_label(formFiltres.passees) }}
+                </div>
+            </div>
+
+            <div class="bouton col-xl-6">
+                <div class="col-xl-4 offset-xl-4 mt-5" style="">
+                    <button class="btn btn-primary btn-lg p-4" type="submit">Rechercher</button>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -122,8 +125,11 @@
                 <th scope="col">Actions</th>
             </tr>
             </thead>
+
             <tbody>
+
             {% if sorties != null %}
+
                 {% for sortie in sorties %}
                     <tr>
                         <td>{{ sortie.nom }}</td>
@@ -143,12 +149,16 @@
                         </td>
                         <td>
                             {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
-                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye" title="Afficher"></i></a>
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye"
+                                                                                                 title="Afficher"></i></a>
                             {% endif %}
                             {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
-                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye" title="Afficher"></i></a>
-                                <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}"><i class="fa-solid fa-pen-to-square" title="Modifier"></i></a>
-                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}"><i class="fa-solid fa-bookmark" title="Publier"></i></a>
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye"
+                                                                                                 title="Afficher"></i></a>
+                                <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}"><i
+                                            class="fa-solid fa-pen-to-square" title="Modifier"></i></a>
+                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}"><i
+                                            class="fa-solid fa-bookmark" title="Publier"></i></a>
                             {% endif %}
                             {% set ok = true %}
                             {% for user in sortie.inscrit %}
@@ -159,7 +169,8 @@
                                 {% endif %}
                             {% endfor %}
                             {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
-                                <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}"><i class="fa-solid fa-list-check" title="S'inscrire"></i></a>
+                                <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}"><i
+                                            class="fa-solid fa-list-check" title="S'inscrire"></i></a>
                             {% endif %}
                         </td>
                     </tr>
