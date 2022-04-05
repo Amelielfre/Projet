@@ -42,53 +42,69 @@
         </div>
 
     </div>
-    <h4>Filtrer les sorties</h4>
+
     {{ form_start(formFiltres) }}
-    <div class=" filtres row mb-5">
+    <<div class=" filtres  row mb-5">
 
-        <div class=" left col-xl-4   ">
+        <div class="table row col-xl-12  ">
+            <h4>Filtrer les sorties</h4>
 
-            <div class="champs ">
+            <div class="champs col-xl-3 ">
                 {{ form_label(formFiltres.site) }}
+
                 {{ form_widget(formFiltres.site) }}
             </div>
-            <div class="champs">
+
+            <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.motCles) }}
+
                 {{ form_widget(formFiltres.motCles) }}
             </div>
-            <div class="champs">
+
+            <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.dateDebut) }}
+
                 {{ form_widget(formFiltres.dateDebut) }}
             </div>
-            <div class="champs">
+
+            <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.dateFin) }}
+
+
                 {{ form_widget(formFiltres.dateFin) }}
             </div>
+
         </div>
 
-        <div class="middle col-xl-4 offset-xl-1  ">
-            <div class="champs">
+        <div class="bouton col-xl-5 offset-xl-7 mt-5 mb-2">
+            <button class="btn btn-primary btn-lg" type="submit">Rechercher</button>
+        </div>
+
+        <div class=" col-xl-12 ">
+            <div class="champs col-xl-3">
                 {{ form_widget(formFiltres.orga, {'id': 'orga'}) }}
                 {{ form_label(formFiltres.orga) }}
             </div>
-            <div class="champs">
+            <div class="champs col-xl-3">
                 {{ form_widget(formFiltres.inscrit, {'id': 'inscrit'}) }}
                 {{ form_label(formFiltres.inscrit) }}
             </div>
-            <div class="champs">
+
+            <div class="champs col-xl-4 ">
                 {{ form_widget(formFiltres.pasInscrit, {'id': 'pasInscrit'}) }}
                 {{ form_label(formFiltres.pasInscrit) }}
             </div>
-            <div class="champs">
+            <div class="champs col-xl-2">
                 {{ form_widget(formFiltres.passees, {'id': 'passees'}) }}
                 {{ form_label(formFiltres.passees) }}
             </div>
+
+
+
         </div>
-        <div class="right col-xl-2 offset-xl-1">
-            <div class="bouton">
-                <button class="btn btn-primary btn-lg" type="submit">Rechercher</button>
-            </div>
-        </div>
+
+
+
 
     </div>
     {{ form_end(formFiltres) }}
