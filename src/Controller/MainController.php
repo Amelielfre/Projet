@@ -58,9 +58,7 @@ class MainController extends AbstractController
         if(!$this->getUser()->getActif()){
             return $this->redirectToRoute('app_logout');
         } else {
-            return $this->redirectToRoute('app_accueil');
+            return $this->redirectToRoute('app_archivage_sortie');
         }
-
-
     }
 }

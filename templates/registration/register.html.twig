@@ -15,7 +15,14 @@
                     'placeholder': 'Saisissez votre pseudo',
                     'class': "form-control"
                 }}) }}
-
+            <div class="error-custom">
+                {% if error["pseudo"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li> {{ error["pseudo"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
 
         <div class="group1 mb-3">
@@ -33,10 +40,15 @@
         </div>
 
         <div class="group2 mb-3">
-            {{ form_row(registrationForm.email,
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email,
                 {'label':'Email :' ,'attr':{'placeholder': 'Saisissez votre email',
                     'class': "form-control"}}) }}
-
+            <div class="error-custom">
+                {% if form_errors(registrationForm.email) %}
+                    <i class="fa-solid fa-circle-exclamation"></i>{{ form_errors(registrationForm.email) }}
+                {% endif %}
+            </div>
         </div>
 
 
@@ -48,19 +60,35 @@
         </div>
 
         <div class="group2 mb-3">
-            {{ form_row(registrationForm.password,
+            {{ form_label(registrationForm.password) }}
+            {{ form_widget(registrationForm.password,
                 {'label':'Password :','attr':{'placeholder': 'Saisissez votre password',
                     'class': "form-control"} }) }}
-
+            <div class="error-custom">
+                {% if form_errors(registrationForm.password) %}
+                    <i class="fa-solid fa-circle-exclamation"></i>{{ form_errors(registrationForm.password) }}
+                {% endif %}
+            </div>
         </div>
 
         <div class="group2 mb-3">
-            {{ form_row(registrationForm.confirm_password,
+            {{ form_label(registrationForm.confirm_password) }}
+            {{ form_widget(registrationForm.confirm_password,
                 {'label':'Confirmer Password :','attr':{'placeholder': 'Saisissez à nouveau votre password',
                     'class': "form-control"} }) }}
-            {% if error %}
-                {{ error }}
-            {% endif %}
+            <div class="error-custom">
+                {% if form_errors(registrationForm.confirm_password) %}
+                    <i class="fa-solid fa-circle-exclamation"></i>{{ form_errors(registrationForm.confirm_password) }}
+                {% endif %}
+            </div>
+            <div class="error-custom">
+                {% if error["mdp"] is defined %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <ul>
+                        <li>{{ error["mdp"] }}</li>
+                    </ul>
+                {% endif %}
+            </div>
         </div>
         <div class="group2 mb-3">
             {{ form_row(registrationForm.site,

@@ -6,6 +6,7 @@ use App\Controller\Admin\UserCrudController;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\SiteRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,64 +21,61 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(SiteRepository $siteRepo, Request $request,SluggerInterface $slugger,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(UserRepository $userRepo, SiteRepository $siteRepo, Request $request, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            $error = null;
+            $error[] = null;
             $user = new User();
             $user->setActif(true);
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
 
-            //Récupération des mot de passe
-            $password = $form->get("password")->getData();
-            $confirmPassword = $form->get("confirm_password")->getData();
-            if ($form->isSubmitted() && $form->isValid()) {
-                dump($user);
-                //Check des mots de passe
-                if ($password == $confirmPassword) {
-                    $user->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $form->get('password')->getData()
-                        )
-                    );
-
-                    $photo = $form->get('photo')->getData();
-
-                    if ($photo) {
-                        $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-
-                        // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
-                        $safeFilename = $slugger->slug($originalFilename);
-                        $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
-                        // Move the file to the directory where brochures are storedtry {
-                        $photo->move(
-                            $this->getParameter('images_directory'),
-                            $newFilename
+            if ($userRepo->findBy(['pseudo' => $user->getPseudo()])) {
+                $error["pseudo"] = "Pseudo déjà existant";
+            } else {
+                //Récupération des mot de passe
+                $password = $form->get("password")->getData();
+                $confirmPassword = $form->get("confirm_password")->getData();
+                if ($form->isSubmitted() && $form->isValid()) {
+                    //Check des mots de passe
+                    if ($password == $confirmPassword) {
+                        $user->setPassword(
+                            $userPasswordHasher->hashPassword(
+                                $user,
+                                $form->get('password')->getData()
+                            )
                         );
-                        $user->setUrlPhoto($newFilename);
+
+                        $photo = $form->get('photo')->getData();
+
+                        if ($photo) {
+                            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+                            // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
+                            $safeFilename = $slugger->slug($originalFilename);
+                            $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                            // Move the file to the directory where brochures are storedtry {
+                            $photo->move(
+                                $this->getParameter('images_directory'),
+                                $newFilename
+                            );
+                            $user->setUrlPhoto($newFilename);
+                        }
+
+
+                        $entityManager->persist($user);
+                        $entityManager->flush();
+                        return $this->redirectToRoute("app_login");
+                    } else {
+                        $error["mdp"] = "Les mots de passe sont pas bon michel !!!!!!";
                     }
-
-
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                    return $this->redirectToRoute("app_login");
-                } else {
-                    $error = "les mots de passe sont pas bon michel !!!!!!";
-                    return $this->render('registration/register.html.twig', [
-                        'registrationForm' => $form->createView(), "error" => $error,
-                    ]);
-
                 }
-
             }
-
-
             return $this->render('registration/register.html.twig', [
-                'registrationForm' => $form->createView(), "error" => $error,
+                'registrationForm' => $form->createView(),
+                "error" => $error,
             ]);
         } else {
             return $this->redirectToRoute("app_accueil");
