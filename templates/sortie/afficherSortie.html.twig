@@ -100,6 +100,12 @@
                     ANNULER
                 </button>
             </a>
+            <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="#btn" name="modifier"
+                        value="modifier">
+                    MODIFIER
+                </button>
+            </a>
         {% endif %}
         {% set ok = true %}
         {% for user in sortie.inscrit %}

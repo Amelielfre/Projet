@@ -22,8 +22,12 @@ class ModificationProfilController extends AbstractController
     /**
      * @Route("/modifier", name="modifier")
      */
-    public function modifProfil(SluggerInterface $slugger,Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function modifProfil(SluggerInterface $slugger, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $user = $this->getUser();
         dump($user);
         $errors[] = null;
@@ -65,7 +69,7 @@ class ModificationProfilController extends AbstractController
 
                 // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
 
                 // Move the file to the directory where brochures are storedtry {
                 $photo->move(
@@ -84,6 +88,25 @@ class ModificationProfilController extends AbstractController
         } else if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && !password_verify($oldPassword, $user->getPassword())) {
             $errors[] = "Pour modifier vos informations, vous devez rentrer votre mot de passe actuel";
             $errors[] = "Pour modifier votre mot de passe, vous devez saisir votre ancien mot de passe, puis le nouveau, puis le confirmer";
+            $photo = $formModifProfil->get('photo')->getData();
+
+            if ($photo) {
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+                // this is needed to safely include the file name as part of the URL$safeFilename = $slugger->slug($originalFilename);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                // Move the file to the directory where brochures are storedtry {
+                $photo->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+                $user->setUrlPhoto($newFilename);
+            }
+            $url = $this->getUser()->getUrlPhoto();
+            $user->setUrlPhoto($url);
+
         }
 
         dump($user);
@@ -100,6 +123,9 @@ class ModificationProfilController extends AbstractController
      */
     public function afficherProfil($id, UserRepository $userRepo): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $user = $userRepo->find($id);
         dump($user);
         return $this->render('modification_profil/profil.html.twig', [

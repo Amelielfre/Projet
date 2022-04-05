@@ -11,56 +11,59 @@
                 {{ message }}
             </div>
         {% endfor %}
-
+        {{ form_start(formModifSortie) }}
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Nom de la sortie :</th>
-                <td>{{ sortie.nom | upper }}</td>
+                <th scope="col">{{ form_label(formModifSortie.nom) }} :</th>
+                <td> {{ form_widget(formModifSortie.nom,{'attr':{'value':sortie.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Date et heure début : :</th>
-                <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
+                <th scope="col">{{ form_label(formModifSortie.dateDebut) }} :</th>
+                <td> {{ form_widget(formModifSortie.dateDebut,{'attr':{'placeholder':sortie.dateDebut | date('d/m/Y') , 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Date limite inscription :</th>
-                <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
+                <th scope="col">{{ form_label(formModifSortie.dateFinInscription) }} :</th>
+                <td> {{ form_widget(formModifSortie.dateFinInscription,{'attr':{'placeholder':sortie.dateFinInscription | date('d/m/Y'), 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Nombre de places :</th>
+                <th scope="col">{{ form_label(formModifSortie.nbInscriptionsMax) }} :</th>
+                <td> {{ form_widget(formModifSortie.nbInscriptionsMax,{'attr':{'value':sortie.nbInscriptionsMax, 'class': "form-control"}}) }}</td>
+
                 <td>{{ nbInscrits }} / {{ sortie.nbInscriptionsMax }}</td>
             </tr>
             <tr>
-                <th scope="col">Durée en minutes :</th>
-                <td>{{ sortie.duree }}</td>
+                <th scope="col">{{ form_label(formModifSortie.duree) }} :</th>
+                <td> {{ form_widget(formModifSortie.duree,{'attr':{'value':sortie.duree, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Description :</th>
-                <td>{{ sortie.description }}</td>
+                <th scope="col">{{ form_label(formModifSortie.description) }} :</th>
+                <td> {{ form_widget(formModifSortie.description,{'attr':{'value':sortie.description, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Campus Organisateur :</th>
-                <td>{{ sortie.organisateur.site.nom }}</td>
+                <th scope="col">{{ form_label(formModifSortie.siteOrganisateur) }} :</th>
+                <td> {{ form_widget(formModifSortie.siteOrganisateur,{'attr':{'value':sortie.organisateur.site.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">Ville :</th>
-                <td>{{ sortie.lieu.ville.nom }}</td>
+                <th scope="col">{{ form_label(formModifSortie.ville) }} :</th>
+                <td> {{ form_widget(formModifSortie.ville,{'attr':{'value':sortie.lieu.ville.nom | upper, 'class': "form-control"}}) }}</td>
+                <td><a href="#id01" class="add-lieu-icone">
+                        <button type="button" class="btn-lieu-custom" id="btn-lieu">
+                            +
+                        </button>
+                    </a></td>
             </tr>
             <tr>
-                <th scope="col">Lieu :</th>
-                <td>{{ sortie.lieu.nom }}</td>
-            </tr>
-            <tr>
-                <th scope="col">Rue :</th>
-                <td>{{ sortie.lieu.rue }}</td>
-            </tr>
-            <tr>
-                <th scope="col">Code Postal :</th>
-                <td>{{ sortie.lieu.ville.codePostal }}</td>
+                <th scope="col">{{ form_label(formModifSortie.lieu) }} :</th>
+                <td> {{ form_widget(formModifSortie.lieu,{'attr':{'value':lieu.nom, 'class': "form-control"}}) }}</td>
+                <td><a href="#id02" class="add-lieu-icone">
+                        <button type="button" class="btn-lieu-custom" id="btn-lieu">
+                            +
+                        </button>
+                    </a></td>
             </tr>
             </thead>
         </table>
-
         <table class="table">
             <thead>
             <tr>
@@ -76,13 +79,11 @@
                     <td>{{ user.nom|upper }}   {{ user.prenom }}</td>
                 </tr>
             {% endfor %}
-
-
             </tbody>
         </table>
 
         {# CHECK BOUTON #}
-        <a href="{{ path('app_accueil') }}">
+        <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">
             <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="retour" value="retour">
                 RETOUR
             </button>
@@ -95,41 +96,116 @@
             </a>
         {% endif %}
         {% if app.user.id == sortie.organisateur.id and sortie.etat.id < 3 %}
-            <a href="#id01">
-                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="#id01" name="annuler"
+            <a href="#id03">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="annuler"
                         value="annuler">
                     ANNULER
                 </button>
             </a>
-        {% endif %}
-        {% set ok = true %}
-        {% for user in sortie.inscrit %}
-            {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
-                <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">
-                    <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="desister"
-                            value="desister">
-                        DESISTER
-                    </button>
-                </a>
-                {% set ok = false %}
-            {% endif %}
-        {% endfor %}
-        {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
-            <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">
-                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="inscription"
-                        value="inscription">
-                    INSCRIPTION
+            <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}">
+                <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="save" value="save">
+                    ENREGISTRER
                 </button>
             </a>
         {% endif %}
 
+        <div id="path_ajax" data-href="{{ path('ajax_lieu_by_ville') }}"></div>
 
+        {{ form_end(formModifSortie) }}
+
+        {#
+        Fenetre modale d'ajout de lieu
+        #}
+        <div id="id02" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter un lieu</h5>
+                        {% if notif %}
+                            <div class="alert alert-info"> {{ notif }} </div>
+                        {% endif %}
+                        <a href="#" class="closebtn">
+                            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(locationForm) }}
+                        <div>
+                            {{ form_label(locationForm.nom) }}
+                            {{ form_widget(locationForm.nom, {'attr': {'class': "form-control nom-lieu"}}) }}
+                            {{ form_errors(locationForm.nom) }}
+                        </div>
+                        <div>
+                            {{ form_label(locationForm.rue) }}
+                            {{ form_widget(locationForm.rue, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(locationForm.rue) }}
+                        </div>
+                        <div>
+                            {{ form_label(locationForm.ville) }}
+                            {{ form_widget(locationForm.ville, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(locationForm.ville) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ajouter le lieu</button>
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                    {{ form_end(locationForm) }}
+                </div>
+            </div>
+        </div>
+
+        {#
+        Fenêtre modal pour ajouter des villes
+        #}
+        <div id="id01" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajouter une ville</h5>
+                        {% if notif %}
+                            <div class="alert alert-info"> {{ notif }} </div>
+                        {% endif %}
+                        <a href="#" class="closebtn">
+                            <button type="button" class="closebtn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="fa-solid fa-circle-xmark"></i></span>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(formVille) }}
+                        <div>
+                            {{ form_label(formVille.nom) }}
+                            {{ form_widget(formVille.nom, {'attr': {'class': "form-control nom-lieu"}}) }}
+                            {{ form_errors(formVille.nom) }}
+                        </div>
+                        <div>
+                            {{ form_label(formVille.codePostal) }}
+                            {{ form_widget(formVille.codePostal, {'attr': {'class': "form-control"}}) }}
+                            {{ form_errors(formVille.codePostal) }}
+                            <div class="error-custom">
+                                {% if errorCpo is defined %}
+                                    {{ errorCpo }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ajouter la ville</button>
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                    {{ form_end(formVille) }}
+                </div>
+            </div>
+        </div>
 
 
         {#
         Fenetre modale d'ajout de motif annulation
         #}
-        <div id="id01" class="modal">
+        <div id="id03" class="modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -159,5 +235,7 @@
                 </div>
             </div>
         </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
     </div>
 {% endblock %}

@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Entity\Ville;
+use App\Form\LieuType;
 use App\Form\SortieType;
+use App\Form\VilleType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,13 +24,25 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AfficherSortieController extends AbstractController
 {
+
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+    {
+        $this->sortieRepo = $sortieRepo;
+        $this->etatRepo = $etatRepo;
+        $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
+    }
+
+
     /**
      * @Route("/afficher/sortie/{id}", name="app_afficher_sortie")
      */
-    public function afficher($id, Request $request, SortieRepository $repoSortie, UserRepository $userRepo): Response
+    public function afficher($id, Request $request): Response
     {
         //Affichage
-        $sortie = $repoSortie->find($id);
+        $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
         $newNb = $sortie->getInscrit()->count();
 
@@ -43,11 +61,11 @@ class AfficherSortieController extends AbstractController
     /**
      * @Route("/afficher/sortie/inscription/{id}", name="app_afficher_sortie_inscription")
      */
-    public function inscription($id, SortieRepository $repoSortie, EntityManagerInterface $em): Response
+    public function inscription($id, EntityManagerInterface $em): Response
     {
         $inscritsSortie = array();
         $user = $this->getUser();
-        $sortie = $repoSortie->find($id);
+        $sortie = $this->sortieRepo->find($id);
 
         //CHECK DATE FIN INSCRIPTION + NB INSCRIPTION MAX
         $time = new \DateTime();
@@ -89,11 +107,11 @@ class AfficherSortieController extends AbstractController
     /**
      * @Route("/afficher/sortie/desister/{id}", name="app_afficher_sortie_desister")
      */
-    public function desister($id, SortieRepository $repoSortie, EntityManagerInterface $em): Response
+    public function desister($id, EntityManagerInterface $em): Response
     {
 
         $user = $this->getUser();
-        $sortie = $repoSortie->find($id);
+        $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
         $newNb = $sortie->getInscrit()->count();
 
@@ -124,18 +142,18 @@ class AfficherSortieController extends AbstractController
     /**
      * @Route("/afficher/sortie/publier/{id}", name="app_afficher_sortie_publier")
      */
-    public function publier($id, EtatRepository $etatRepo, SortieRepository $sortieRepo, EntityManagerInterface $em): Response
+    public function publier($id, EntityManagerInterface $em): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
         $user = $this->getUser();
-        $sortie = $sortieRepo->find($id);
+        $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
         $sortie->addInscrit($user);
         $newNb = $sortie->getInscrit()->count();
 
-        $etat = $etatRepo->find(2);
+        $etat = $this->etatRepo->find(2);
         dump($etat);
         $sortie->setEtat($etat);
         dump($sortie);
@@ -154,17 +172,17 @@ class AfficherSortieController extends AbstractController
     /**
      * @Route("/afficher/sortie/annuler/{id}", name="app_afficher_sortie_annuler")
      */
-    public function annuler($id, EtatRepository $etatRepo, Request $request, SortieRepository $sortieRepo, EntityManagerInterface $em): Response
+    public function annuler($id, Request $request, EntityManagerInterface $em): Response
     {
 
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        $sortie = $sortieRepo->find($id);
+        $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
         //changement de l'etat --> ANNULER
-        $etat = $etatRepo->find(6);
+        $etat = $this->etatRepo->find(6);
         dump($etat);
         $sortie->setEtat($etat);
         dump($sortie);
@@ -189,23 +207,89 @@ class AfficherSortieController extends AbstractController
     /**
      * @Route("/afficher/sortie/modifier/{id}", name="app_afficher_sortie_modifier")
      */
-    public function modifier($id, EtatRepository $etatRepo, Request $request, SortieRepository $sortieRepo, EntityManagerInterface $em): Response
+    public function modifier($id, Request $request, EntityManagerInterface $em): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $sortie = $sortieRepo->find($id);
+
+        $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
         $newNb = $sortie->getInscrit()->count();
+        $lieuSortie = new Lieu();
+        $lieuSortie->getId();
+        $notif = "";
+        $error = "";
 
-        $formSortie = $this->createForm(SortieType::class, $sortie);
-        $formSortie->handleRequest($request);
+        //Partie formulaire pour ajouter des lieux avec la fenêtre modal
+        $lieu = new Lieu();
+        $formLieu = $this->createForm(LieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if ($formLieu->isSubmitted() && $formLieu->isValid()) {
+            if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])) {
+                $notif = "Ce lieu existe déjà";
+            } elseif ($this->lieuRepo->findBy(['rue' => $lieu->getRue()])) {
+                $notif = "Ce lieu existe déjà";
+            } else {
+                $notif = "Lieu ajouté";
+                $em->persist($lieu);
+                $em->flush();
+            }
+        }
+
+        $lieuForm = $this->createForm(LieuType::class);
+
+        //Partie formulaire pour ajouter des villes avec la fenêtre modal
+        $ville = new Ville();
+        $errorCpo = "";
+        $formVille = $this->createForm(VilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if ($formVille->isSubmitted() && $formVille->isValid()) {
+            if (is_int($ville->getCodePostal())) {
+                $errorCpo = "Code Postal inconnu";
+            } else {
+                if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
+                    $notif = "Cette ville existe déjà";
+                } else {
+                    $notif = "Ville ajoutée";
+                    $em->persist($ville);
+                    $em->flush();
+                }
+            }
+        }
+
+        //check formulaire complet
+        $formModifSortie = $this->createForm(SortieType::class, $sortie);
+        $formModifSortie->handleRequest($request);
+
+        if ($formModifSortie->isSubmitted() && $formModifSortie->isValid()) {
+            if ($sortie->getDuree() > 2880) {
+                $error = "La durée est trop longue (max 2880 min = 48h)";
+            } else {
+                //on vient ajouter en BDD
+                $em->persist($sortie);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
+            }
+        }
+        //on vient ajouter en BDD
+        $em->persist($sortie);
+        $em->flush();
 
         return $this->render('sortie/modifierSortie.html.twig', [
             'sortie' => $sortie,
             'users' => $users,
+            "notif" => $notif,
+            "error" => $error,
+            "errorCpo" => $errorCpo,
+            'lieu' => $lieuSortie,
             'nbInscrits' => $newNb,
-            'formSortie' => $formSortie->createView()
+            "locationForm" => $lieuForm->createView(),
+            'formVille' => $formVille->createView(),
+            'formModifSortie' => $formModifSortie->createView()
         ]);
     }
 }
