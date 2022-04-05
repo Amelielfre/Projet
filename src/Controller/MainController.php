@@ -48,4 +48,18 @@ class MainController extends AbstractController
             'sorties' => $sorties
         ]);
     }
+
+    /**
+     * @Route("/check", name="app_check")
+     */
+    public function check(){
+
+        if(!$this->getUser()->getActif()){
+            return $this->redirectToRoute('app_logout');
+        } else {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+
+    }
 }
