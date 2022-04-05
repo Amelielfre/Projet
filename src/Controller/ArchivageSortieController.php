@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ArchivesSorties;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,14 +15,14 @@ class ArchivageSortieController extends AbstractController
     /**
      * @Route("/", name="app_archivage_sortie")
      */
-    public function index(SortieRepository $repoSortie, EntityManagerInterface $em): Response
+    public function index(SortieRepository $repoSortie, EtatRepository $repoEtat, EntityManagerInterface $em): Response
     {
 
-        $date = new \DateTime(date('Y-m-d H:i:s'));
-        $date->sub(new \DateInterval('P30D'));
-        $sorties = $repoSortie->findAArchiver($date);
-
-        dump($sorties);
+        // archivage des sorties terminees depuis plus de 30 jours
+        $now = new \DateTime(date('Y-m-d H:i:s'));
+        $dateArchivage = clone $now;
+        $dateArchivage->sub(new \DateInterval('P30D'));
+        $sorties = $repoSortie->findAArchiver($dateArchivage);
 
         foreach ($sorties as $sortie) {
 
@@ -49,16 +50,39 @@ class ArchivageSortieController extends AbstractController
             $em->remove($sortie);
             $em->flush();
 
-    }
-
-//        return $this->render('archivage_sortie/index.html.twig', [
-//            'controller_name' => 'ArchivageSortieController',
-//        ]);
-
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        } else {
-            return $this->redirectToRoute('app_accueil');
         }
+
+        // actualisation des sorties cloturees
+        $sorties = $repoSortie->findACloturer($now);
+        dump($sorties);
+        if ($sorties != null) {
+            $etat = $repoEtat->find(3);
+            foreach ($sorties as $sortie) {
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+            }
+        }
+
+        // actualisation des sorties en cours
+        $sorties = $repoSortie->findEnCours($now);
+        if ($sorties != null) {
+            $etat = $repoEtat->find(4);
+            foreach ($sorties as $sortie) {
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+            }
+        }
+
+//        if (!$this->getUser()) {
+//            return $this->redirectToRoute('app_login');
+//        } else {
+//            return $this->redirectToRoute('app_accueil');
+//        }
+
+        return $this->render('archivage_sortie/index.html.twig', [
+            'controller_name' => 'salut'
+        ]);
     }
 }

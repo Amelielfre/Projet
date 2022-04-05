@@ -122,7 +122,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findAArchiver($date)
     {
 
-        //creation du query builder et de la date recherchee
+        //creation du query builder
         $qb = $this->createQueryBuilder('s');
 
         //recuperation des sorties qui ont plus d'un mois depuis leur déroulement
@@ -136,7 +136,8 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return int
      */
-    public function countParticipants($id){
+    public function countParticipants($id)
+    {
 
         //creation du query builder et de la date recherchee
         $qb = $this->createQueryBuilder('s');
@@ -149,6 +150,46 @@ class SortieRepository extends ServiceEntityRepository
 
         // execution de la requete et envoie du resultat
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findACloturer($now)
+    {
+
+        //creation du query builder
+        $qb = $this->createQueryBuilder('s');
+
+        //recuperation des sorties dont la date d'inscription est passee et qui ne sont encore ouvertes
+        $qb->where('s.dateFinInscription < :now')
+            ->setParameter('now', $now)
+            ->join('s.etat', 'e')
+            ->andWhere('e.id = :etat')
+            ->setParameter('etat', 2);
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findEnCours($now)
+    {
+
+        //creation du query builder
+        $qb = $this->createQueryBuilder('s');
+
+        //recuperation des sorties qui sont en cours de deroulement
+        $qb->where('s.dateDebut < :now')
+            ->setParameter('now', $now)
+            ->join('s.etat', 'e')
+            ->andWhere($qb->expr()->between('e.id', 2, 3));
+
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
     }
 
 //     /**
