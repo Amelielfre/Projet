@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="form-custom">
-        <h1>Afficher une sortie</h1>
+        <h1 class="mt-5 mb-5">{{ sortie.nom | upper }}</h1>
 
         {% for message in app.flashes('warning') %}
             <div class="alert alert-danger">
@@ -61,11 +61,11 @@
             </thead>
         </table>
 
-        <table class="table">
+        <table class="table participant">
             <thead>
             <tr>
                 <th scope="col">Pseudo :</th>
-                <th scope="col">Nom : :</th>
+                <th scope="col">Nom  :</th>
             </tr>
             </thead>
             <tbody>

@@ -233,8 +233,7 @@ div#navbarSupportedContent{
     height: 15%;
 
 }
-/*************************************/
-/************PROFIL BOOTSTRAP*********************/
+
 
 
 /***********************/
@@ -373,4 +372,10 @@ label{
     width: 50%;
     height: auto;
 
+}
+/*************************************/
+/**********AFFICHAGE PROFIL*********************/
+
+.participant{
+    display: block;
 }
