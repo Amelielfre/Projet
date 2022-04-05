@@ -20,12 +20,11 @@ final class Version20220404140050 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE archives_sorties ADD date_debut DATETIME NOT NULL, ADD date_fin_inscription DATETIME NOT NULL, ADD nom_lieu VARCHAR(255) NOT NULL, ADD cp_ville VARCHAR(5) NOT NULL, ADD nom_ville VARCHAR(255) NOT NULL, DROP date_heure_debut, DROP date_limite_inscription, CHANGE duree duree INT DEFAULT NULL, CHANGE nb_inscription_max nb_inscriptions_max INT NOT NULL');
+        $this->addSql('CREATE TABLE archives_sorties (id INT AUTO_INCREMENT NOT NULL, nom_lieu VARCHAR(255) NOT NULL, date_debut DATETIME NOT NULL, duree INT DEFAULT NULL, date_fin_inscription DATETIME NOT NULL, nb_inscriptions_max INT NOT NULL, description LONGTEXT DEFAULT NULL, pseudo_organisateur VARCHAR(255) NOT NULL, nom_organisateur VARCHAR(255) NOT NULL, prenom_organisateur VARCHAR(255) NOT NULL, nom_lieu VARCHAR(255) NOT NULL, cp_ville VARCHAR(5) NOT NULL, ADD nom_ville VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE archives_sorties ADD date_heure_debut DATETIME NOT NULL, ADD date_limite_inscription DATETIME NOT NULL, DROP date_debut, DROP date_fin_inscription, DROP nom_lieu, DROP cp_ville, DROP nom_ville, CHANGE duree duree INT NOT NULL, CHANGE nb_inscriptions_max nb_inscription_max INT NOT NULL');
+
     }
 }
