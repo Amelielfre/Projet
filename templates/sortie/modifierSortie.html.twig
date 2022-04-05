@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Sortie{% endblock %}
+{% block title %}Modifier Sortie{% endblock %}
 
 {% block body %}
     <div class="form-custom">
-        <h1>Afficher une sortie</h1>
+        <h1>Modifier Sortie</h1>
 
         {% for message in app.flashes('warning') %}
             <div class="alert alert-danger">
@@ -70,7 +70,6 @@
             </thead>
             <tbody>
 
-
             {% for user in users %}
                 <tr>
                     <td><a href="{{ path('app_profil_afficher', {'id':user.id}) }}">{{ user.pseudo }}</a></td>
@@ -81,6 +80,8 @@
 
             </tbody>
         </table>
+
+        {# CHECK BOUTON #}
         <a href="{{ path('app_accueil') }}">
             <button type="submit" class="btn btn-sm btn-primary btn-custom" id="btn" name="retour" value="retour">
                 RETOUR

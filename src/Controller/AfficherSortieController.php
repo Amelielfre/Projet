@@ -26,6 +26,8 @@ class AfficherSortieController extends AbstractController
         //Affichage
         $sortie = $repoSortie->find($id);
         $users = $sortie->getInscrit();
+        $newNb = $sortie->getInscrit()->count();
+
 
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
@@ -33,6 +35,7 @@ class AfficherSortieController extends AbstractController
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
             'users' => $users,
+            'nbInscrits' => $newNb,
             'formSortie' => $formSortie->createView()
         ]);
     }
@@ -78,6 +81,7 @@ class AfficherSortieController extends AbstractController
         $em->flush();
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
+            'nbInscrits' => $newNb,
             'users' => $users,
         ]);
     }
@@ -91,6 +95,8 @@ class AfficherSortieController extends AbstractController
         $user = $this->getUser();
         $sortie = $repoSortie->find($id);
         $users = $sortie->getInscrit();
+        $newNb = $sortie->getInscrit()->count();
+
         //check user n'est pas l'organisateur
         if ($user->getId() == $sortie->getOrganisateur()->getId()) {
             $this->addFlash('warning', "Vous ne pouvez pas vous desister, vous devez annuler la sortie");
@@ -110,6 +116,7 @@ class AfficherSortieController extends AbstractController
         }
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
+            'nbInscrits' => $newNb,
             'users' => $users,
         ]);
     }
@@ -126,6 +133,7 @@ class AfficherSortieController extends AbstractController
         $sortie = $sortieRepo->find($id);
         $users = $sortie->getInscrit();
         $sortie->addInscrit($user);
+        $newNb = $sortie->getInscrit()->count();
 
         $etat = $etatRepo->find(2);
         dump($etat);
@@ -137,6 +145,7 @@ class AfficherSortieController extends AbstractController
 
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
+            'nbInscrits' => $newNb,
             'users' => $users
         ]);
     }
@@ -185,7 +194,18 @@ class AfficherSortieController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
+        $sortie = $sortieRepo->find($id);
+        $users = $sortie->getInscrit();
+        $newNb = $sortie->getInscrit()->count();
 
+        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formSortie->handleRequest($request);
 
+        return $this->render('sortie/modifierSortie.html.twig', [
+            'sortie' => $sortie,
+            'users' => $users,
+            'nbInscrits' => $newNb,
+            'formSortie' => $formSortie->createView()
+        ]);
     }
 }
