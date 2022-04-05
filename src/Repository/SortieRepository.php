@@ -133,6 +133,24 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return int
+     */
+    public function countParticipants($id){
+
+        //creation du query builder et de la date recherchee
+        $qb = $this->createQueryBuilder('s');
+
+        // compte du nombre de participants à une sortie
+        $qb->andWhere('s.id = :id')
+            ->setParameter('id', $id)
+            ->join('s.inscrit', 'i')
+            ->select($qb->expr()->count('i.id'));
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 //     /**
 //      * @return Sortie[] Returns an array of Sortie objects
 //      */

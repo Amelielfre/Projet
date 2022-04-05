@@ -77,6 +77,11 @@ class ArchivesSorties
      */
     private $nomVille;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbParticipants;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -222,6 +227,18 @@ class ArchivesSorties
     public function setNomVille(string $nomVille): self
     {
         $this->nomVille = $nomVille;
+
+        return $this;
+    }
+
+    public function getNbParticipants(): ?int
+    {
+        return $this->nbParticipants;
+    }
+
+    public function setNbParticipants(?int $nbParticipants): self
+    {
+        $this->nbParticipants = $nbParticipants;
 
         return $this;
     }

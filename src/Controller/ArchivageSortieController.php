@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArchivageSortieController extends AbstractController
 {
     /**
-     * @Route("/archivage", name="app_archivage_sortie")
+     * @Route("/", name="app_archivage_sortie")
      */
     public function index(SortieRepository $repoSortie, EntityManagerInterface $em): Response
     {
@@ -21,7 +21,11 @@ class ArchivageSortieController extends AbstractController
         $date->sub(new \DateInterval('P30D'));
         $sorties = $repoSortie->findAArchiver($date);
 
+        dump($sorties);
+
         foreach ($sorties as $sortie) {
+
+            // creation de l'objet archive avec sauvegarde des informations a conserver
             $archiveSortie = new ArchivesSorties();
             $archiveSortie->setNomSortie($sortie->getNom());
             $archiveSortie->setDateDebut($sortie->getDateDebut());
@@ -35,14 +39,26 @@ class ArchivageSortieController extends AbstractController
             $archiveSortie->setNomLieu($sortie->getLieu()->getNom());
             $archiveSortie->setNomVille($sortie->getLieu()->getVille()->getNom());
             $archiveSortie->setCpVille($sortie->getLieu()->getVille()->getCodePostal());
+            $archiveSortie->setNbParticipants($repoSortie->countParticipants($sortie->getId()));
 
+            // archivage en bdd
             $em->persist($archiveSortie);
+            $em->flush();
+
+            // suppression de la sortie archivee
+            $em->remove($sortie);
             $em->flush();
 
     }
 
-        return $this->render('archivage_sortie/index.html.twig', [
-            'controller_name' => 'ArchivageSortieController',
-        ]);
+//        return $this->render('archivage_sortie/index.html.twig', [
+//            'controller_name' => 'ArchivageSortieController',
+//        ]);
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        } else {
+            return $this->redirectToRoute('app_accueil');
+        }
     }
 }
