@@ -127,23 +127,23 @@
                         </td>
                         <td>
                             {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
-                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye" title="Afficher"></i></a>
                             {% endif %}
                             {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
-                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye" title="Afficher"></i></a>
                                 <a href="#">Modifier</a>
-                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">Publier</a>
+                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}"><i class="fa-solid fa-check" title="Publier"></i></a>
                             {% endif %}
                             {% set ok = true %}
                             {% for user in sortie.inscrit %}
                                 {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
-                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se
-                                        désister</a>
+                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">
+                                        <i class="fa-solid fa-person-running" title="Désister"></i></a>
                                     {% set ok = false %}
                                 {% endif %}
                             {% endfor %}
                             {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
-                                <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
+                                <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}"><i class="fa-solid fa-list-check" title="S'inscrire"></i></a>
                             {% endif %}
                         </td>
                     </tr>
