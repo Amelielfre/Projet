@@ -71,9 +71,9 @@ class SortieController extends AbstractController
 
 
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
-            if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])){
+            if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])) {
                 $notif = "Ce lieu existe déjà";
-            }elseif ($this->lieuRepo->findBy( ['rue' => $lieu->getRue()])){
+            } elseif ($this->lieuRepo->findBy(['rue' => $lieu->getRue()])) {
                 $notif = "Ce lieu existe déjà";
             } else {
                 $notif = "Lieu ajouté";
@@ -91,9 +91,9 @@ class SortieController extends AbstractController
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
-            if(!is_int($ville->getCodePostal())){
+            if (!is_int($ville->getCodePostal())) {
                 $errorCpo = "Code Postal inconnu";
-            }else {
+            } else {
                 if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
                     $notif = "Cette ville existe déjà";
                 } else {
@@ -109,10 +109,8 @@ class SortieController extends AbstractController
 
         //on vérifie si le formulaire complet est submit et validé
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            if($sortie->getDuree()>2880){
+            if ($sortie->getDuree() > 2880) {
                 $error = "La durée est trop longue (max 2880 min = 48h)";
-            } else if (is_int($sortie->getNbInscriptionsMax())){
-                $error = "Le nombre de participant est inconnu";
             } else {
                 //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
                 if ($request->request->get("save")) {
@@ -128,8 +126,8 @@ class SortieController extends AbstractController
                 $em->flush();
                 return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
             }
-
         }
+
 
         return $this->render('sortie/creation.html.twig', [
             "notif" => $notif,

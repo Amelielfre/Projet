@@ -96,7 +96,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         // execution de la requete et envoie du resultat
-        return $qb->getQuery()->getResult();
+        return $qb->orderBy('s.dateDebut', 'ASC')->getQuery()->getResult();
     }
 
     /**
