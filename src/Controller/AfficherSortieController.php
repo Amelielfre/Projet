@@ -184,17 +184,15 @@ class AfficherSortieController extends AbstractController
 
         $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
+        $nbInscrit = " ";
         //changement de l'etat --> ANNULER
         $etat = $this->etatRepo->find(6);
-        dump($etat);
         $sortie->setEtat($etat);
-        dump($sortie);
 
         //Partie formulaire pour ajouter le motif d'annulation avec la fenêtre modal
 
         $motif = $request->request->get("motifAnnulation");
         $sortie->setMotifAnnulation($motif);
-        dump($motif);
 
 
         $em->persist($sortie);
@@ -203,6 +201,7 @@ class AfficherSortieController extends AbstractController
         return $this->render('sortie/afficherSortie.html.twig', [
             'sortie' => $sortie,
             'users' => $users,
+            'nbInscrits' => $nbInscrit
         ]);
 
     }
