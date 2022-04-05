@@ -49,14 +49,23 @@ class ArchivageSortieController extends AbstractController
             // suppression de la sortie archivee
             $em->remove($sortie);
             $em->flush();
-
         }
 
         // actualisation des sorties cloturees
         $sorties = $repoSortie->findACloturer($now);
-        dump($sorties);
         if ($sorties != null) {
             $etat = $repoEtat->find(3);
+            foreach ($sorties as $sortie) {
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+            }
+        }
+
+        // annulation des sorties creees non ouvertes a la fin des inscriptions
+        $sorties = $repoSortie->findAAnnuler($now);
+        if ($sorties != null) {
+            $etat = $repoEtat->find(6);
             foreach ($sorties as $sortie) {
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
@@ -75,14 +84,25 @@ class ArchivageSortieController extends AbstractController
             }
         }
 
-//        if (!$this->getUser()) {
-//            return $this->redirectToRoute('app_login');
-//        } else {
-//            return $this->redirectToRoute('app_accueil');
-//        }
+        // actualisation des sorties passees
+        $sorties = $repoSortie->findPassees($now);
+        if ($sorties != null) {
+            $etat = $repoEtat->find(5);
+            foreach ($sorties as $sortie) {
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+                $em->flush();
+            }
+        }
 
-        return $this->render('archivage_sortie/index.html.twig', [
-            'controller_name' => 'salut'
-        ]);
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        } else {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+//        return $this->render('archivage_sortie/index.html.twig', [
+//            'controller_name' => 'salut'
+//        ]);
     }
 }

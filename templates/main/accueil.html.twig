@@ -108,49 +108,47 @@
             <tbody>
             {% if sorties != null %}
                 {% for sortie in sorties %}
-                    {% if (sortie.etat.id == 2)
-                        or (sortie.etat.id == 1
-                        and app.user.id == sortie.organisateur.id) %}
-                        <tr>
-                            <td>{{ sortie.nom }}</td>
-                            <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
-                            <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
-                            <td>{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.etat.libelle }}</td>
-                            <td>
-                                {% for user in sortie.inscrit %}
-                                    {% if app.user.id == user.id %}
-                                        X
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td>
-                                <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
-                            </td>
-                            <td>
-                                {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
-                                    <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateDebut | date('d/m/Y') }} à {{ sortie.dateDebut | date('H:i') }}</td>
+                        <td>{{ sortie.dateFinInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>
+                            {% for user in sortie.inscrit %}
+                                {% if app.user.id == user.id %}
+                                    X
                                 {% endif %}
-                                {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
-                                    <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
-                                    <a href="#">Modifier</a>
-                                    <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">Publier</a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                        </td>
+                        <td>
+                            {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                            {% endif %}
+                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
+                                <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}">Afficher</a>
+                                <a href="#">Modifier</a>
+                                <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}">Publier</a>
+                            {% endif %}
+                            {% set ok = true %}
+                            {% for user in sortie.inscrit %}
+                                {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
+                                    <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se
+                                        désister</a>
+                                    {% set ok = false %}
                                 {% endif %}
-                                {% set ok = true %}
-                                {% for user in sortie.inscrit %}
-                                    {% if app.user.id == user.id and app.user.id != sortie.organisateur.id %}
-                                        <a href="{{ path('app_afficher_sortie_desister', {'id':sortie.id}) }}">Se
-                                            désister</a>
-                                        {% set ok = false %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
-                                    <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endif %}
+                            {% endfor %}
+                            {% if ok == true and app.user.id != sortie.organisateur.id and sortie.etat.id == 2 %}
+                                <a href="{{ path('app_afficher_sortie_inscription', {'id':sortie.id}) }}">S'inscrire</a>
+                            {% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
+            {% else %}
+                <h4>Aucune sortie ne correspond à votre recherche !</h4>
             {% endif %}
             </tbody>
         </table>

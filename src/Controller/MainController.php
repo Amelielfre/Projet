@@ -41,6 +41,7 @@ class MainController extends AbstractController
 
             //execution de la requete
             $sorties = $repoSortie->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);
+            dump($sorties);
         }
 
         return $this->render('main/accueil.html.twig', [

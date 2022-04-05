@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -77,8 +78,10 @@ class SortieRepository extends ServiceEntityRepository
         // ajout du filtre par sorties passees si necessaire
         if ($passees == true) {
             $qb->join("s.etat", "e")
-                ->andWhere('e.id = :etat')
-                ->setParameter('etat', 5);
+                ->andWhere('e.id = 5');
+        } else {
+            $qb->join("s.etat", "e")
+                ->andWhere($qb->expr()->between('e.id', 1, 4));
         }
 
         // ajout des mot cles a la requete si necessaire
@@ -104,7 +107,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findAccueil()
     {
-
         // creation du query builder
         $qb = $this->createQueryBuilder('s');
 
@@ -113,7 +115,7 @@ class SortieRepository extends ServiceEntityRepository
             ->where('e.id = 2');
 
         // execution de la requete et envoie du resultat
-        return $qb->getQuery()->getResult();
+        return $qb->orderBy('s.dateDebut', 'ASC')->getQuery()->getResult();
     }
 
     /**
@@ -121,7 +123,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findAArchiver($date)
     {
-
         //creation du query builder
         $qb = $this->createQueryBuilder('s');
 
@@ -138,7 +139,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function countParticipants($id)
     {
-
         //creation du query builder et de la date recherchee
         $qb = $this->createQueryBuilder('s');
 
@@ -157,7 +157,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findACloturer($now)
     {
-
         //creation du query builder
         $qb = $this->createQueryBuilder('s');
 
@@ -177,7 +176,6 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findEnCours($now)
     {
-
         //creation du query builder
         $qb = $this->createQueryBuilder('s');
 
@@ -187,6 +185,47 @@ class SortieRepository extends ServiceEntityRepository
             ->join('s.etat', 'e')
             ->andWhere($qb->expr()->between('e.id', 2, 3));
 
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findAAnnuler($now)
+    {
+        //creation du query builder
+        $qb = $this->createQueryBuilder('s');
+
+        //recuperation des sorties qui sont a annuler
+        $qb->where('s.dateFinInscription < :now')
+            ->setParameter('now', $now)
+            ->join('s.etat', 'e')
+            ->andWhere('e.id = :creee')
+            ->setParameter('creee', 1);
+
+
+        // execution de la requete et envoie du resultat
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Sortie[] Returns an array of Sortie objects
+     */
+    public function findPassees($date)
+    {
+        //creation du query builder
+        $qb = $this->createQueryBuilder('s');
+
+        //ajustement de la date
+        $date->sub(new \DateInterval('P1D'));
+
+        //recuperation des sorties qui sont a passer a l'etat passee
+        $qb->where('s.dateDebut < :date')
+            ->setParameter('date', $date)
+            ->join('s.etat', 'e')
+            ->andWhere($qb->expr()->between('e.id', 2, 4));
 
         // execution de la requete et envoie du resultat
         return $qb->getQuery()->getResult();
