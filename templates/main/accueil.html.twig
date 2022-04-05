@@ -44,11 +44,11 @@
     </div>
     <h4>Filtrer les sorties</h4>
     {{ form_start(formFiltres) }}
-    <div class="filtres row mb-5">
+    <div class=" filtres row mb-5">
 
-        <div class="left col-4">
+        <div class=" left col-xl-4   ">
 
-            <div class="champs">
+            <div class="champs ">
                 {{ form_label(formFiltres.site) }}
                 {{ form_widget(formFiltres.site) }}
             </div>
@@ -65,7 +65,8 @@
                 {{ form_widget(formFiltres.dateFin) }}
             </div>
         </div>
-        <div class="middle col-4 offset-1">
+
+        <div class="middle col-xl-4 offset-xl-1  ">
             <div class="champs">
                 {{ form_widget(formFiltres.orga) }}
                 {{ form_label(formFiltres.orga) }}
@@ -83,7 +84,7 @@
                 {{ form_label(formFiltres.passees) }}
             </div>
         </div>
-        <div class="right col-2 offset-1">
+        <div class="right col-xl-2 offset-xl-1">
             <div class="bouton">
                 <button class="btn btn-primary btn-lg" type="submit">Rechercher</button>
             </div>
@@ -153,7 +154,7 @@
             </tbody>
         </table>
     </div>
-    <div class="bouton mt-3">
+    <div class="bouton mt-4 col-sm-3 ">
         <a class="btn btn-primary btn-lg" href="{{ path('app_sortie_creation') }}">Proposer une sortie</a>
     </div>
 {% endblock %}

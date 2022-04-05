@@ -98,11 +98,13 @@ div#navbarSupportedContent{
 
 /*********************************************/
 /************Filtre **************************/
-
-{
+.left{
     display: block;
-    width: 150px;
-    float: left;
+    align-items: flex-start;
+}
+.middle{
+    display: block;
+    align-items: flex-end;
 }
 
 .form-control-filtre{
