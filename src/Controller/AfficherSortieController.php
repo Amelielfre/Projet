@@ -123,11 +123,14 @@ class AfficherSortieController extends AbstractController
             $time = new \DateTime();
             if ($sortie->getDateDebut() < $time) {
                 $this->addFlash('warning', "Il est trop tard pour se désister");
+            } else {
+                $sortie->removeInscrit($user);
+                $nb = $sortie->getInscrit()->count();
+                if ( $sortie->getEtat()== 3 and $sortie->getNbInscriptionsMax() > $nb) {
+                    $etat = $this->etatRepo->find(2);
+                    $sortie->setEtat($etat);
+                }
             }
-
-            // DESISTER
-
-            $sortie->removeInscrit($user);
 
             $em->persist($sortie);
             $em->flush();
