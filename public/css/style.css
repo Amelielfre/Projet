@@ -137,6 +137,11 @@ div#navbarSupportedContent{
     align-items: flex-end;
 }
 
+.site-input select {
+    width: 160px !important;
+    height: 30px;
+}
+
 .form-control-filtre{
     padding: 5px;
 }
@@ -156,16 +161,93 @@ div#navbarSupportedContent{
 }
 
 .filtres{
-    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
-    padding: 20px 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    padding: 30px 30px;
+    border-radius: 10px;
+}
+.check-box-width{
+    width: 370px;
 }
 
+.checkbox-group{
+    padding: 15px 15px;
+    border-radius: 10px;
+}
 
+.filtre-button{
+    background-color: #657ED4;
+    transition: 0.3s;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.filtre-button:hover{
+    background-color: white;
+    color: #657ED4;
+    border: 1px solid #657ED4;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px inset !important;
+}
+
+/*****************/
+
+/**select filtre**/
+.filtres select {
+    padding: 10px;
+    color: #231e1e;
+    border: 1px solid #bbb1ff;
+    border-radius: 10px;
+    width: 220px !important;
+    height: 45px;
+    transition: 0.2s;
+    box-shadow: rgba(50, 50, 93, 0.05) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.filtres select:hover{
+    border: none;
+    color: #211e1e;
+    background-color: #eaebff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.filtres select:focus{
+    outline: none !important;
+    background-color: #eaebff;
+    color: #211e1e;
+    transform: scale(1.05);
+}
+
+/*****************/
+/**input filtre**/
+.filtres input {
+    color: #231e1e;
+    border: 1px solid #bbb1ff;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.2s;
+    box-shadow: rgba(50, 50, 93, 0.05) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.filtres input:hover{
+    border: none;
+    color: #211e1e;
+    background-color: #eaebff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.filtres input:focus{
+    color: #211e1e;
+    background-color: #eaebff;
+    outline: none !important;
+    transform: scale(1.05);
+}
 /********************************************/
 /**************FORMULAIRE******************/
 .form-custom{
     margin-top: 25px;
     padding: 20px 20px;
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
 }
 
 .check-group{

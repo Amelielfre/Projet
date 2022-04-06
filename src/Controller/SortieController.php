@@ -45,32 +45,41 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request, EntityManagerInterface $em
     ): Response
     {
+
         $sortie = new Sortie();
         $notif[] = null;
         $error = "";
+
+
         //vérification du user en session
         if ($this->getUser()) {
+
             //on récupère l'utilisateur connecté
             $user = $this->getUser();
+
+            //on set l'organisteur de la sortie par le User qui est connecté
             $sortie->setOrganisateur($user);
 
-            //on vient l'ajouter dans la table sortieId_userId en BDD
+            //on vient l'ajouter dans la table sortieId_userId en BDD pour
+            //l'ajouter à la liste des inscrits
             $sortie->addInscrit($user);
 
+            //on set le site orgranisteur par celui du User connecté
             $sortie->setSiteOrganisateur($this->getUser()->getSite());
         } else {
-            //si l'utilisateur qui n'est pas co
+            //si l'utilisateur n'est pas connecté et qu'il
             // tente d'aller sur la page de création il est redirigé vers le login
             return $this->redirectToRoute('app_login');
         }
 
+        //***************************************************************
         //Partie formulaire pour ajouter des lieux avec la fenêtre modal
         $lieu = new Lieu();
         $formLieu = $this->createForm(LieuType::class, $lieu);
         $formLieu->handleRequest($request);
 
-
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
+            //vérification des contraintes de sécurité
             if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])) {
                 if ($this->lieuRepo->findBy(['rue' => $lieu->getRue()])) {
                     $notif["lieu"] = "Ce lieu existe déjà";
@@ -80,8 +89,9 @@ class SortieController extends AbstractController
             if ($lieu->getNom() == null or $lieu->getRue() == null) {
                 $notif["lieu"] = "Veuillez remplir les champs";
             }
-            dump($lieu->getNom());
-            dump($notif);
+
+
+            //on vient vérifier le nb d'erreurs et on vient ajouter en BDD
             if (count($notif) < 2) {
                 $notif["lieu"] = "Lieu ajouté";
                 $em->persist($lieu);
@@ -91,28 +101,33 @@ class SortieController extends AbstractController
         }
         $lieuForm = $this->createForm(LieuType::class);
 
+
+        //***************************************************************
         //Partie formulaire pour ajouter des villes avec la fenêtre modal
         $ville = new Ville();
         $formVille = $this->createForm(VilleType::class, $ville);
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
+
+            //vérification des contraintes de sécurité
             if ($ville->getCodePostal() == null or $ville->getNom() == null) {
                 $notif["ville"] = "Veuillez remplir les champs";
             }
-            if (!is_numeric($ville->getCodePostal())) {
-                $notif["ville"] = "Code Postal inconnu";
-            }
-            if (strlen($ville->getCodePostal()) != 5) {
+            if (!is_numeric($ville->getCodePostal()) or strlen($ville->getCodePostal()) != 5) {
                 $notif["ville"] = "Code Postal inconnu";
             }
 
             $ville1 = $this->villeRepo->findBy(['nom' => $ville->getNom()]);
             $ville2 = $this->villeRepo->findBy(['codePostal' => $ville->getCodePostal()]);
-            if($ville1[0]->getId() ==  $ville2[0]->getId()){
+
+            if ($ville1 != null && $ville2 != null) {
+                if ($ville1[0]->getId() == $ville2[0]->getId()) {
                     $notif["ville"] = "Cette ville existe déjà";
+                }
             }
 
+            //on vient vérifier le nb d'erreurs et on vient ajouter en BDD
             if (count($notif) < 2) {
                 $notif["ville"] = "Ville ajoutée";
                 $em->persist($ville);
@@ -120,6 +135,8 @@ class SortieController extends AbstractController
             }
         }
 
+        //***************************************************************
+        //Partie du formulaire pour créer une sortie
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
@@ -128,7 +145,7 @@ class SortieController extends AbstractController
             if ($sortie->getDuree() > 2880) {
                 $error = "La durée est trop longue (max 2880 min = 48h)";
             } else {
-                //si le user à cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
+                //si le user a cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
                 if ($request->request->get("save")) {
                     $etat = $this->etatRepo->find(1);
                     $sortie->setEtat($etat);
@@ -145,6 +162,8 @@ class SortieController extends AbstractController
         }
 
 
+        //Redirection vers la page de création sortie, avec tout les formulaires
+        //ainsi que les potentielles erreurs
         return $this->render('sortie/creation.html.twig', [
             "notif" => $notif,
             "error" => $error,
