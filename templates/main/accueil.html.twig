@@ -126,11 +126,11 @@
                             <a href="{{ path('app_profil_afficher', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
                         <td>
-                            {% if app.user.id != sortie.organisateur.id or sortie.etat.id != 1 %}
+                            {% if app.user.id != sortie.organisateur.id and sortie.etat.id != 1 %}
                                 <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye"
                                                                                                  title="Afficher"></i></a>
                             {% endif %}
-                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
+                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id < 4 %}
                                 <a href="{{ path('app_afficher_sortie', {'id':sortie.id}) }}"><i class="fa-solid fa-eye"
                                                                                                  title="Afficher"></i></a>
                                 <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}"><i

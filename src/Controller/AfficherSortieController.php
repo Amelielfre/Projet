@@ -232,9 +232,10 @@ class AfficherSortieController extends AbstractController
         $user = $this->getUser();
         $sortie = $this->sortieRepo->find($id);
 
-        if (!$user->getId() == $sortie->getOrganisateur()->getId()) {
+        if ($user->getId() != $sortie->getOrganisateur()->getId()) {
             return $this->redirectToRoute('app_accueil');
         }
+
 
         $users = $sortie->getInscrit();
         $newNb = $sortie->getInscrit()->count();
