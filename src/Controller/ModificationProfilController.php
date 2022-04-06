@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ModificationProfilType;
 
+use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
+use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +23,20 @@ use Symfony\Component\String\Slugger\SluggerInterface;
  */
 class ModificationProfilController extends AbstractController
 {
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+    {
+        $this->sortieRepo = $sortieRepo;
+        $this->etatRepo = $etatRepo;
+        $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
+    }
+
     /**
      * @Route("/modifier", name="modifier")
      */
-    public function modifProfil(UserRepository $userRepo, SluggerInterface $slugger, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function modifProfil( SluggerInterface $slugger, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         if (!$this->getUser()) {
@@ -44,13 +58,13 @@ class ModificationProfilController extends AbstractController
         $password = $formModifProfil->get("password")->getData();
         $confirmPassword = $formModifProfil->get("confirm_password")->getData();
         if($user->getEmail() != $oldEmail){
-            if($userRepo->findBy(["email"=>$user->getEmail()])){
+            if($this->userRepo->findBy(["email"=>$user->getEmail()])){
                 $errors["email"] = "Email déjà existant";
             }
         }
         if ($formModifProfil->isSubmitted() && $formModifProfil->isValid() && password_verify($oldPassword, $user->getPassword())) {
             if($user->getPseudo() != $oldPseudo){
-                if($userRepo->findBy(["pseudo"=>$user->getPseudo()])){
+                if($this->userRepo->findBy(["pseudo"=>$user->getPseudo()])){
                     $errors["pseudo"] = "Pseudo déjà existant";
                 }
             }
@@ -112,13 +126,13 @@ class ModificationProfilController extends AbstractController
     /**
      * @Route("/{id}", name="afficher")
      */
-    public function afficherProfil($id, UserRepository $userRepo): Response
+    public function afficherProfil($id): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $user = $userRepo->find($id);
-        dump($user);
+        $user = $this->userRepo->find($id);
+
         return $this->render('modification_profil/profil.html.twig', [
             'user' => $user
         ]);

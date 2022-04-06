@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\ArchivesSorties;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,17 +15,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArchivageSortieController extends AbstractController
 {
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+    {
+        $this->sortieRepo = $sortieRepo;
+        $this->etatRepo = $etatRepo;
+        $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
+    }
     /**
      * @Route("/", name="app_archivage_sortie")
      */
-    public function index(SortieRepository $repoSortie, EtatRepository $repoEtat, EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
         // archivage des sorties terminees depuis plus de 30 jours
         $now = new \DateTime(date('Y-m-d H:i:s'));
         $dateArchivage = clone $now;
         $dateArchivage->sub(new \DateInterval('P30D'));
-        $sorties = $repoSortie->findAArchiver($dateArchivage);
+        $sorties = $this->sortieRepo->findAArchiver($dateArchivage);
 
         foreach ($sorties as $sortie) {
 
@@ -40,7 +55,7 @@ class ArchivageSortieController extends AbstractController
             $archiveSortie->setNomLieu($sortie->getLieu()->getNom());
             $archiveSortie->setNomVille($sortie->getLieu()->getVille()->getNom());
             $archiveSortie->setCpVille($sortie->getLieu()->getVille()->getCodePostal());
-            $archiveSortie->setNbParticipants($repoSortie->countParticipants($sortie->getId()));
+            $archiveSortie->setNbParticipants($this->sortieRepo->countParticipants($sortie->getId()));
 
             // archivage en bdd
             $em->persist($archiveSortie);
@@ -52,9 +67,9 @@ class ArchivageSortieController extends AbstractController
         }
 
         // actualisation des sorties cloturees
-        $sorties = $repoSortie->findACloturer($now);
+        $sorties = $this->sortieRepo->findACloturer($now);
         if ($sorties != null) {
-            $etat = $repoEtat->find(3);
+            $etat = $this->etatRepo->find(3);
             foreach ($sorties as $sortie) {
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
@@ -63,9 +78,9 @@ class ArchivageSortieController extends AbstractController
         }
 
         // annulation des sorties creees non ouvertes a la fin des inscriptions
-        $sorties = $repoSortie->findAAnnuler($now);
+        $sorties = $this->sortieRepo->findAAnnuler($now);
         if ($sorties != null) {
-            $etat = $repoEtat->find(6);
+            $etat = $this->etatRepo->find(6);
             foreach ($sorties as $sortie) {
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
@@ -74,9 +89,9 @@ class ArchivageSortieController extends AbstractController
         }
 
         // actualisation des sorties en cours
-        $sorties = $repoSortie->findEnCours($now);
+        $sorties = $this->sortieRepo->findEnCours($now);
         if ($sorties != null) {
-            $etat = $repoEtat->find(4);
+            $etat = $this->etatRepo->find(4);
             foreach ($sorties as $sortie) {
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
@@ -85,9 +100,9 @@ class ArchivageSortieController extends AbstractController
         }
 
         // actualisation des sorties passees
-        $sorties = $repoSortie->findPassees($now);
+        $sorties = $this->sortieRepo->findPassees($now);
         if ($sorties != null) {
-            $etat = $repoEtat->find(5);
+            $etat = $this->etatRepo->find(5);
             foreach ($sorties as $sortie) {
                 $sortie->setEtat($etat);
                 $em->persist($sortie);

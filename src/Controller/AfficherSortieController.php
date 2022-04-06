@@ -41,6 +41,10 @@ class AfficherSortieController extends AbstractController
      */
     public function afficher($id, Request $request): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         //Affichage
         $sortie = $this->sortieRepo->find($id);
         $users = $sortie->getInscrit();
@@ -63,18 +67,19 @@ class AfficherSortieController extends AbstractController
      */
     public function inscription($id, EntityManagerInterface $em): Response
     {
-        $inscritsSortie = array();
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = $this->getUser();
         $sortie = $this->sortieRepo->find($id);
 
         //CHECK DATE FIN INSCRIPTION + NB INSCRIPTION MAX
         $time = new \DateTime();
-        //    dump($time);
-        //    dump($sortie->getDateFinInscription());
+
         $nb = $sortie->getInscrit()->count();
-        //  dump($sortie->getNbInscriptionsMax());
-        //  dump($sortie->getInscrit());
-        //  dump($nb);
+
         // INSCRIPTION
         if ($sortie->getDateFinInscription() <= $time) {
             $this->addFlash('warning', "La date de fin d'inscription est passé");
@@ -109,6 +114,10 @@ class AfficherSortieController extends AbstractController
      */
     public function desister($id, EntityManagerInterface $em): Response
     {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $user = $this->getUser();
         $sortie = $this->sortieRepo->find($id);
@@ -182,7 +191,13 @@ class AfficherSortieController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        $user = $this->getUser();
         $sortie = $this->sortieRepo->find($id);
+
+        if (!$user->getId() == $sortie->getOrganisateur()->getId()) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $users = $sortie->getInscrit();
         $nbInscrit = " ";
         //changement de l'etat --> ANNULER
@@ -214,8 +229,13 @@ class AfficherSortieController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-
+        $user = $this->getUser();
         $sortie = $this->sortieRepo->find($id);
+
+        if (!$user->getId() == $sortie->getOrganisateur()->getId()) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $users = $sortie->getInscrit();
         $newNb = $sortie->getInscrit()->count();
         $lieuSortie = new Lieu();

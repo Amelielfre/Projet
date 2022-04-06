@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Form\FiltresFormType;
+use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,16 +15,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+    {
+        $this->sortieRepo = $sortieRepo;
+        $this->etatRepo = $etatRepo;
+        $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
+    }
+
     /**
      * @Route("/accueil", name="app_accueil")
      */
-    public function main(Request $request, SortieRepository $repoSortie): Response
+    public function main(Request $request): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        $sorties = $repoSortie->findAccueil();
+        $sorties = $this->sortieRepo->findAccueil();
         $user = $this->getUser();
 
         // CREATION FORMULAIRE
@@ -40,7 +54,7 @@ class MainController extends AbstractController
             $passees = $formFiltres->get("passees")->getData();
 
             //execution de la requete
-            $sorties = $repoSortie->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);
+            $sorties = $this->sortieRepo->findByFiltres($site, $user, $orga, $inscrit, $pasInscrit, $passees, $motCles, $dateDebut, $dateFin);
             dump($sorties);
         }
 
@@ -54,6 +68,10 @@ class MainController extends AbstractController
      * @Route("/check", name="app_check")
      */
     public function check(){
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
         if(!$this->getUser()->getActif()){
             return $this->redirectToRoute('app_logout');

@@ -2,27 +2,41 @@
 
 namespace App\Controller;
 
-use App\Controller\Admin\UserCrudController;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
+use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
+
+    public function __construct(SortieRepository $sortieRepo, EtatRepository $etatRepo,
+                                UserRepository   $userRepo, VilleRepository $villeRepo, LieuRepository $lieuRepo)
+    {
+        $this->sortieRepo = $sortieRepo;
+        $this->etatRepo = $etatRepo;
+        $this->userRepo = $userRepo;
+        $this->villeRepo = $villeRepo;
+        $this->lieuRepo = $lieuRepo;
+    }
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(UserRepository $userRepo, SiteRepository $siteRepo, Request $request, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $error[] = null;
@@ -31,11 +45,11 @@ class RegistrationController extends AbstractController
             $form = $this->createForm(RegistrationFormType::class, $user);
             $form->handleRequest($request);
 
-            if($userRepo->findBy(["email"=>$user->getEmail()])){
+            if($this->userRepo->findBy(["email"=>$user->getEmail()])){
                     $error["email"] = "Email déjà existant";
             }
 
-            if ($userRepo->findBy(['pseudo' => $user->getPseudo()])) {
+            if ($this->userRepo->findBy(['pseudo' => $user->getPseudo()])) {
                 $error["pseudo"] = "Pseudo déjà existant";
             }
                 //Récupération des mot de passe
