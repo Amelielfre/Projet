@@ -42,6 +42,7 @@ class RegistrationController extends AbstractController
 
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $error[] = null;
+            dump($error);
             $user = new User();
             $user->setActif(true);
             $form = $this->createForm(RegistrationFormType::class, $user);
@@ -58,6 +59,7 @@ class RegistrationController extends AbstractController
                 $password = $form->get("password")->getData();
                 $confirmPassword = $form->get("confirm_password")->getData();
                 if ($form->isSubmitted() && $form->isValid()) {
+
                     //Check des mots de passe
                     if ($password == $confirmPassword) {
                         $user->setPassword(
@@ -65,7 +67,8 @@ class RegistrationController extends AbstractController
                                 $user,
                                 $form->get('password')->getData()
                             )
-                        );
+                    );
+
 
                         $photo = $form->get('photo')->getData();
 
@@ -83,8 +86,9 @@ class RegistrationController extends AbstractController
                             );
                             $user->setUrlPhoto($newFilename);
                         }
+                        dump($error);
+                        if(count($error) < 2){
 
-                        if(count($error) < 1){
                             $entityManager->persist($user);
                             $entityManager->flush();
                             return $this->redirectToRoute("app_login");

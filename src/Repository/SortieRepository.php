@@ -72,7 +72,9 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('e.id = 5');
         } else {
             $qb->join("s.etat", "e")
-                ->andWhere($qb->expr()->between('e.id', 1, 4));
+                ->andWhere($qb->expr()->between('e.id', 2, 4))
+                ->orWhere('e.id = 1 and s.organisateur = :orga')
+                ->setParameter('orga', $user);
         }
 
         // ajout du filtre par inscrit/pas inscrit si necessaire
@@ -90,11 +92,15 @@ class SortieRepository extends ServiceEntityRepository
                 $qb->expr()->literal("%" . $motCles . "%")));
         }
 
-        // ajout de la date a la requete SQL si necessaire
-        if ($dateDebutRech != null && $dateFinRech != null) {
+        // ajout de la date debut a la requete SQL si necessaire
+        if ($dateDebutRech != null) {
             $qb->andWhere('s.dateDebut >= :dateDebutRech')
-                ->setParameter('dateDebutRech', $dateDebutRech)
-                ->andWhere('s.dateDebut <= :dateFinRech')
+                ->setParameter('dateDebutRech', $dateDebutRech);
+        }
+
+        // ajout de la date fin a la requete SQL si necessaire
+        if ($dateFinRech != null) {
+            $qb->andWhere('s.dateDebut <= :dateFinRech')
                 ->setParameter('dateFinRech', $dateFinRech);
         }
 

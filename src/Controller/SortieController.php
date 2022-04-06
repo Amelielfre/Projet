@@ -90,7 +90,7 @@ class SortieController extends AbstractController
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
-            if (!is_int($ville->getCodePostal())) {
+            if (is_int($ville->getCodePostal())) {
                 $errorCpo = "Code Postal inconnu";
             } else {
                 if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {

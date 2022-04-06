@@ -103,7 +103,8 @@ class ModificationProfilController extends AbstractController
                 );
                 $user->setUrlPhoto($newFilename);
             }
-            if(count($errors) < 1){
+
+            if(count($errors) < 2){
                 // ENVOI EN BDD
                 $em->persist($user);
                 $em->flush();
