@@ -58,9 +58,9 @@
 
     <div class="card">
 
-        {% if app.user.UrlPhoto %}
+        {% if user.UrlPhoto %}
 
-            <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
+            <img src="/uploads{{ asset(user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
         {% else %}
 

@@ -27,11 +27,11 @@ class FiltresFormType extends AbstractType
                 'required' => false
             ])
             ->add('dateDebut', DateTimeType::class, [
-                'label' => "Entre : ",
+                'label' => "A partir de : ",
                 'widget' => "single_text",
                 'required' => false])
             ->add('dateFin', DateTimeType::class, [
-                'label' => "et : ",
+                'label' => "Jusqu'au : ",
                 'widget' => "single_text",
                 'required' => false])
             ->add('orga', CheckboxType::class, [
