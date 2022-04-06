@@ -15,15 +15,15 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.nom) }} <span class="champ-obligatoire">*</span></th>
+                <th scope="col">{{ form_label(formModifSortie.nom) }}</th>
                 <td> {{ form_widget(formModifSortie.nom,{'attr':{'value':sortie.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.dateDebut) }} <span class="champ-obligatoire">*</span></th>
+                <th scope="col">{{ form_label(formModifSortie.dateDebut) }}</th>
                 <td> {{ form_widget(formModifSortie.dateDebut,{'attr':{'placeholder':sortie.dateDebut | date('d/m/Y') , 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.dateFinInscription) }} <span class="champ-obligatoire">*</span></th>
+                <th scope="col">{{ form_label(formModifSortie.dateFinInscription) }} </th>
                 <td> {{ form_widget(formModifSortie.dateFinInscription,{'attr':{'placeholder':sortie.dateFinInscription | date('d/m/Y'), 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
@@ -45,7 +45,7 @@
                 <td> {{ form_widget(formModifSortie.siteOrganisateur,{'attr':{'value':sortie.organisateur.site.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.ville) }} <span class="champ-obligatoire">*</span></th>
+                <th scope="col">{{ form_label(formModifSortie.ville) }} </th>
                 <td> {{ form_widget(formModifSortie.ville,{'attr':{'value':sortie.lieu.ville.nom | upper, 'class': "form-control"}}) }}</td>
                 <td><a href="#id01" class="add-lieu-icone">
                         <button type="button" class="btn-lieu-custom" id="btn-lieu">

@@ -37,13 +37,36 @@ h1 {
     color: #3a467d;
     font-size: 0.9em;
 }
+.mdp-forgot{
+    margin-top: 10px;
+}
+.login-checkbox{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: space-around;
+    display: flex;
+}
 /*************************************/
 /***************NAVBAR******************/
 
 .header-nav{
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
+.logo-anim{
+    -webkit-transition:-webkit-transform .9s;
+    -moz-transition:-moz-transform .9s;
+    -o-transition:-o-transform .9s;
+    -ms-transition:-ms-transform .9s;
+    transition:transform .9s;
+}
 
+.logo-anim:hover{
+    -webkit-transform:rotate(360deg);
+    -moz-transform:rotate(360deg);
+    -o-transform:rotate(360deg);
+    -ms-transform:rotate(360deg);
+    transform:rotate(360deg);
+}
 .container-fluid{
     padding-top: 5px;
     justify-content: space-between;
@@ -348,7 +371,7 @@ label{
 /**************** LOGIN ******************************/
 .form-custom-login{
     margin-top: 100px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
     padding: 20px 20px;
     justify-content: center;
     align-items: center;

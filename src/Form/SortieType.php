@@ -74,7 +74,7 @@ class SortieType extends AbstractType
                 ])
             ->add('nbInscriptionsMax', IntegerType::class,
                 [
-                    "label" => "Nombre de participants maximum",
+                    "label" => "Nombre de participants maximum *",
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",

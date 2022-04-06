@@ -46,7 +46,7 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = new Sortie();
-        $notif = "";
+        $notif[] = null;
         $error = "";
         //vérification du user en session
         if ($this->getUser()) {
@@ -72,34 +72,51 @@ class SortieController extends AbstractController
 
         if ($formLieu->isSubmitted() && $formLieu->isValid()) {
             if ($this->lieuRepo->findBy(['nom' => $lieu->getNom()])) {
-                $notif = "Ce lieu existe déjà";
-            } elseif ($this->lieuRepo->findBy(['rue' => $lieu->getRue()])) {
-                $notif = "Ce lieu existe déjà";
-            } else {
-                $notif = "Lieu ajouté";
+                if ($this->lieuRepo->findBy(['rue' => $lieu->getRue()])) {
+                    $notif["lieu"] = "Ce lieu existe déjà";
+                }
+            }
+
+            if ($lieu->getNom() == null or $lieu->getRue() == null) {
+                $notif["lieu"] = "Veuillez remplir les champs";
+            }
+            dump($lieu->getNom());
+            dump($notif);
+            if (count($notif) < 2) {
+                $notif["lieu"] = "Lieu ajouté";
                 $em->persist($lieu);
                 $em->flush();
             }
+
         }
         $lieuForm = $this->createForm(LieuType::class);
 
         //Partie formulaire pour ajouter des villes avec la fenêtre modal
         $ville = new Ville();
-        $errorCpo = "";
         $formVille = $this->createForm(VilleType::class, $ville);
         $formVille->handleRequest($request);
 
         if ($formVille->isSubmitted() && $formVille->isValid()) {
-            if (is_int($ville->getCodePostal())) {
-                $errorCpo = "Code Postal inconnu";
-            } else {
-                if ($this->villeRepo->findBy(['nom' => $ville->getNom()])) {
-                    $notif = "Cette ville existe déjà";
-                } else {
-                    $notif = "Ville ajoutée";
-                    $em->persist($ville);
-                    $em->flush();
-                }
+            if ($ville->getCodePostal() == null or $ville->getNom() == null) {
+                $notif["ville"] = "Veuillez remplir les champs";
+            }
+            if (!is_numeric($ville->getCodePostal())) {
+                $notif["ville"] = "Code Postal inconnu";
+            }
+            if (strlen($ville->getCodePostal()) != 5) {
+                $notif["ville"] = "Code Postal inconnu";
+            }
+
+            $ville1 = $this->villeRepo->findBy(['nom' => $ville->getNom()]);
+            $ville2 = $this->villeRepo->findBy(['codePostal' => $ville->getCodePostal()]);
+            if($ville1[0]->getId() ==  $ville2[0]->getId()){
+                    $notif["ville"] = "Cette ville existe déjà";
+            }
+
+            if (count($notif) < 2) {
+                $notif["ville"] = "Ville ajoutée";
+                $em->persist($ville);
+                $em->flush();
             }
         }
 
@@ -130,7 +147,6 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/creation.html.twig', [
             "notif" => $notif,
-            "errorCpo" => $errorCpo,
             "error" => $error,
             "formSortie" => $formSortie->createView(),
             "locationForm" => $lieuForm->createView(),

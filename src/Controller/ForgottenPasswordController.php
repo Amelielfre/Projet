@@ -19,7 +19,7 @@ class ForgottenPasswordController extends AbstractController
     /**
      * @Route("/oubli-pass", name="app_forgotten_password")
      */
-    public function oubliPass(EntityManagerInterface $em, Request $request, UserRepository $userRepo, Mailer\Mailer $mailer, TokenGeneratorInterface $tokenGenerator
+    public function oubliPass(EntityManagerInterface $em, Request $request, UserRepository $userRepo, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator
     ): Response
     {
         // On initialise le formulaire

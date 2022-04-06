@@ -97,8 +97,9 @@ class Ville
 
         return $this;
     }
-    /*public function __toString()
+
+    public function __toString()
     {
-        return $this->getNom() . " " . $this->getCodePostal();
-    }*/
+        return $this->getNom();
+    }
 }

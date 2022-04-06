@@ -21,28 +21,28 @@ class ModificationProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, ["label" => "Mail :", 'constraints' => [
+            ->add('email', EmailType::class, ["label" => "E-mail *", 'constraints' => [
                 new NotBlank([
                     'message' => "l'email doit etre valide",
                 ])
             ]])
-            ->add('nom', TextType::class, ["label" => "Nom :", 'constraints' => [
+            ->add('nom', TextType::class, ["label" => "Nom ", 'constraints' => [
                 new NotBlank([
                     'message' => 'Un nom doit etre rempli',
                 ])
             ]])
-            ->add('prenom', TextType::class, ["label" => "Prenom :", 'constraints' => [
+            ->add('prenom', TextType::class, ["label" => "Prenom ", 'constraints' => [
                 new NotBlank([
                     'message' => 'Un prenom doit etre rempli',
                 ])
             ]])
-            ->add('pseudo', TextType::class, ["label" => "Pseudo :", 'constraints' => [
+            ->add('pseudo', TextType::class, ["label" => "Pseudo *", 'constraints' => [
                 new NotBlank([
                     'message' => 'Un pseudo doit etre rempli',
                 ])
             ]])
             ->add('telephone', TextType::class, [
-                "label" => "Téléphone:",
+                "label" => "Téléphone",
                 'required' => false])
 
             ->add('photo',FileType::class,[
@@ -52,7 +52,7 @@ class ModificationProfilType extends AbstractType
             ])
 
             ->add('oldPassword', PasswordType::class, [
-                'label' => 'Mot de passe actuel  :',
+                'label' => 'Mot de passe actuel  *',
                 'mapped' => false,
                 'required' => true,
             ])

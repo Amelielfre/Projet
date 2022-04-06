@@ -48,6 +48,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Site', 'fas fa-map', Site::class);
         yield MenuItem::linkToCrud('Ville', 'fas fa-city', Ville::class);
         yield MenuItem::linkToCrud('Sortie', 'fas fa-beer', Sortie::class);
-//        yield MenuItem::linkToCrud('Lieu', 'fas fa-map', Lieu::class);
+        yield MenuItem::linkToCrud('Lieu', 'fas fa-map', Lieu::class);
     }
 }
