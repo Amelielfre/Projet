@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -64,6 +65,11 @@ class ModificationProfilType extends AbstractType
                 'label' => 'Confirmez nouveau mot de passe :',
                 'mapped' => false,
                 'required' => false
+            ])
+            ->add('partage', CheckboxType::class, [
+                'label'    => 'Voulez-vous partager votre photo avec les autres utilisateurs ?',
+                'required' => false,
+                'data' => false,
             ])
 //            ->add('enregistrer', SubmitType::class, ["label" => "Enregistrer Informations"])
 //            ->add('password', PasswordType::class, [

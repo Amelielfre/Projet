@@ -104,6 +104,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $token_reset;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $partage;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -361,6 +366,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTokenReset(?string $token_reset): self
     {
         $this->token_reset = $token_reset;
+
+        return $this;
+    }
+
+    public function getPartage(): ?bool
+    {
+        return $this->partage;
+    }
+
+    public function setPartage(?bool $partage): self
+    {
+        $this->partage = $partage;
 
         return $this;
     }

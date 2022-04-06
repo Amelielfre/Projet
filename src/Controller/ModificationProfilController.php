@@ -44,7 +44,6 @@ class ModificationProfilController extends AbstractController
         }
         $user = $this->getUser();
         $errors[] = null;
-        $user2 = new User();
         $oldPseudo = $this->getUser()->getPseudo();
         $oldEmail = $this->getUser()->getEmail();
         // CREATION FORMULAIRE*****

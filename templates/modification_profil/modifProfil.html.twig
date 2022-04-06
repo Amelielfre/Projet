@@ -94,6 +94,10 @@
                 {% endif %}
             </div>
         </div>
+        <div>
+            {{ form_label(formModifProfil.partage) }}
+            {{ form_widget(formModifProfil.partage) }}
+        </div>
         <div class="button-group-custom">
             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
             <a class="btn btn-primary" href="{{ path('app_profil_afficher',{id:user.id}) }}">
