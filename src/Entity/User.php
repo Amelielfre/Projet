@@ -99,6 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $UrlPhoto;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token_reset;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -346,5 +351,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->getPseudo();
+    }
+
+    public function getTokenReset(): ?string
+    {
+        return $this->token_reset;
+    }
+
+    public function setTokenReset(?string $token_reset): self
+    {
+        $this->token_reset = token_reset;
+
+        return $this;
     }
 }

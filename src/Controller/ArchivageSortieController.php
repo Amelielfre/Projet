@@ -116,7 +116,7 @@ class ArchivageSortieController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-//        return $this->render('archivage_sortie/index.html.twig', [
+//        return $this->render('archivage_sortie/forgotten_password.html.twig', [
 //            'controller_name' => 'salut'
 //        ]);
     }
