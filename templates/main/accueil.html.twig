@@ -13,7 +13,6 @@
                                 <img src="/uploads{{ asset(app.user.UrlPhoto) }}" alt="AvatarUser"
                                      width="100%" class="">
                             </div>
-
                             <h4>{{ app.user.pseudo }}</h4>
                         </th>
 
@@ -25,7 +24,7 @@
                                      width="100%" class="">
                             </div>
 
-                            <h3>{{ app.user.pseudo }}</h3>
+                            <h3 class="pseudo-accueil">{{ app.user.pseudo }}</h3>
                         </th>
 
                     {% endif %}
@@ -36,7 +35,7 @@
 
     {{ form_start(formFiltres) }}
 
-    <div class=" filtres   mb-5">
+    <div class="filtres mb-5">
         <div class=" row col-xl-12  ">
             <h4>Filtrer les sorties</h4>
             <hr>

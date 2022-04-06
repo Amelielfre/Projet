@@ -155,6 +155,10 @@ div#navbarSupportedContent{
     padding: 20px 20px;
 }
 
+.filtres{
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+    padding: 20px 20px;
+}
 
 
 /********************************************/
@@ -393,13 +397,15 @@ label{
 .utilisateur{
     margin-left: 55%;
    text-align: center;
+
 }
-
+.pseudo-accueil{
+    font-size: 1.1em;
+}
 .photoaccueil img{
-
     border: solid black 1px;
     border-radius: 100% ;
-    width: 50%;
+    width: 45%;
     height: auto;
 
 }
