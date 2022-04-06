@@ -58,7 +58,7 @@
 
     <div class="card">
 
-        {% if ( user.partage == true ) and ( user.UrlPhoto ) %}
+        {% if ((user.partage == true) or (user.id == app.user.id)) and ( user.UrlPhoto ) %}
 
             <img src="/uploads{{ asset(user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
