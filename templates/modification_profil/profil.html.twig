@@ -58,7 +58,7 @@
 
     <div class="card">
 
-        {% if user.UrlPhoto %}
+        {% if user.UrlPhoto and app.user.id == user.id %}
 
             <img src="/uploads{{ asset(user.UrlPhoto) }}" alt="AvatarUser" width="100%" class="">
 
@@ -73,8 +73,8 @@
         <p class="title">Nom : {{ user.nom }}</p>
         {% if app.user.id == user.id %}
             <p class="title">Téléphone : {{ user.telephone }}</p>
+            <p class="title">Email : {{ user.email }}</p>
         {% endif %}
-        <p class="title">Email : {{ user.email }}</p>
         <p>{{ user.site.nom }}</p>
 
         <div style="margin: 24px 0;">

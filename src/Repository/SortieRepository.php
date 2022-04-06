@@ -96,7 +96,6 @@ class SortieRepository extends ServiceEntityRepository
         if ($dateDebutRech != null) {
             $qb->andWhere('s.dateDebut >= :dateDebutRech')
                 ->setParameter('dateDebutRech', $dateDebutRech);
-
         }
 
         // ajout de la date fin a la requete SQL si necessaire
