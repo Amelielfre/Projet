@@ -33,7 +33,10 @@ h1 {
     margin-left: 3%;
     margin-top: 2%;
 }
-
+.champ-obligatoire{
+    color: #3a467d;
+    font-size: 0.9em;
+}
 /*************************************/
 /***************NAVBAR******************/
 

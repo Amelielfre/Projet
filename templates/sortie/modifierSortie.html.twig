@@ -15,37 +15,37 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.nom) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.nom) }} <span class="champ-obligatoire">*</span></th>
                 <td> {{ form_widget(formModifSortie.nom,{'attr':{'value':sortie.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.dateDebut) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.dateDebut) }} <span class="champ-obligatoire">*</span></th>
                 <td> {{ form_widget(formModifSortie.dateDebut,{'attr':{'placeholder':sortie.dateDebut | date('d/m/Y') , 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.dateFinInscription) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.dateFinInscription) }} <span class="champ-obligatoire">*</span></th>
                 <td> {{ form_widget(formModifSortie.dateFinInscription,{'attr':{'placeholder':sortie.dateFinInscription | date('d/m/Y'), 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.nbInscriptionsMax) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.nbInscriptionsMax) }} </th>
                 <td> {{ form_widget(formModifSortie.nbInscriptionsMax,{'attr':{'value':sortie.nbInscriptionsMax, 'class': "form-control"}}) }}</td>
 
                 <td>{{ nbInscrits }} / {{ sortie.nbInscriptionsMax }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.duree) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.duree) }} </th>
                 <td> {{ form_widget(formModifSortie.duree,{'attr':{'value':sortie.duree, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.description) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.description) }} </th>
                 <td> {{ form_widget(formModifSortie.description,{'attr':{'value':sortie.description, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.siteOrganisateur) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.siteOrganisateur) }} </th>
                 <td> {{ form_widget(formModifSortie.siteOrganisateur,{'attr':{'value':sortie.organisateur.site.nom | upper, 'class': "form-control"}}) }}</td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.ville) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.ville) }} <span class="champ-obligatoire">*</span></th>
                 <td> {{ form_widget(formModifSortie.ville,{'attr':{'value':sortie.lieu.ville.nom | upper, 'class': "form-control"}}) }}</td>
                 <td><a href="#id01" class="add-lieu-icone">
                         <button type="button" class="btn-lieu-custom" id="btn-lieu">
@@ -54,7 +54,7 @@
                     </a></td>
             </tr>
             <tr>
-                <th scope="col">{{ form_label(formModifSortie.lieu) }} :</th>
+                <th scope="col">{{ form_label(formModifSortie.lieu) }} <span class="champ-obligatoire">*</span></th>
                 <td> {{ form_widget(formModifSortie.lieu,{'attr':{'value':lieu.nom, 'class': "form-control"}}) }}</td>
                 <td><a href="#id02" class="add-lieu-icone">
                         <button type="button" class="btn-lieu-custom" id="btn-lieu">
@@ -67,8 +67,8 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Pseudo :</th>
-                <th scope="col">Nom : :</th>
+                <th scope="col">Pseudo </th>
+                <th scope="col">Nom</th>
             </tr>
             </thead>
             <tbody>

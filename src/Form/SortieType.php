@@ -31,7 +31,7 @@ class SortieType extends AbstractType
         $builder
             ->add('nom', TextType::class,
                 [
-                    "label" => "Nom de la sortie",
+                    "label" => "Nom de la sortie *",
                     "attr" => [
                         "placeholder" => "Apéro en terasse...",
                     ],
@@ -43,7 +43,7 @@ class SortieType extends AbstractType
                 ])
             ->add('dateDebut', DateTimeType::class,
                 [
-                    "label" => "Date de la sortie", "widget" => "single_text",
+                    "label" => "Date de la sortie *", "widget" => "single_text",
                     "constraints" => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
@@ -65,7 +65,7 @@ class SortieType extends AbstractType
                 ])
             ->add('dateFinInscription', DateType::class,
                 [
-                    "label" => "Date de fin d'inscription", "widget" => "single_text",
+                    "label" => "Date de fin d'inscription *", "widget" => "single_text",
                     'constraints' => [
                         new NotBlank([
                             'message' => "Veuillez remplir ce champs",
@@ -102,7 +102,7 @@ class SortieType extends AbstractType
                 [
                     "class" => Ville::class,
                     'choice_label' => 'nom',
-                    "label" => "Ville",
+                    "label" => "Ville *",
                     'placeholder' => "Sélectionner une ville",
                     "mapped" => false,
                     "constraints" => [

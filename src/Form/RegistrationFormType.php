@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo :'
+                'label' => 'Pseudo *'
                 , 'constraints' => [
                     new NotBlank([
                         'message' => 'Un pseudo doit etre rempli',
@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('nom', TextType::class, [
-                'label' => 'Nom :'
+                'label' => 'Nom '
                 , 'constraints' => [
                     new NotBlank([
                         'message' => 'Un nom doit etre rempli',
@@ -42,7 +42,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prenom :'
+                'label' => 'Prenom '
                 , 'constraints' => [
                     new NotBlank([
                         'message' => 'Un prenom doit etre rempli',
@@ -50,7 +50,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Email :'
+                'label' => 'Email *'
                 , 'constraints' => [
                     new NotBlank([
                         'message' => 'le mail doit etre valide',
@@ -58,14 +58,14 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('telephone', TextType::class, [
-                'label' => 'Telephone : ',
+                'label' => 'Telephone  ',
                 'required' => false
             ])
             ->add('site', EntityType::class, [
                 'class' => Site::class,
                 'choice_label' => 'nom'])
             ->add('password', PasswordType::class, [
-                'label' => 'Password :'
+                'label' => 'Password *'
                 , 'constraints' => [
                     new NotBlank([
                         'message' => 'le password doit etre valide',
@@ -73,7 +73,7 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('confirm_password', PasswordType::class, [
-                'label' => 'Confirmez Password :',
+                'label' => 'Confirmez Password *',
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
