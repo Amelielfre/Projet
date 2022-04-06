@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
@@ -29,6 +30,7 @@ class RegistrationController extends AbstractController
         $this->villeRepo = $villeRepo;
         $this->lieuRepo = $lieuRepo;
     }
+
     /**
      * @Route("/register", name="app_register")
      */
