@@ -37,8 +37,9 @@
     {{ form_start(formFiltres) }}
 
     <div class=" filtres   mb-5">
-        <div class="table row col-xl-12  ">
+        <div class=" row col-xl-12  ">
             <h4>Filtrer les sorties</h4>
+            <hr>
             <div class="champs col-xl-2  ">
                 {{ form_label(formFiltres.site) }}
                     <br>
@@ -46,7 +47,7 @@
             </div>
             <div class="champs  col-xl-3  ">
                 {{ form_label(formFiltres.motCles) }}
-
+                <br>
                 {{ form_widget(formFiltres.motCles) }}
             </div>
             <div class="champs  col-xl-3  ">
