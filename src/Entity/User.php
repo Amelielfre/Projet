@@ -360,7 +360,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setTokenReset(?string $token_reset): self
     {
-        $this->token_reset = token_reset;
+        $this->token_reset = $token_reset;
 
         return $this;
     }
