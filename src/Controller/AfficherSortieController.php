@@ -135,7 +135,7 @@ class AfficherSortieController extends AbstractController
             } else {
                 $sortie->removeInscrit($user);
                 $nb = $sortie->getInscrit()->count();
-                if ( $sortie->getEtat()== 3 and $sortie->getNbInscriptionsMax() > $nb) {
+                if ( $sortie->getEtat()->getId()== 3 and $sortie->getNbInscriptionsMax() > $nb) {
                     $etat = $this->etatRepo->find(2);
                     $sortie->setEtat($etat);
                 }
