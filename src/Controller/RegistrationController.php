@@ -30,6 +30,7 @@ class RegistrationController extends AbstractController
         $this->villeRepo = $villeRepo;
         $this->lieuRepo = $lieuRepo;
     }
+
     /**
      * @Route("/register", name="app_register")
      */
