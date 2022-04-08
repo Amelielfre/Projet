@@ -89,7 +89,8 @@ class SortieRepository extends ServiceEntityRepository
         // ajout des mot cles a la requete si necessaire
         if ($motCles != null) {
             $qb->andWhere($qb->expr()->like('s.nom',
-                $qb->expr()->literal("%" . $motCles . "%")));
+                $qb->expr()->literal("%" . ":motcles" . "%")))
+                    ->setParameter('motcles', $motCles);
         }
 
         // ajout de la date debut a la requete SQL si necessaire
