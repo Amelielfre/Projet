@@ -44,6 +44,9 @@ class AfficherSortieController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
+        if (!$this->sortieRepo->find($id)){
+            return $this->redirectToRoute('app_accueil');
+        }
 
         //Affichage
         $sortie = $this->sortieRepo->find($id);
@@ -77,7 +80,6 @@ class AfficherSortieController extends AbstractController
 
         //CHECK DATE FIN INSCRIPTION + NB INSCRIPTION MAX
         $time = new \DateTime();
-
         $nb = $sortie->getInscrit()->count();
 
         // INSCRIPTION

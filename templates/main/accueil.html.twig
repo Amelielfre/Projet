@@ -140,6 +140,8 @@
                                                                                                  title="Afficher"></i></a>
                                 <a href="{{ path('app_afficher_sortie_modifier', {'id':sortie.id}) }}"><i
                                             class="fa-solid fa-pen-to-square" title="Modifier"></i></a>
+                            {% endif %}
+                            {% if app.user.id == sortie.organisateur.id and sortie.etat.id == 1 %}
                                 <a href="{{ path('app_afficher_sortie_publier', {'id':sortie.id}) }}"><i
                                             class="fa-solid fa-bookmark" title="Publier"></i></a>
                             {% endif %}

@@ -44,11 +44,8 @@ class SortieType extends AbstractType
             ->add('dateDebut', DateTimeType::class,
                 [
                     "label" => "Date de la sortie *", "widget" => "single_text",
-                    "constraints" => [
-                        new NotBlank([
-                            'message' => "Veuillez remplir ce champs",
-                        ]),
-                    ]
+                    'empty_data' => null,
+
                 ])
             ->add('duree', IntegerType::class,
                 [
@@ -66,11 +63,9 @@ class SortieType extends AbstractType
             ->add('dateFinInscription', DateType::class,
                 [
                     "label" => "Date de fin d'inscription *", "widget" => "single_text",
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => "Veuillez remplir ce champs",
-                        ]),
-                    ],
+                    'empty_data' => null,
+
+
                 ])
             ->add('nbInscriptionsMax', IntegerType::class,
                 [

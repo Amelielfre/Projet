@@ -46,9 +46,10 @@ class SortieController extends AbstractController
     ): Response
     {
 
+
         $sortie = new Sortie();
         $notif[] = null;
-        $error = "";
+        $error[] = null;
 
 
         //vérification du user en session
@@ -137,13 +138,24 @@ class SortieController extends AbstractController
 
         //***************************************************************
         //Partie du formulaire pour créer une sortie
+        dump("olazdazdaa");
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
-
+        dump("la");
         //on vérifie si le formulaire complet est submit et validé
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            dump("oli");
+            if ($sortie->getDateDebut() == null) {
+                $error["dateDebut"] = "La date de début doit être remplie";
+            }
+            if ($sortie->getDateFinInscription() == null) {
+                $error["dateFin"] = "La date de fin d'inscription doit être remplie";
+            }
+            if (!is_numeric($sortie->getNbInscriptionsMax())) {
+                $error["nbInscrit"] = "Le nombre doit être valide";
+            }
             if ($sortie->getDuree() > 2880) {
-                $error = "La durée est trop longue (max 2880 min = 48h)";
+                $error["duree"] = "La durée est trop longue (max 2880 min = 48h)";
             } else {
                 //si le user a cliqué sur enregistrer on vient ajouter l'etat "Créée" à la sortie
                 if ($request->request->get("save")) {
@@ -154,10 +166,12 @@ class SortieController extends AbstractController
                     $etat = $this->etatRepo->find(2);
                     $sortie->setEtat($etat);
                 }
-                //on vient ajouter en BDD
+                if (count($error) < 2){
+                    //on vient ajouter en BDD
                 $em->persist($sortie);
                 $em->flush();
                 return $this->redirect($this->generateUrl('app_afficher_sortie', ['id' => $sortie->getId()]));
+            }
             }
         }
 

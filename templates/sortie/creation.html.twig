@@ -18,6 +18,9 @@
             {{ form_label(formSortie.dateDebut) }}
             {{ form_widget(formSortie.dateDebut, {'attr': {'id': 'txt_2','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             <div class="error-custom">
+                {% if error["dateDebut"] is defined %}
+                    {{ error["dateDebut"] }}
+                {% endif %}
                 {{ form_errors(formSortie.dateDebut) }}
             </div>
         </div>
@@ -25,6 +28,9 @@
             {{ form_label(formSortie.dateFinInscription) }}
             {{ form_widget(formSortie.dateFinInscription, {'attr': {'id': 'txt_3','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             <div class="error-custom">
+                {% if error["dateFin"] is defined %}
+                    {{ error["dateFin"] }}
+                {% endif %}
                 {{ form_errors(formSortie.dateFinInscription) }}
             </div>
         </div>
@@ -33,8 +39,8 @@
             {{ form_widget(formSortie.duree, {'attr': {'id': 'txt_4','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             <div class="error-custom">
             {{ form_errors(formSortie.duree) }}
-                {% if error is defined %}
-                    {{ error }}
+                {% if error["duree"] is defined %}
+                    {{ error["duree"] }}
                 {% endif %}
             </div>
         </div>
@@ -43,8 +49,8 @@
             {{ form_widget(formSortie.nbInscriptionsMax, {'attr': {'id': 'txt_5','onkeyup': 'saveValue(this);','class': "form-control"}}) }}
             <div class="error-custom">
             {{ form_errors(formSortie.nbInscriptionsMax) }}
-                {% if error is defined %}
-                    {{ error }}
+                {% if error["nbInscrit"] is defined %}
+                    {{ error["nbInscrit"] }}
                 {% endif %}
             </div>
         </div>
